@@ -1,11 +1,5 @@
-import { Button } from '@/components/ui/button';
-
 const Home = () => {
-  return (
-    <div className="text-destructive">
-      <Button>Click</Button>
-    </div>
-  );
+  return <main className="container">Home</main>;
 };
 
 export default Home;

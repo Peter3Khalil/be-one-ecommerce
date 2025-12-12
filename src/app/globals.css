@@ -138,6 +138,25 @@
   --radius: 0.5rem;
 }
 
+@utility container {
+  padding-inline: 10px;
+  max-width: 1800px;
+  @variant sm {
+    padding-inline: 20px;
+    max-width: 100%;
+  }
+
+  @variant lg {
+    padding-inline: 80px;
+    max-width: 100%;
+  }
+
+  @variant xl {
+    padding-inline: 120px;
+    max-width: 100%;
+  }
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;
