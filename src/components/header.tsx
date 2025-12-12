@@ -1,12 +1,7 @@
 'use client';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTrigger,
-} from '@/components/ui/sheet';
+import { Button } from '@ui/button';
+import { Input } from '@ui/input';
+import { Sheet, SheetContent, SheetHeader, SheetTrigger } from '@ui/sheet';
 import { cn } from '@/lib/utils';
 import { CircleUserRound, Menu, Search, ShoppingCart, X } from 'lucide-react';
 import Link from 'next/link';
