@@ -16,7 +16,7 @@ const Header = () => {
   const [isSearchOpened, setIsSearchOpened] = useState(false);
   return (
     <header
-      className={cn('border-b py-4', {
+      className={cn('flex h-16 items-center border-b', {
         'py-0': isSearchOpened,
       })}
     >
@@ -77,8 +77,11 @@ const Header = () => {
       )}
 
       <Activity mode={isSearchOpened ? 'visible' : 'hidden'}>
-        <div className="flex items-center gap-2 px-2 py-2">
-          <Input className="h-14" placeholder="Search products..." />
+        <div className="flex h-full w-full items-center gap-2 px-2 py-2">
+          <Input
+            className="h-full max-w-full"
+            placeholder="Search products..."
+          />
           <Button
             variant="ghost"
             className="text-muted-foreground duration-200 hover:text-foreground"
