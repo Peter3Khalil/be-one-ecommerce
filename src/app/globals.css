@@ -139,10 +139,9 @@
 }
 
 @utility container {
-  padding-inline: 10px;
+  padding-inline: 20px;
   max-width: 1800px;
   @variant sm {
-    padding-inline: 20px;
     max-width: 100%;
   }
 

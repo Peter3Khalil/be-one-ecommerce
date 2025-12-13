@@ -4,7 +4,7 @@ import './globals.css';
 import Header from '@components/header';
 
 const roboto = Roboto({
-  weight: ['400', '500', '600', '700', '800'],
+  weight: ['400', '500', '600', '700', '800', '900'],
   fallback: ['sans-serif', 'arial'],
   style: ['normal', 'italic'],
   subsets: ['latin'],
@@ -26,7 +26,7 @@ export default function RootLayout({
         className={`${roboto.className} bg-background text-foreground antialiased`}
       >
         <Header />
-        {children}
+        <main>{children}</main>
       </body>
     </html>
   );
