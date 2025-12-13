@@ -4,6 +4,7 @@ import { Button } from '@ui/button';
 import { ShoppingBag } from 'lucide-react';
 import { useState } from 'react';
 import Rating from './rating';
+import Link from 'next/link';
 
 type Props = {
   image: string;
@@ -13,6 +14,7 @@ type Props = {
   rating: number;
   discount?: number;
   delay?: number;
+  id: string | number;
 };
 
 const ProductCard = ({
@@ -23,6 +25,7 @@ const ProductCard = ({
   rating,
   discount,
   delay = 0,
+  id,
 }: Props) => {
   const [isHovered, setIsHovered] = useState(false);
   return (
@@ -37,7 +40,10 @@ const ProductCard = ({
           <Badge className="absolute top-3 left-3 z-10">-{discount}%</Badge>
         )}
 
-        <div className="relative aspect-4/5 overflow-hidden">
+        <Link
+          href={`/products/${id}`}
+          className="relative block aspect-4/5 overflow-hidden"
+        >
           <img
             src={image}
             alt={name}
@@ -59,13 +65,16 @@ const ProductCard = ({
               Add to Cart
             </Button>
           </div>
-        </div>
+        </Link>
       </div>
 
       <div className="mt-4 space-y-2 px-1">
-        <h3 className="font-medium text-foreground transition-colors duration-300 group-hover:text-primary">
+        <Link
+          href={`/products/${id}`}
+          className="font-medium text-foreground transition-colors duration-300 group-hover:text-primary"
+        >
           {name}
-        </h3>
+        </Link>
 
         <Rating rating={rating} />
         <div className="flex items-center gap-2">
