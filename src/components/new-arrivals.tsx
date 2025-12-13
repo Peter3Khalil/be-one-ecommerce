@@ -21,13 +21,6 @@ const products = [
     discount: 20,
   },
   {
-    id: 3,
-    image: '/products/3.jpg',
-    name: 'Checkered Shirt',
-    price: 180,
-    rating: 4.5,
-  },
-  {
     id: 4,
     image: '/products/4.jpg',
     name: 'Sleeve Striped T-shirt',
@@ -49,7 +42,7 @@ const products = [
 
 const NewArrivals = () => {
   return (
-    <section className="container flex flex-col gap-16 py-16">
+    <section className="container flex flex-col gap-16 border-b py-16">
       <div className="text-center">
         <h2 className="font-display text-4xl font-bold text-foreground md:text-5xl lg:text-6xl">
           New Arrivals
