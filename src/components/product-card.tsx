@@ -1,8 +1,9 @@
 import { cn } from '@/lib/utils';
 import { Badge } from '@ui/badge';
 import { Button } from '@ui/button';
-import { ShoppingBag, Star } from 'lucide-react';
+import { ShoppingBag } from 'lucide-react';
 import { useState } from 'react';
+import Rating from './rating';
 
 type Props = {
   image: string;
@@ -66,23 +67,7 @@ const ProductCard = ({
           {name}
         </h3>
 
-        <div className="flex items-center gap-1.5">
-          <div className="flex items-center gap-0.5">
-            {[...Array(5)].map((_, i) => (
-              <Star
-                key={i}
-                className={cn(
-                  'h-3.5 w-3.5',
-                  i < Math.floor(rating)
-                    ? 'fill-primary text-accent'
-                    : 'fill-accent text-muted'
-                )}
-              />
-            ))}
-          </div>
-          <span className="text-xs text-muted-foreground">{rating}/5</span>
-        </div>
-
+        <Rating rating={rating} />
         <div className="flex items-center gap-2">
           <span className="text-lg font-semibold text-foreground">
             ${price}
