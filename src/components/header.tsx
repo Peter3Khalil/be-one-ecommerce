@@ -16,9 +16,12 @@ const Header = () => {
   const [isSearchOpened, setIsSearchOpened] = useState(false);
   return (
     <header
-      className={cn('flex h-16 items-center border-b', {
-        'py-0': isSearchOpened,
-      })}
+      className={cn(
+        'sticky top-0 z-50 flex h-16 items-center border-b bg-background',
+        {
+          'py-0': isSearchOpened,
+        }
+      )}
     >
       {!isSearchOpened && (
         <div className="container flex items-center justify-between gap-8">
