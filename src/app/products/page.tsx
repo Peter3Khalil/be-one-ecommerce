@@ -21,13 +21,22 @@ import { Input } from '@ui/input';
 import { Slider } from '@ui/slider';
 import { ChevronRight, Filter } from 'lucide-react';
 import { useState } from 'react';
+import {
+  Pagination,
+  PaginationContent,
+  PaginationEllipsis,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from '@ui/pagination';
 
 const Products = () => {
   return (
     <div className="container grid grid-cols-4 gap-6 py-10 lg:py-16">
       <DesktopFilters />
-      <div className="col-span-full md:col-span-3">
-        <div className="mb-4 flex items-center justify-between">
+      <div className="col-span-full space-y-6 md:col-span-3">
+        <div className="flex items-center justify-between">
           <h1 className="text-3xl font-bold">Products</h1>
           <MobileFilters />
         </div>
@@ -38,6 +47,27 @@ const Products = () => {
             </li>
           ))}
         </ul>
+        <Pagination>
+          <PaginationContent className="flex-wrap gap-4">
+            <PaginationItem>
+              <PaginationPrevious href="#" />
+            </PaginationItem>
+            <div className="flex items-center gap-2">
+              {Array.from({ length: 5 }).map((_, index) => (
+                <PaginationItem key={index}>
+                  <PaginationLink href="#">{index + 1}</PaginationLink>
+                </PaginationItem>
+              ))}
+
+              <PaginationItem>
+                <PaginationEllipsis />
+              </PaginationItem>
+            </div>
+            <PaginationItem>
+              <PaginationNext href="#" />
+            </PaginationItem>
+          </PaginationContent>
+        </Pagination>
       </div>
     </div>
   );
