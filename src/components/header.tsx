@@ -65,8 +65,11 @@ const Header = () => {
                 variant="ghost"
                 className="text-muted-foreground duration-200 hover:text-foreground"
                 size="icon"
+                asChild
               >
-                <ShoppingCart />
+                <Link href="/cart">
+                  <ShoppingCart />
+                </Link>
               </Button>
               <Button
                 variant="ghost"
