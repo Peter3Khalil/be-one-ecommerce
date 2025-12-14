@@ -3,6 +3,7 @@ import { Roboto } from 'next/font/google';
 import './globals.css';
 import Header from '@components/header';
 import ThemeProvider from '@components/theme-provider';
+import NextTopLoader from 'nextjs-toploader';
 
 const roboto = Roboto({
   weight: ['400', '500', '600', '700', '800', '900'],
@@ -27,6 +28,7 @@ export default function RootLayout({
         className={`${roboto.className} bg-background text-foreground antialiased`}
       >
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          <NextTopLoader color="var(--primary)" />
           <Header />
           <main>{children}</main>
         </ThemeProvider>
