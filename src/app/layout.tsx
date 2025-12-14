@@ -28,7 +28,7 @@ export default function RootLayout({
         className={`${roboto.className} bg-background text-foreground antialiased`}
       >
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <NextTopLoader color="var(--primary)" />
+          <NextTopLoader color="var(--primary)" showSpinner={false} />
           <Header />
           <main>{children}</main>
         </ThemeProvider>
