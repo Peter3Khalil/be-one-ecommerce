@@ -1,6 +1,5 @@
 import { Button } from '@ui/button';
 import { Minus, Plus, Trash2 } from 'lucide-react';
-import React from 'react';
 
 const Cart = () => {
   return (
@@ -16,8 +15,8 @@ const Cart = () => {
                 className="aspect-square h-32 rounded-lg"
               />
               <div className="flex w-full flex-col">
-                <h2 className="text-lg font-semibold md:text-xl">
-                  Product Name
+                <h2 className="max-w-[154px] text-base font-semibold md:max-w-md md:text-lg md:text-xl">
+                  Satin Drape Blouse
                 </h2>
                 <p className="text-sm text-muted-foreground">
                   <b>Size:</b> Large
@@ -26,7 +25,7 @@ const Cart = () => {
                   <b>Color:</b> Red
                 </p>
                 <div className="mt-auto flex w-full items-center">
-                  <p className="text-xl font-medium md:text-3xl">$49.99</p>
+                  <p className="text-xl font-medium md:text-3xl">$49</p>
                   <div className="ms-auto flex h-10 items-center gap-4 rounded-full bg-secondary *:rounded-full">
                     <Button size="icon" variant="secondary">
                       <Plus />
