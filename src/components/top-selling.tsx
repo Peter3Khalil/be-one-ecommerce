@@ -2,41 +2,7 @@
 import { ArrowRight } from 'lucide-react';
 import ProductCard from './product-card';
 import { Button } from './ui/button';
-
-const products = [
-  {
-    id: 1,
-    image: '/products/1.jpg',
-    name: 'T-shirt with Tape Details',
-    price: 120,
-    rating: 4.5,
-  },
-  {
-    id: 2,
-    image: '/products/2.jpg',
-    name: 'Skinny Fit Jeans',
-    price: 240,
-    originalPrice: 260,
-    rating: 3.5,
-    discount: 20,
-  },
-  {
-    id: 3,
-    image: '/products/3.jpg',
-    name: 'Checkered Shirt',
-    price: 180,
-    rating: 4.5,
-  },
-  {
-    id: 5,
-    image: '/products/1.webp',
-    name: 'Sleeve Striped T-shirt',
-    price: 130,
-    originalPrice: 160,
-    rating: 4.5,
-    discount: 30,
-  },
-];
+import products from '@public/data.json';
 
 const TopSelling = () => {
   return (
