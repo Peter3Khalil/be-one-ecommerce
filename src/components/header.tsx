@@ -1,11 +1,12 @@
 'use client';
+import { cn } from '@/lib/utils';
 import { Button } from '@ui/button';
 import { Input } from '@ui/input';
 import { Sheet, SheetContent, SheetHeader, SheetTrigger } from '@ui/sheet';
-import { cn } from '@/lib/utils';
 import { CircleUserRound, Menu, Search, ShoppingCart, X } from 'lucide-react';
 import Link from 'next/link';
 import { Activity, useState } from 'react';
+import ThemeToggle from './theme-toggle';
 
 const NAV_ITEMS = [
   { label: 'Home', href: '#' },
@@ -74,6 +75,7 @@ const Header = () => {
               >
                 <CircleUserRound />
               </Button>
+              <ThemeToggle />
             </div>
           </div>
         </div>
