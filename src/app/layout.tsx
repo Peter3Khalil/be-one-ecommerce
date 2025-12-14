@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Roboto } from 'next/font/google';
 import './globals.css';
 import Header from '@components/header';
+import Footer from '@components/footer';
 import ThemeProvider from '@components/theme-provider';
 import NextTopLoader from 'nextjs-toploader';
 
@@ -31,6 +32,7 @@ export default function RootLayout({
           <NextTopLoader color="var(--primary)" showSpinner={false} />
           <Header />
           <main>{children}</main>
+          <Footer />
         </ThemeProvider>
       </body>
     </html>
