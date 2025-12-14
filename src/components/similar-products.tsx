@@ -42,7 +42,7 @@ const products = [
 
 const SimilarProducts = () => {
   return (
-    <section className="container flex flex-col gap-16 border-b py-16">
+    <section className="container flex flex-col gap-16 border-t border-b py-16">
       <div className="text-center">
         <h2 className="font-display text-4xl font-bold text-foreground md:text-5xl lg:text-6xl">
           You might also like
