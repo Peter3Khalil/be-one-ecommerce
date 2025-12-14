@@ -37,7 +37,12 @@ const Products = () => {
       <DesktopFilters />
       <div className="col-span-full space-y-6 md:col-span-3">
         <div className="flex items-center justify-between">
-          <h1 className="text-3xl font-bold">Products</h1>
+          <div className="flex w-full flex-col justify-between md:flex-row md:items-center">
+            <h1 className="text-3xl font-bold">Products</h1>
+            <p className="text-muted-foreground">
+              Showing 1-10 of 100 Products
+            </p>
+          </div>
           <MobileFilters />
         </div>
         <ul className="grid w-full grid-cols-2 gap-4 md:grid-cols-2 md:gap-6 lg:grid-cols-3">
