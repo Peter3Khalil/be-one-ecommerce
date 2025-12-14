@@ -83,7 +83,7 @@ const CustomCheckbox = ({
 const DesktopFilters = () => {
   const [range, setRange] = useState([1, 67]);
   return (
-    <div className="col-span-1 hidden h-fit rounded-2xl border px-6 py-4 md:block">
+    <div className="col-span-1 hidden h-fit rounded-2xl border bg-card px-6 py-4 md:block">
       <div className="flex items-center justify-between border-b pb-4">
         <h3 className="text-lg font-semibold lg:text-xl">Filters</h3>
         <Button variant="outline" size="sm" className="rounded-full">
