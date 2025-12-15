@@ -1,7 +1,7 @@
 'use client';
 import { duplicateArray } from '@/lib/utils';
 import ProductCard from '@components/product-card';
-import products from '@public/data.json';
+import { products } from '@public/data.json';
 import { Button } from '@ui/button';
 import { Checkbox } from '@ui/checkbox';
 import {

@@ -2,7 +2,7 @@
 import { ArrowRight } from 'lucide-react';
 import ProductCard from './product-card';
 import { Button } from './ui/button';
-import products from '@public/data.json';
+import { products } from '@public/data.json';
 
 const NewArrivals = () => {
   return (
