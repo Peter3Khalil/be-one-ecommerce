@@ -2,6 +2,7 @@
 
 import { cn } from '@/lib/utils';
 import Rating from '@components/rating';
+import Reviews from '@components/reviews';
 import SimilarProducts from '@components/similar-products';
 import { Button } from '@ui/button';
 import { Minus, Plus } from 'lucide-react';
@@ -98,6 +99,7 @@ const ProductDetails = () => {
           </div>
         </div>
       </article>
+      <Reviews />
       <SimilarProducts />
     </div>
   );
