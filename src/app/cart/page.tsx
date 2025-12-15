@@ -1,5 +1,6 @@
 import { Button } from '@ui/button';
 import { Minus, Plus, Trash2 } from 'lucide-react';
+import Link from 'next/link';
 
 const Cart = () => {
   return (
@@ -9,15 +10,22 @@ const Cart = () => {
         <ul className="space-y-4 bg-card *:not-last:border-b *:not-last:pb-4 md:col-span-3">
           {Array.from({ length: 6 }).map((_, index) => (
             <li key={index} className="relative flex gap-4">
-              <img
-                src="/products/1.jpg"
-                alt="Product Image"
-                className="aspect-square h-32 rounded-lg"
-              />
+              <Link href="/products/1" className="block shrink-0">
+                <img
+                  src="/products/1.jpg"
+                  alt="Product Image"
+                  className="aspect-square h-32 rounded-lg"
+                />
+              </Link>
               <div className="flex w-full flex-col">
-                <h2 className="max-w-[154px] text-base font-semibold md:max-w-md md:text-lg md:text-xl">
-                  Satin Drape Blouse
-                </h2>
+                <Link
+                  href="/products/1"
+                  className="underline-offset-2 hover:underline"
+                >
+                  <h2 className="max-w-[154px] text-base font-semibold md:max-w-md md:text-lg md:text-xl">
+                    Satin Drape Blouse
+                  </h2>
+                </Link>
                 <p className="text-sm text-muted-foreground">
                   <b>Size:</b> Large
                 </p>
