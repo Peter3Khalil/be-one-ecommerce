@@ -42,8 +42,8 @@ const ProductDetails = () => {
             />
           </div>
         </div>
-        <div className="flex flex-col space-y-4 divide-y-2 divide-accent *:not-first:mt-auto dark:divide-y dark:divide-accent/50">
-          <div className="space-y-2 pb-4">
+        <div className="flex flex-col divide-y-2 divide-accent *:py-4 *:last:pb-0 dark:divide-y dark:divide-accent/50">
+          <div className="space-y-2">
             <h1 className="text-3xl font-bold">Product Title</h1>
             <Rating rating={4.5} size={24} />
             <p className="text-xl font-semibold text-primary">$99.99</p>
@@ -53,7 +53,7 @@ const ProductDetails = () => {
               entice potential buyers.
             </p>
           </div>
-          <div className="pb-4">
+          <div>
             <span className="text-muted-foreground">Select Color</span>
             <div className="mt-2 flex items-center gap-3">
               {['red', 'blue', 'green'].map((color) => (
@@ -72,7 +72,7 @@ const ProductDetails = () => {
               ))}
             </div>
           </div>
-          <div className="pb-4">
+          <div>
             <span className="text-muted-foreground">Choose Size</span>
             <div className="mt-2 flex items-center gap-3">
               {['S', 'M', 'L', 'XL'].map((size) => (
@@ -82,7 +82,7 @@ const ProductDetails = () => {
               ))}
             </div>
           </div>
-          <div className="flex items-center gap-4">
+          <div className="mt-auto flex items-center gap-4">
             <div className="flex h-10 items-center gap-4 rounded-full bg-secondary *:rounded-full">
               <Button size="icon" variant="secondary">
                 <Plus />
