@@ -17,7 +17,7 @@ const ReviewCard = ({
   verified = false,
 }: ReviewCardProps) => {
   return (
-    <article className="flex flex-col rounded-2xl border bg-card p-6 transition-shadow hover:shadow-md">
+    <article className="flex flex-col rounded-2xl border bg-card p-6">
       <div className="mb-4 flex items-start justify-between">
         <Rating rating={rating} size={24} />
       </div>
