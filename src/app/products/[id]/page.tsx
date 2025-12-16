@@ -1,11 +1,11 @@
 'use client';
 
 import { cn } from '@/lib/utils';
+import Counter from '@components/counter';
 import Rating from '@components/rating';
 import Reviews from '@components/reviews';
 import SimilarProducts from '@components/similar-products';
 import { Button } from '@ui/button';
-import { Minus, Plus } from 'lucide-react';
 import { useState } from 'react';
 
 const ProductDetails = () => {
@@ -84,15 +84,7 @@ const ProductDetails = () => {
             </div>
           </div>
           <div className="mt-auto flex items-center gap-4">
-            <div className="flex h-10 items-center gap-4 rounded-full bg-secondary *:rounded-full">
-              <Button size="icon" variant="secondary">
-                <Plus />
-              </Button>
-              <b>1</b>
-              <Button size="icon" variant="secondary">
-                <Minus />
-              </Button>
-            </div>
+            <Counter />
             <Button size="lg" className="flex-1">
               Add to Cart
             </Button>
