@@ -1,11 +1,10 @@
 'use client';
+import { capitalize } from '@/lib/utils';
 import Counter from '@components/counter';
+import InputFormField from '@components/input-form-field';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { Button } from '@ui/button';
-import { Label } from '@ui/label';
-import { RadioGroup, RadioGroupItem } from '@ui/radio-group';
-import { Trash2 } from 'lucide-react';
-import Link from 'next/link';
-import { useState } from 'react';
+import Combobox from '@ui/combobox';
 import {
   Dialog,
   DialogClose,
@@ -16,6 +15,26 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@ui/dialog';
+import { Form } from '@ui/form';
+import { Label } from '@ui/label';
+import { RadioGroup, RadioGroupItem } from '@ui/radio-group';
+import { Trash2 } from 'lucide-react';
+import Link from 'next/link';
+import { useId, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { getGovernorates, getSubregions } from 'subdivisions-of-egypt';
+import { z } from 'zod';
+
+const formSchema = z.object({
+  customer_name: z.string().min(1, 'Full Name is required'),
+  email: z.email('Invalid email address'),
+  phone: z.string().min(1, 'Phone is required'),
+  address: z.string().min(1, 'Address is required'),
+  city: z.string().min(1, 'City is required'),
+  region: z.string().min(1, 'Region is required'),
+  postal_code: z.string().optional().or(z.literal('')),
+  country: z.string().min(1, 'Country is required'),
+});
 
 const Cart = () => {
   const [products, setProducts] = useState([
@@ -54,6 +73,7 @@ const Cart = () => {
   const discount = subtotal * 0.2;
   const deliveryFee = 10;
   const total = subtotal - discount + deliveryFee;
+
   return (
     <div className="container space-y-4 py-6 sm:py-10">
       <h1 className="text-3xl font-bold">Your Cart</h1>
@@ -170,161 +190,133 @@ const Cart = () => {
 };
 
 const AddressDialog = () => {
-  const [formData, setFormData] = useState({
-    customer_name: '',
-    email: '',
-    phone: '',
-    address: '',
-    city: '',
-    postal_code: '',
-    country: 'egypt',
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      country: 'Egypt',
+    },
   });
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-  };
-
-  const handleSave = () => {
-    console.log('Saving address:', formData);
-    // Here you would typically send the data to your backend
-  };
-
+  function onSubmit(data: z.infer<typeof formSchema>) {
+    console.log(data);
+  }
+  const formId = useId();
+  const arabicGovernorates = getGovernorates().map(({ name_ar }) => name_ar);
+  const englishGovernorates = getGovernorates().map(({ name_en }) => name_en);
+  const allCovernorates = [...englishGovernorates, ...arabicGovernorates];
+  const selectedGovernorateId = getGovernorates().find(
+    (gov) =>
+      gov.name_en === form.getValues('city') ||
+      gov.name_ar === form.getValues('city')
+  )?.id;
+  const regionsOfCity = selectedGovernorateId
+    ? getSubregions(selectedGovernorateId)
+    : [];
+  const regions = regionsOfCity
+    .map(({ name_en }) => name_en)
+    .concat(regionsOfCity.map(({ name_ar }) => name_ar));
   return (
-    <Dialog>
-      <DialogTrigger asChild>
-        <Button variant="outline" className="w-full rounded-full">
-          + Add New Address
-        </Button>
-      </DialogTrigger>
-      <DialogContent className="max-h-[90vh] overflow-y-auto">
-        <DialogHeader>
-          <DialogTitle>Add New Address</DialogTitle>
-          <DialogDescription>
-            Enter your shipping address details below.
-          </DialogDescription>
-        </DialogHeader>
-        <div className="grid gap-4 py-4">
-          <div className="grid gap-2">
-            <Label htmlFor="customer_name">
-              Full Name <span className="text-destructive">*</span>
-            </Label>
-            <input
-              id="customer_name"
+    <Form {...form}>
+      <Dialog>
+        <DialogTrigger asChild>
+          <Button variant="outline" className="w-full rounded-full">
+            + Add New Address
+          </Button>
+        </DialogTrigger>
+        <DialogContent className="max-h-[90vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle>Add New Address</DialogTitle>
+            <DialogDescription>
+              Enter your shipping address details below.
+            </DialogDescription>
+          </DialogHeader>
+          <form
+            id={formId}
+            className="grid gap-6 py-4"
+            onSubmit={form.handleSubmit(onSubmit)}
+          >
+            <InputFormField
+              control={form.control}
               name="customer_name"
-              type="text"
+              label="Full Name"
               placeholder="John Doe"
-              value={formData.customer_name}
-              onChange={handleChange}
-              required
-              className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50"
             />
-          </div>
-          <div className="grid gap-2">
-            <Label htmlFor="phone">
-              Phone <span className="text-destructive">*</span>
-            </Label>
-            <input
-              id="phone"
+            <InputFormField
+              control={form.control}
               name="phone"
-              type="tel"
-              placeholder="+20 123 456 7890"
-              value={formData.phone}
-              onChange={handleChange}
-              required
-              className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50"
+              label="Phone"
+              placeholder="+1 234 567 890"
             />
-          </div>
-          <div className="grid gap-2">
-            <Label htmlFor="email">
-              Email <span className="text-destructive">*</span>
-            </Label>
-            <input
-              id="email"
+            <InputFormField
+              control={form.control}
               name="email"
-              type="email"
+              label="Email"
               placeholder="john@example.com"
-              value={formData.email}
-              onChange={handleChange}
-              required
-              className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50"
             />
-          </div>
-          <div className="grid gap-2">
-            <Label htmlFor="country">
-              Country <span className="text-destructive">*</span>
-            </Label>
-            <input
-              id="country"
+            <InputFormField
+              control={form.control}
               name="country"
-              type="text"
+              label="Country"
               placeholder="Egypt"
-              value={formData.country}
-              onChange={handleChange}
-              required
-              className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50"
+              disabled
             />
-          </div>
-          <div className="grid gap-2">
-            <Label htmlFor="address">
-              Address <span className="text-destructive">*</span>
-            </Label>
-            <input
-              id="address"
+            <div className="grid grid-cols-2 gap-4">
+              <Combobox
+                items={allCovernorates.map((val) => ({
+                  value: val,
+                  label: capitalize(val),
+                }))}
+                value={form.getValues('city')}
+                placeholder="Select City"
+                onValueChange={(city) => {
+                  form.setValue('city', city);
+                  form.trigger('city');
+                  form.setValue('region', ''); // Reset region when city changes
+                }}
+              />
+              <Combobox
+                items={regions.map((val) => ({
+                  value: val,
+                  label: capitalize(val),
+                }))}
+                value={form.getValues('region')}
+                placeholder="Select Region"
+                onValueChange={(region) => {
+                  form.setValue('region', region);
+                  form.trigger('region');
+                }}
+              />
+            </div>
+            <InputFormField
+              control={form.control}
               name="address"
-              type="text"
+              label="Address"
               placeholder="123 Main Street, Apt 4"
-              value={formData.address}
-              onChange={handleChange}
-              required
-              className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50"
             />
-          </div>
-          <div className="grid grid-cols-2 gap-4">
-            <div className="grid gap-2">
-              <Label htmlFor="city">
-                City <span className="text-destructive">*</span>
-              </Label>
-              <input
-                id="city"
-                name="city"
-                type="text"
-                placeholder="Cairo"
-                value={formData.city}
-                onChange={handleChange}
-                required
-                className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50"
-              />
-            </div>
-            <div className="grid gap-2">
-              <Label htmlFor="postal_code">
-                Postal Code <span className="text-destructive">*</span>
-              </Label>
-              <input
-                id="postal_code"
-                name="postal_code"
-                type="text"
-                placeholder="12345"
-                value={formData.postal_code}
-                onChange={handleChange}
-                required
-                className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50"
-              />
-            </div>
-          </div>
-        </div>
-        <DialogFooter>
-          <DialogClose asChild>
-            <Button variant="outline">Cancel</Button>
-          </DialogClose>
-          <DialogClose asChild>
-            <Button onClick={handleSave}>Save Address</Button>
-          </DialogClose>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
+            <InputFormField
+              control={form.control}
+              name="postal_code"
+              label="Postal Code"
+              placeholder="12345"
+            />
+          </form>
+          <DialogFooter>
+            <DialogClose asChild>
+              <Button variant="outline">Cancel</Button>
+            </DialogClose>
+            <DialogClose asChild>
+              <Button
+                type="submit"
+                disabled={!form.formState.isValid}
+                form={formId}
+              >
+                Save Address
+              </Button>
+            </DialogClose>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+    </Form>
   );
 };
 

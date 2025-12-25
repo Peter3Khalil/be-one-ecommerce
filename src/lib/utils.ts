@@ -12,3 +12,7 @@ export function duplicateArray<T>(arr: T[], times = 5): T[] {
   }
   return result;
 }
+
+export function capitalize(str: string) {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
