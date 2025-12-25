@@ -1,4 +1,5 @@
 declare module '*.css';
+
 declare module 'subdivisions-of-egypt' {
   interface Subregion {
     id: string;

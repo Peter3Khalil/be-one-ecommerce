@@ -8,6 +8,7 @@ import AddressDialog, {
   AddressFormData,
   addressSchema,
 } from './address-dialog';
+import { useTranslations } from 'next-intl';
 
 const STORAGE_KEY = 'address';
 
@@ -48,54 +49,69 @@ const PaymentSummary: FC<Props> = ({
   const [address, setAddress] = useState<AddressFormData | undefined>(
     loadAddressFromStorage
   );
+  const t = useTranslations();
   return (
     <div className="h-fit space-y-4 bg-card p-4 md:col-span-2">
-      <h3 className="border-b pb-4 text-2xl font-semibold">Payment Summary</h3>
+      <h3 className="border-b pb-4 text-2xl font-semibold">
+        {t('CartPage.paymentSummary')}
+      </h3>
       <div className="space-y-4 border-b pb-4">
         <p className="text-sm font-medium text-muted-foreground">
-          Payment Method
+          {t('CartPage.paymentMethod')}
         </p>
         <RadioGroup defaultValue="cash_on_delivery">
           <div className="flex items-center gap-3">
             <RadioGroupItem value="cash_on_delivery" id="r1" />
-            <Label htmlFor="r1">Cash on Delivery</Label>
+            <Label htmlFor="r1">{t('CartPage.cashOnDelivery')}</Label>
           </div>
           <div className="flex items-center gap-3">
             <RadioGroupItem disabled value="credit_card" id="r2" />
             <Label htmlFor="r2" className="opacity-40">
-              Credit Card (Soon)
+              {t('CartPage.creditCard')} ({t('Global.soon')})
             </Label>
           </div>
         </RadioGroup>
       </div>
 
       <div className="space-y-4 border-b pb-4">
-        <p className="text-sm font-medium text-muted-foreground">Address</p>
+        <p className="text-sm font-medium text-muted-foreground">
+          {t('CartPage.address')}
+        </p>
         {address ? (
           <div className="space-y-1">
             <p>
-              <span className="text-sm text-muted-foreground">Name:</span>{' '}
+              <span className="text-sm text-muted-foreground">
+                {t('CartPage.name')}:
+              </span>{' '}
               {address.customer_name}
             </p>
             <p>
-              <span className="text-sm text-muted-foreground">Phone:</span>{' '}
+              <span className="text-sm text-muted-foreground">
+                {t('CartPage.phone')}:
+              </span>{' '}
               {address.phone}
             </p>
             <p>
-              <span className="text-sm text-muted-foreground">Email:</span>{' '}
+              <span className="text-sm text-muted-foreground">
+                {t('CartPage.email')}:
+              </span>{' '}
               {address.email}
             </p>
             <p>
-              <span className="text-sm text-muted-foreground">Location:</span>{' '}
+              <span className="text-sm text-muted-foreground">
+                {t('CartPage.location')}:
+              </span>{' '}
               {address.region}, {address.city}, {address.country}
             </p>
             <p>
-              <span className="text-sm text-muted-foreground">Address:</span>{' '}
+              <span className="text-sm text-muted-foreground">
+                {t('CartPage.address')}:
+              </span>{' '}
               {address.address}
             </p>
             <p>
               <span className="text-sm text-muted-foreground">
-                Postal Code:
+                {t('CartPage.postalCode')}:
               </span>{' '}
               {address.postal_code}
             </p>
@@ -108,7 +124,7 @@ const PaymentSummary: FC<Props> = ({
               defaultValues={address}
               trigger={
                 <Button variant="link" className="p-0">
-                  Edit Address
+                  {t('CartPage.editAddress')}
                 </Button>
               }
             />
@@ -119,7 +135,7 @@ const PaymentSummary: FC<Props> = ({
               'animate-bounce text-destructive': isClicked && !address,
             })}
           >
-            No address added yet.
+            {t('CartPage.noAddressAdded')}
           </p>
         )}
         <AddressDialog
@@ -132,14 +148,16 @@ const PaymentSummary: FC<Props> = ({
       </div>
       <div className="space-y-4 *:last:border-b *:last:pb-4">
         <div className="flex items-center justify-between text-muted-foreground">
-          <span>Subtotal</span>
+          <span>{t('CartPage.subtotal')}</span>
           <span className="font-medium text-foreground">
             ${subtotal.toFixed(2)}
           </span>
         </div>
         {discount > 0 && (
           <div className="flex items-center justify-between text-muted-foreground">
-            <span>Discount (-{(discount * 100).toFixed(0)}%)</span>
+            <span>
+              {t('CartPage.discount')} (-{(discount * 100).toFixed(0)}%)
+            </span>
             <span className="font-medium text-destructive">
               -${(subtotal * discount).toFixed(2)}
             </span>
@@ -147,7 +165,7 @@ const PaymentSummary: FC<Props> = ({
         )}
         {deliveryFee > 0 && (
           <div className="flex items-center justify-between text-muted-foreground">
-            <span>Delivery Fee</span>
+            <span>{t('CartPage.deliveryFee')}</span>
             <span className="font-medium text-foreground">
               ${deliveryFee.toFixed(2)}
             </span>
@@ -155,7 +173,7 @@ const PaymentSummary: FC<Props> = ({
         )}
       </div>
       <div className="flex items-center justify-between text-lg font-semibold">
-        <span className="font-semibold">Total</span>
+        <span className="font-semibold">{t('CartPage.total')}</span>
         <span>${total.toFixed(2)}</span>
       </div>
       <Button
@@ -164,7 +182,7 @@ const PaymentSummary: FC<Props> = ({
         className="w-full rounded-full"
         size="lg"
       >
-        Place Order
+        {t('CartPage.placeOrder')}
       </Button>
     </div>
   );

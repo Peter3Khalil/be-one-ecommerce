@@ -1,0 +1,27 @@
+import { TranslationType } from '../translation.type';
+
+export default {
+  CartPage: {
+    paymentSummary: 'ملخص الدفع',
+    paymentMethod: 'طريقة الدفع',
+    cashOnDelivery: 'الدفع عند الاستلام',
+    creditCard: 'بطاقة ائتمان',
+    address: 'العنوان',
+    name: 'الاسم',
+    phone: 'الهاتف',
+    email: 'البريد الإلكتروني',
+    location: 'الموقع',
+    postalCode: 'الرمز البريدي',
+    editAddress: 'تعديل العنوان',
+    noAddressAdded: 'لم يتم إضافة عنوان',
+    addNewAddress: 'إضافة عنوان جديد',
+    subtotal: 'المجموع الفرعي',
+    discount: 'الخصم',
+    deliveryFee: 'رسوم التوصيل',
+    total: 'الإجمالي',
+    placeOrder: 'إتمام الطلب',
+  },
+  Global: {
+    soon: 'قريباً',
+  },
+} satisfies TranslationType;
