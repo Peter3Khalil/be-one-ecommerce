@@ -37,6 +37,28 @@ const formSchema = z.object({
 });
 type AddressFormData = z.infer<typeof formSchema>;
 
+const STORAGE_KEY = 'address';
+
+function loadAddressFromStorage(): AddressFormData | undefined {
+  if (typeof window === 'undefined') return undefined;
+  const raw = localStorage.getItem(STORAGE_KEY);
+  if (!raw) return undefined;
+  try {
+    const parsed = JSON.parse(raw);
+    const result = formSchema.safeParse(parsed);
+    if (result.success) return result.data;
+    localStorage.removeItem(STORAGE_KEY);
+  } catch {
+    localStorage.removeItem(STORAGE_KEY);
+  }
+  return undefined;
+}
+
+function saveAddressToStorage(addr: AddressFormData) {
+  if (typeof window === 'undefined') return;
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(addr));
+}
+
 const Cart = () => {
   const [products, setProducts] = useState([
     {
@@ -74,8 +96,10 @@ const Cart = () => {
   const discount = subtotal * 0.2;
   const deliveryFee = 10;
   const total = subtotal - discount + deliveryFee;
-  const [address, setAddress] = useState<AddressFormData>();
   const [isClicked, setIsClicked] = useState(false);
+  const [address, setAddress] = useState<AddressFormData | undefined>(
+    loadAddressFromStorage
+  );
   return (
     <div className="container space-y-4 py-6 sm:py-10">
       <h1 className="text-3xl font-bold">Your Cart</h1>
@@ -189,7 +213,10 @@ const Cart = () => {
                   {address.postal_code}
                 </p>
                 <AddressDialog
-                  onAddressAdd={(data) => setAddress(data)}
+                  onAddressAdd={(data) => {
+                    setAddress(data);
+                    saveAddressToStorage(data);
+                  }}
                   key={JSON.stringify(address)}
                   defaultValues={address}
                   trigger={
@@ -209,7 +236,10 @@ const Cart = () => {
               </p>
             )}
             <AddressDialog
-              onAddressAdd={(data) => setAddress(data)}
+              onAddressAdd={(data) => {
+                setAddress(data);
+                saveAddressToStorage(data);
+              }}
               key={JSON.stringify(address)}
             />
           </div>
