@@ -1,5 +1,5 @@
 'use client';
-import { capitalize } from '@/lib/utils';
+import { capitalize, getAllGovernorates } from '@/lib/utils';
 import Counter from '@components/counter';
 import InputFormField from '@components/input-form-field';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -201,9 +201,6 @@ const AddressDialog = () => {
     console.log(data);
   }
   const formId = useId();
-  const arabicGovernorates = getGovernorates().map(({ name_ar }) => name_ar);
-  const englishGovernorates = getGovernorates().map(({ name_en }) => name_en);
-  const allCovernorates = [...englishGovernorates, ...arabicGovernorates];
   const selectedGovernorateId = getGovernorates().find(
     (gov) =>
       gov.name_en === form.getValues('city') ||
@@ -262,7 +259,7 @@ const AddressDialog = () => {
             />
             <div className="grid grid-cols-2 gap-4">
               <Combobox
-                items={allCovernorates.map((val) => ({
+                items={getAllGovernorates().map((val) => ({
                   value: val,
                   label: capitalize(val),
                 }))}
