@@ -35,11 +35,13 @@ type Props = {
   subtotal: number;
   discount?: number;
   deliveryFee?: number;
+  disabled?: boolean;
 };
 const PaymentSummary: FC<Props> = ({
   subtotal,
   discount = 0,
   deliveryFee = 0,
+  disabled,
 }) => {
   const total = subtotal - subtotal * discount + deliveryFee;
   const [isClicked, setIsClicked] = useState(false);
@@ -47,7 +49,7 @@ const PaymentSummary: FC<Props> = ({
     loadAddressFromStorage
   );
   return (
-    <div className="h-fit space-y-4 bg-card md:col-span-2">
+    <div className="h-fit space-y-4 bg-card p-4 md:col-span-2">
       <h3 className="border-b pb-4 text-2xl font-semibold">Payment Summary</h3>
       <div className="space-y-4 border-b pb-4">
         <p className="text-sm font-medium text-muted-foreground">
@@ -158,7 +160,7 @@ const PaymentSummary: FC<Props> = ({
       </div>
       <Button
         onClick={() => setIsClicked(true)}
-        disabled={!address && isClicked}
+        disabled={(!address && isClicked) || disabled}
         className="w-full rounded-full"
         size="lg"
       >

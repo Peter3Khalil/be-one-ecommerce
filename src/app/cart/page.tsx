@@ -37,10 +37,11 @@ const Cart = () => {
     (acc, product) => acc + product.price * product.quantity,
     0
   );
+  const isEmpty = products.length === 0;
   return (
     <div className="container space-y-4 py-6 sm:py-10">
       <h1 className="text-3xl font-bold">Your Cart</h1>
-      <div className="grid gap-4 *:rounded-xl *:border *:p-4 md:grid-cols-5">
+      <div className="grid gap-4 *:rounded-xl *:border md:grid-cols-5">
         <CartList
           products={products}
           onQuantityChange={(index, quantity) => {
@@ -51,7 +52,12 @@ const Cart = () => {
             });
           }}
         />
-        <PaymentSummary subtotal={subtotal} deliveryFee={50} discount={0.5} />
+        <PaymentSummary
+          disabled={isEmpty}
+          subtotal={subtotal}
+          deliveryFee={isEmpty ? 0 : 50}
+          discount={isEmpty ? 0 : 0.5}
+        />
       </div>
     </div>
   );

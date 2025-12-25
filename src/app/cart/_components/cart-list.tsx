@@ -17,8 +17,18 @@ type Props = {
   onQuantityChange?: (index: number, quantity: number) => void;
 };
 const CartList: FC<Props> = ({ products, onQuantityChange }) => {
+  if (products.length === 0) {
+    return (
+      <div className="flex h-fit flex-col items-center justify-center gap-4 bg-card px-4 py-10 md:col-span-3">
+        <p className="text-center text-2xl font-medium">Your cart is empty.</p>
+        <Button asChild>
+          <Link href="/products">Shop Products</Link>
+        </Button>
+      </div>
+    );
+  }
   return (
-    <ul className="space-y-4 bg-card *:not-last:border-b *:not-last:pb-4 md:col-span-3">
+    <ul className="h-fit space-y-4 bg-card p-4 *:not-last:border-b *:not-last:pb-4 md:col-span-3">
       {products.map((product, index) => (
         <li key={index} className="relative flex gap-4">
           <Link href={`/products/${product.id}`} className="block shrink-0">
