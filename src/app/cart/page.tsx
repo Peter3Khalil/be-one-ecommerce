@@ -1,5 +1,5 @@
 'use client';
-import { capitalize, getAllGovernorates } from '@/lib/utils';
+import { capitalize, cn, getAllGovernorates } from '@/lib/utils';
 import Counter from '@components/counter';
 import InputFormField from '@components/input-form-field';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -20,7 +20,7 @@ import { Label } from '@ui/label';
 import { RadioGroup, RadioGroupItem } from '@ui/radio-group';
 import { Trash2 } from 'lucide-react';
 import Link from 'next/link';
-import { useId, useState } from 'react';
+import { FC, useId, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { getGovernorates, getSubregions } from 'subdivisions-of-egypt';
 import { z } from 'zod';
@@ -35,6 +35,7 @@ const formSchema = z.object({
   postal_code: z.string().optional().or(z.literal('')),
   country: z.string().min(1, 'Country is required'),
 });
+type AddressFormData = z.infer<typeof formSchema>;
 
 const Cart = () => {
   const [products, setProducts] = useState([
@@ -73,7 +74,8 @@ const Cart = () => {
   const discount = subtotal * 0.2;
   const deliveryFee = 10;
   const total = subtotal - discount + deliveryFee;
-
+  const [address, setAddress] = useState<AddressFormData>();
+  const [isClicked, setIsClicked] = useState(false);
   return (
     <div className="container space-y-4 py-6 sm:py-10">
       <h1 className="text-3xl font-bold">Your Cart</h1>
@@ -154,7 +156,62 @@ const Cart = () => {
 
           <div className="space-y-4 border-b pb-4">
             <p className="text-sm font-medium text-muted-foreground">Address</p>
-            <AddressDialog />
+            {address ? (
+              <div className="space-y-1">
+                <p>
+                  <span className="text-sm text-muted-foreground">Name:</span>{' '}
+                  {address.customer_name}
+                </p>
+                <p>
+                  <span className="text-sm text-muted-foreground">Phone:</span>{' '}
+                  {address.phone}
+                </p>
+                <p>
+                  <span className="text-sm text-muted-foreground">Email:</span>{' '}
+                  {address.email}
+                </p>
+                <p>
+                  <span className="text-sm text-muted-foreground">
+                    Location:
+                  </span>{' '}
+                  {address.region}, {address.city}, {address.country}
+                </p>
+                <p>
+                  <span className="text-sm text-muted-foreground">
+                    Address:
+                  </span>{' '}
+                  {address.address}
+                </p>
+                <p>
+                  <span className="text-sm text-muted-foreground">
+                    Postal Code:
+                  </span>{' '}
+                  {address.postal_code}
+                </p>
+                <AddressDialog
+                  onAddressAdd={(data) => setAddress(data)}
+                  key={JSON.stringify(address)}
+                  defaultValues={address}
+                  trigger={
+                    <Button variant="link" className="p-0">
+                      Edit Address
+                    </Button>
+                  }
+                />
+              </div>
+            ) : (
+              <p
+                className={cn('text-center text-xl text-muted-foreground', {
+                  'animate-bounce text-destructive': isClicked && !address,
+                })}
+              >
+                No address added yet.
+              </p>
+            )}
+            <AddressDialog
+              onAddressAdd={(data) => setAddress(data)}
+              key={JSON.stringify(address)}
+            />
           </div>
           <div className="space-y-4 *:last:border-b *:last:pb-4">
             <div className="flex items-center justify-between text-muted-foreground">
@@ -180,8 +237,13 @@ const Cart = () => {
             <span className="font-semibold">Total</span>
             <span>${total.toFixed(2)}</span>
           </div>
-          <Button className="w-full rounded-full" size="lg">
-            Proceed to Checkout
+          <Button
+            onClick={() => setIsClicked(true)}
+            disabled={!address && isClicked}
+            className="w-full rounded-full"
+            size="lg"
+          >
+            Place Order
           </Button>
         </div>
       </div>
@@ -189,16 +251,28 @@ const Cart = () => {
   );
 };
 
-const AddressDialog = () => {
-  const form = useForm<z.infer<typeof formSchema>>({
+type AddressDialogProps = {
+  // eslint-disable-next-line no-unused-vars
+  onAddressAdd?: (data: AddressFormData) => void;
+  defaultValues?: Partial<AddressFormData>;
+  trigger?: React.ReactNode;
+};
+const AddressDialog: FC<AddressDialogProps> = ({
+  onAddressAdd,
+  defaultValues,
+  trigger,
+}) => {
+  const form = useForm<AddressFormData>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       country: 'Egypt',
+      ...defaultValues,
     },
   });
 
-  function onSubmit(data: z.infer<typeof formSchema>) {
+  function onSubmit(data: AddressFormData) {
     console.log(data);
+    onAddressAdd?.(data);
   }
   const formId = useId();
   const selectedGovernorateId = getGovernorates().find(
@@ -216,9 +290,11 @@ const AddressDialog = () => {
     <Form {...form}>
       <Dialog>
         <DialogTrigger asChild>
-          <Button variant="outline" className="w-full rounded-full">
-            + Add New Address
-          </Button>
+          {trigger || (
+            <Button variant="outline" className="w-full rounded-full">
+              + Add New Address
+            </Button>
+          )}
         </DialogTrigger>
         <DialogContent className="max-h-[90vh] overflow-y-auto">
           <DialogHeader>
@@ -237,18 +313,21 @@ const AddressDialog = () => {
               name="customer_name"
               label="Full Name"
               placeholder="John Doe"
+              required
             />
             <InputFormField
               control={form.control}
               name="phone"
               label="Phone"
               placeholder="+1 234 567 890"
+              required
             />
             <InputFormField
               control={form.control}
               name="email"
               label="Email"
               placeholder="john@example.com"
+              required
             />
             <InputFormField
               control={form.control}
@@ -256,44 +335,61 @@ const AddressDialog = () => {
               label="Country"
               placeholder="Egypt"
               disabled
+              required
             />
             <div className="grid grid-cols-2 gap-4">
-              <Combobox
-                items={getAllGovernorates().map((val) => ({
-                  value: val,
-                  label: capitalize(val),
-                }))}
-                value={form.getValues('city')}
-                placeholder="Select City"
-                onValueChange={(city) => {
-                  form.setValue('city', city);
-                  form.trigger('city');
-                  form.setValue('region', ''); // Reset region when city changes
-                }}
-              />
-              <Combobox
-                items={regions.map((val) => ({
-                  value: val,
-                  label: capitalize(val),
-                }))}
-                value={form.getValues('region')}
-                placeholder="Select Region"
-                onValueChange={(region) => {
-                  form.setValue('region', region);
-                  form.trigger('region');
-                }}
-              />
+              <div className="flex flex-col gap-1">
+                <Label className="gap-1">
+                  City
+                  <span className="text-destructive">*</span>
+                </Label>
+                <Combobox
+                  items={getAllGovernorates().map((val) => ({
+                    value: val,
+                    label: capitalize(val),
+                  }))}
+                  value={form.getValues('city')}
+                  placeholder="Select City"
+                  onValueChange={(city) => {
+                    form.setValue('city', city);
+                    form.trigger('city');
+                    form.setValue('region', ''); // Reset region when city changes
+                  }}
+                  className="w-full"
+                />
+              </div>
+
+              <div className="flex flex-col gap-1">
+                <Label className="gap-1">
+                  Region
+                  <span className="text-destructive">*</span>
+                </Label>
+                <Combobox
+                  items={regions.map((val) => ({
+                    value: val,
+                    label: capitalize(val),
+                  }))}
+                  value={form.getValues('region')}
+                  placeholder="Select Region"
+                  onValueChange={(region) => {
+                    form.setValue('region', region);
+                    form.trigger('region');
+                  }}
+                  className="w-full"
+                />
+              </div>
             </div>
             <InputFormField
               control={form.control}
               name="address"
               label="Address"
               placeholder="123 Main Street, Apt 4"
+              required
             />
             <InputFormField
               control={form.control}
               name="postal_code"
-              label="Postal Code"
+              label="Postal Code (Optional)"
               placeholder="12345"
             />
           </form>
