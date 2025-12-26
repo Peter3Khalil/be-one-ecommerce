@@ -4,9 +4,9 @@ import { Button } from '@ui/button';
 import { Input } from '@ui/input';
 import { Sheet, SheetContent, SheetHeader, SheetTrigger } from '@ui/sheet';
 import { CircleUserRound, Menu, Search, ShoppingCart, X } from 'lucide-react';
-import Link from 'next/link';
 import { Activity, useState } from 'react';
 import ThemeToggle from './theme-toggle';
+import { Link } from '@/i18n/navigation';
 
 const NAV_ITEMS = [
   { label: 'Home', href: '#' },
@@ -31,6 +31,8 @@ const Header = () => {
             <Link
               href="/"
               className="text-3xl leading-none font-bold text-nowrap"
+              lang="en"
+              // eslint-disable-next-line i18next/no-literal-string
             >
               Be One.
             </Link>
@@ -121,6 +123,8 @@ const MobileMenu = () => {
           <Link
             href="/"
             className="text-3xl leading-none font-bold text-nowrap"
+            lang="en"
+            // eslint-disable-next-line i18next/no-literal-string
           >
             Be One.
           </Link>

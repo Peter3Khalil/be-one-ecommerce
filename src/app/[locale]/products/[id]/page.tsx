@@ -6,9 +6,20 @@ import Rating from '@components/rating';
 import Reviews from '@components/reviews';
 import SimilarProducts from '@components/similar-products';
 import { Button } from '@ui/button';
+import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 
 const ProductDetails = () => {
+  const t = useTranslations();
+  const PRODUCT_DETAILS = {
+    title: 'Product Title',
+    rating: 4.5,
+    price: '$99.99',
+    colors: ['Red', 'Blue', 'Green'],
+    sizes: ['S', 'M', 'L', 'XL'],
+    description:
+      'This is a detailed description of the product. It highlights the key features, specifications, and benefits of the product to entice potential buyers.',
+  };
   const [currentImage, setCurrentImage] = useState('/products/1.jpg');
   return (
     <div>
@@ -45,19 +56,21 @@ const ProductDetails = () => {
         </div>
         <div className="flex flex-col divide-y-2 divide-accent *:py-4 *:last:pb-0 dark:divide-y dark:divide-accent/50">
           <div className="space-y-2">
-            <h1 className="text-3xl font-bold">Product Title</h1>
-            <Rating rating={4.5} size={24} />
-            <p className="text-xl font-semibold text-primary">$99.99</p>
+            <h1 className="text-3xl font-bold">{PRODUCT_DETAILS.title}</h1>
+            <Rating rating={PRODUCT_DETAILS.rating} size={24} />
+            <p className="text-xl font-semibold text-primary">
+              {PRODUCT_DETAILS.price}
+            </p>
             <p className="text-muted-foreground">
-              This is a detailed description of the product. It highlights the
-              key features, specifications, and benefits of the product to
-              entice potential buyers.
+              {PRODUCT_DETAILS.description}
             </p>
           </div>
           <div>
-            <span className="text-muted-foreground">Select Color</span>
+            <span className="text-muted-foreground">
+              {t('ProductDetailsPage.selectColor')}
+            </span>
             <div className="mt-2 flex items-center gap-3">
-              {['red', 'blue', 'green'].map((color) => (
+              {PRODUCT_DETAILS.colors.map((color) => (
                 <button
                   key={color}
                   className={cn(
@@ -74,9 +87,11 @@ const ProductDetails = () => {
             </div>
           </div>
           <div>
-            <span className="text-muted-foreground">Choose Size</span>
+            <span className="text-muted-foreground">
+              {t('ProductDetailsPage.chooseSize')}
+            </span>
             <div className="mt-2 flex items-center gap-3">
-              {['S', 'M', 'L', 'XL'].map((size) => (
+              {PRODUCT_DETAILS.sizes.map((size) => (
                 <Button key={size} variant="secondary">
                   {size}
                 </Button>
@@ -86,7 +101,7 @@ const ProductDetails = () => {
           <div className="mt-auto flex items-center gap-4">
             <Counter />
             <Button size="lg" className="flex-1">
-              Add to Cart
+              {t('Global.addToCart')}
             </Button>
           </div>
         </div>

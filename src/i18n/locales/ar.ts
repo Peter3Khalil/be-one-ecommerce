@@ -1,7 +1,29 @@
 import { TranslationType } from '../translation.type';
 
 export default {
+  HomePage: {
+    hero: {
+      findClothes: 'ابحث عن الملابس',
+      thatMatches: 'التي تناسب',
+      yourStyle: 'أسلوبك',
+      description:
+        'اكتشف تشكيلتنا الواسعة من الملابس التي تعكس أسلوبك الفريد. من الأزياء العصرية إلى الكلاسيكية، لدينا كل ما تحتاجه لتجديد خزانة ملابسك.',
+      cashOnDelivery: {
+        title: 'الدفع عند الاستلام',
+        description: 'ادفع عند الاستلام',
+      },
+      fastDelivery: {
+        title: 'توصيل سريع',
+        description: 'توصيل سريع وموثوق',
+      },
+      highQuality: {
+        title: 'جودة عالية',
+        description: 'مواد ممتازة فقط',
+      },
+    },
+  },
   CartPage: {
+    yourCart: 'عربة التسوق الخاصة بك',
     paymentSummary: 'ملخص الدفع',
     paymentMethod: 'طريقة الدفع',
     cashOnDelivery: 'الدفع عند الاستلام',
@@ -20,8 +42,46 @@ export default {
     deliveryFee: 'رسوم التوصيل',
     total: 'الإجمالي',
     placeOrder: 'إتمام الطلب',
+    cartEmpty: 'عربة التسوق فارغة',
+    shopProducts: 'تسوق المنتجات',
+    enterShippingDetails: 'أدخل تفاصيل الشحن',
+    fullName: 'الاسم الكامل',
+    country: 'البلد',
+    city: 'المدينة',
+    region: 'المنطقة',
+    saveAddress: 'حفظ العنوان',
+    selectRegion: 'اختر المنطقة',
+    selectCity: 'اختر المدينة',
+    addressPlaceholder: '123 الشارع الرئيسي، شقة 4',
+    countryPlaceholder: 'مصر',
+    namePlaceholder: 'ياسمين عبدالعزيز',
+  },
+  ProductsPage: {
+    products: 'المنتجات',
+    filters: 'الفلاتر',
+    reset: 'إعادة تعيين',
+    from: 'من',
+    to: 'إلى',
+    availability: 'التوفر',
+    inStock: 'متوفر في المخزون',
+    outOfStock: 'غير متوفر في المخزون',
+    applyFilters: 'تطبيق الفلاتر',
+    showing: 'عرض',
+    of: 'من',
+  },
+  ProductDetailsPage: {
+    chooseSize: 'اختر المقاس',
+    selectColor: 'اختر اللون',
   },
   Global: {
     soon: 'قريباً',
+    size: 'المقاس',
+    color: 'اللون',
+    quantity: 'الكمية',
+    cancel: 'إلغاء',
+    optional: 'اختياري',
+    price: 'السعر',
+    addToCart: 'أضف إلى العربة',
+    shopNow: 'تسوق الآن',
   },
 } satisfies TranslationType;

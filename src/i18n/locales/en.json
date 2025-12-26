@@ -1,5 +1,26 @@
 {
+  "HomePage": {
+    "hero": {
+      "findClothes": "Find Clothes",
+      "thatMatches": "That Matches",
+      "yourStyle": "Your Style",
+      "description": "Discover our wide range of clothing that reflects your unique style. From trendy fashion to classic pieces, we have everything you need to refresh your wardrobe.",
+      "cashOnDelivery": {
+        "title": "Cash on Delivery",
+        "description": "Pay when you receive"
+      },
+      "fastDelivery": {
+        "title": "Fast Delivery",
+        "description": "Quick & reliable shipping"
+      },
+      "highQuality": {
+        "title": "High Quality",
+        "description": "Premium materials only"
+      }
+    }
+  },
   "CartPage": {
+    "yourCart": "Your Cart",
     "paymentSummary": "Payment Summary",
     "paymentMethod": "Payment Method",
     "cashOnDelivery": "Cash on Delivery",
@@ -17,9 +38,47 @@
     "discount": "Discount",
     "deliveryFee": "Delivery Fee",
     "total": "Total",
-    "placeOrder": "Place Order"
+    "placeOrder": "Place Order",
+    "cartEmpty": "Cart is Empty",
+    "shopProducts": "Shop Products",
+    "enterShippingDetails": "Enter your shipping details",
+    "fullName": "Full Name",
+    "country": "Country",
+    "city": "City",
+    "region": "Region",
+    "saveAddress": "Save Address",
+    "selectRegion": "Select Region",
+    "selectCity": "Select City",
+    "addressPlaceholder": "123 Main Street, Apt 4",
+    "countryPlaceholder": "Egypt",
+    "namePlaceholder": "Yasmin Abdelaziz"
+  },
+  "ProductsPage": {
+    "products": "Products",
+    "filters": "Filters",
+    "reset": "Reset",
+    "from": "From",
+    "to": "To",
+    "availability": "Availability",
+    "inStock": "In Stock",
+    "outOfStock": "Out of Stock",
+    "applyFilters": "Apply Filters",
+    "showing": "Showing",
+    "of": "of"
+  },
+  "ProductDetailsPage": {
+    "chooseSize": "Choose Size",
+    "selectColor": "Select Color"
   },
   "Global": {
-    "soon": "Coming Soon"
+    "soon": "Soon",
+    "size": "Size",
+    "color": "Color",
+    "quantity": "Quantity",
+    "cancel": "Cancel",
+    "optional": "Optional",
+    "price": "Price",
+    "addToCart": "Add to Cart",
+    "shopNow": "Shop Now"
   }
 }

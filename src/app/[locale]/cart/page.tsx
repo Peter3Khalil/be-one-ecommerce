@@ -2,8 +2,10 @@
 import { useState } from 'react';
 import CartList from './_components/cart-list';
 import PaymentSummary from './_components/payment-summary';
+import { useTranslations } from 'next-intl';
 
 const Cart = () => {
+  const t = useTranslations();
   const [products, setProducts] = useState([
     {
       id: 1,
@@ -40,7 +42,7 @@ const Cart = () => {
   const isEmpty = products.length === 0;
   return (
     <div className="container space-y-4 py-6 sm:py-10">
-      <h1 className="text-3xl font-bold">Your Cart</h1>
+      <h1 className="text-3xl font-bold">{t('CartPage.yourCart')}</h1>
       <div className="grid gap-4 *:rounded-xl *:border md:grid-cols-5">
         <CartList
           products={products}

@@ -1,39 +1,40 @@
 import { Button } from '@ui/button';
 import { BadgeCheck, BadgeDollarSign, LucideIcon, Truck } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import React, { FC } from 'react';
 
 const Hero = () => {
+  const t = useTranslations();
   return (
     <section className="bg-accent pt-14 md:h-[calc(100svh-64px)] md:min-h-auto md:pt-24 dark:bg-background">
       <div className="container flex h-full flex-col justify-between gap-8 lg:flex-row">
         <div className="space-y-4">
-          <h1 className="flex flex-col text-4xl font-black uppercase *:text-nowrap md:text-5xl lg:text-6xl">
-            <span>Find clothes</span>
-            <span>that Matches</span>
-            <span>your style</span>
+          <h1 className="flex flex-col text-4xl font-black uppercase *:text-nowrap md:text-5xl lg:text-6xl rtl:gap-3">
+            <span>{t('HomePage.hero.findClothes')}</span>
+            <span>{t('HomePage.hero.thatMatches')}</span>
+            <span>{t('HomePage.hero.yourStyle')}</span>
           </h1>
           <p className="max-w-md text-base text-muted-foreground md:text-lg">
-            Explore our collection of summer and winter clothing to find the
-            perfect outfit for any season.
+            {t('HomePage.hero.description')}
           </p>
           <Button size="lg" className="w-full sm:w-[200px]">
-            Shop Now
+            {t('Global.shopNow')}
           </Button>
           <ul className="mt-8 grid grid-cols-2 gap-4 md:grid-cols-3">
             <FeatureItem
               icon={BadgeDollarSign}
-              title="Cash on delivery"
-              description="Pay when you receive"
+              title={t('HomePage.hero.cashOnDelivery.title')}
+              description={t('HomePage.hero.cashOnDelivery.description')}
             />
             <FeatureItem
               icon={Truck}
-              title="Fast delivery"
-              description="Quick & reliable shipping"
+              title={t('HomePage.hero.fastDelivery.title')}
+              description={t('HomePage.hero.fastDelivery.description')}
             />
             <FeatureItem
               icon={BadgeCheck}
-              title="High Quality"
-              description="Premium materials only"
+              title={t('HomePage.hero.highQuality.title')}
+              description={t('HomePage.hero.highQuality.description')}
             />
           </ul>
         </div>
@@ -43,8 +44,8 @@ const Hero = () => {
             className="mt-auto hidden w-full md:block md:w-[350px]"
           />
           <img src="/hero-mobile.png" className="mt-auto w-full md:hidden" />
-          <StarSvg className="absolute right-0 size-24 fill-primary lg:top-0 lg:-right-10 lg:size-32" />
-          <StarSvg className="absolute bottom-48 left-0 fill-primary lg:-left-14" />
+          <StarSvg className="absolute end-0 size-24 fill-primary lg:-end-10 lg:top-0 lg:size-32" />
+          <StarSvg className="absolute start-0 bottom-48 fill-primary lg:-start-14" />
         </div>
       </div>
     </section>

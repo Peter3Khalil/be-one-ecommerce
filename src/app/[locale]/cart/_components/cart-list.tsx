@@ -1,6 +1,7 @@
 import Counter from '@components/counter';
 import { Button } from '@ui/button';
 import { Trash2 } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 import React, { FC } from 'react';
 type Props = {
@@ -17,12 +18,15 @@ type Props = {
   onQuantityChange?: (index: number, quantity: number) => void;
 };
 const CartList: FC<Props> = ({ products, onQuantityChange }) => {
+  const t = useTranslations();
   if (products.length === 0) {
     return (
       <div className="flex h-fit flex-col items-center justify-center gap-4 bg-card px-4 py-10 md:col-span-3">
-        <p className="text-center text-2xl font-medium">Your cart is empty.</p>
+        <p className="text-center text-2xl font-medium">
+          {t('CartPage.cartEmpty')}
+        </p>
         <Button asChild>
-          <Link href="/products">Shop Products</Link>
+          <Link href="/products">{t('CartPage.shopProducts')}</Link>
         </Button>
       </div>
     );
@@ -48,10 +52,10 @@ const CartList: FC<Props> = ({ products, onQuantityChange }) => {
               </h2>
             </Link>
             <p className="text-sm text-muted-foreground">
-              <b>Size:</b> {product.size}
+              <b>{t('Global.size')}:</b> {product.size}
             </p>
             <p className="text-sm text-muted-foreground">
-              <b>Color:</b> {product.color}
+              <b>{t('Global.color')}:</b> {product.color}
             </p>
             <div className="mt-auto flex w-full items-center">
               <p className="text-xl font-medium md:text-3xl">

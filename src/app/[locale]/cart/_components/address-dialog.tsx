@@ -16,6 +16,7 @@ import {
 } from '@ui/dialog';
 import { Form } from '@ui/form';
 import { Label } from '@ui/label';
+import { useTranslations } from 'next-intl';
 import { FC, useId } from 'react';
 import { useForm } from 'react-hook-form';
 import { getGovernorates, getSubregions } from 'subdivisions-of-egypt';
@@ -40,6 +41,7 @@ type Props = {
   trigger?: React.ReactNode;
 };
 const AddressDialog: FC<Props> = ({ onAddressAdd, defaultValues, trigger }) => {
+  const t = useTranslations();
   const form = useForm<AddressFormData>({
     resolver: zodResolver(addressSchema),
     defaultValues: {
@@ -70,15 +72,15 @@ const AddressDialog: FC<Props> = ({ onAddressAdd, defaultValues, trigger }) => {
         <DialogTrigger asChild>
           {trigger || (
             <Button variant="outline" className="w-full rounded-full">
-              + Add New Address
+              + {t('CartPage.addNewAddress')}
             </Button>
           )}
         </DialogTrigger>
         <DialogContent className="max-h-[90vh] overflow-y-auto">
           <DialogHeader>
-            <DialogTitle>Add New Address</DialogTitle>
+            <DialogTitle>{t('CartPage.addNewAddress')}</DialogTitle>
             <DialogDescription>
-              Enter your shipping address details below.
+              {t('CartPage.enterShippingDetails')}
             </DialogDescription>
           </DialogHeader>
           <form
@@ -89,36 +91,38 @@ const AddressDialog: FC<Props> = ({ onAddressAdd, defaultValues, trigger }) => {
             <InputFormField
               control={form.control}
               name="customer_name"
-              label="Full Name"
-              placeholder="John Doe"
+              label={t('CartPage.fullName')}
+              placeholder={t('CartPage.namePlaceholder')}
               required
             />
             <InputFormField
               control={form.control}
               name="phone"
-              label="Phone"
+              label={t('CartPage.phone')}
+              // eslint-disable-next-line i18next/no-literal-string
               placeholder="+1 234 567 890"
               required
             />
             <InputFormField
               control={form.control}
               name="email"
-              label="Email"
+              label={t('CartPage.email')}
+              // eslint-disable-next-line i18next/no-literal-string
               placeholder="john@example.com"
               required
             />
             <InputFormField
               control={form.control}
               name="country"
-              label="Country"
-              placeholder="Egypt"
+              label={t('CartPage.country')}
+              placeholder={t('CartPage.countryPlaceholder')}
               disabled
               required
             />
             <div className="grid grid-cols-2 gap-4">
               <div className="flex flex-col gap-1">
                 <Label className="gap-1">
-                  City
+                  {t('CartPage.city')}
                   <span className="text-destructive">*</span>
                 </Label>
                 <Combobox
@@ -127,7 +131,7 @@ const AddressDialog: FC<Props> = ({ onAddressAdd, defaultValues, trigger }) => {
                     label: capitalize(val),
                   }))}
                   value={form.getValues('city')}
-                  placeholder="Select City"
+                  placeholder={t('CartPage.selectCity')}
                   onValueChange={(city) => {
                     form.setValue('city', city);
                     form.trigger('city');
@@ -139,7 +143,7 @@ const AddressDialog: FC<Props> = ({ onAddressAdd, defaultValues, trigger }) => {
 
               <div className="flex flex-col gap-1">
                 <Label className="gap-1">
-                  Region
+                  {t('CartPage.region')}
                   <span className="text-destructive">*</span>
                 </Label>
                 <Combobox
@@ -148,7 +152,7 @@ const AddressDialog: FC<Props> = ({ onAddressAdd, defaultValues, trigger }) => {
                     label: capitalize(val),
                   }))}
                   value={form.getValues('region')}
-                  placeholder="Select Region"
+                  placeholder={t('CartPage.selectRegion')}
                   onValueChange={(region) => {
                     form.setValue('region', region);
                     form.trigger('region');
@@ -160,20 +164,20 @@ const AddressDialog: FC<Props> = ({ onAddressAdd, defaultValues, trigger }) => {
             <InputFormField
               control={form.control}
               name="address"
-              label="Address"
-              placeholder="123 Main Street, Apt 4"
+              label={t('CartPage.address')}
+              placeholder={t('CartPage.addressPlaceholder')}
               required
             />
             <InputFormField
               control={form.control}
               name="postal_code"
-              label="Postal Code (Optional)"
+              label={t('CartPage.postalCode') + ` (${t('Global.optional')})`}
               placeholder="12345"
             />
           </form>
           <DialogFooter>
             <DialogClose asChild>
-              <Button variant="outline">Cancel</Button>
+              <Button variant="outline">{t('Global.cancel')}</Button>
             </DialogClose>
             <DialogClose asChild>
               <Button
@@ -181,7 +185,7 @@ const AddressDialog: FC<Props> = ({ onAddressAdd, defaultValues, trigger }) => {
                 disabled={!form.formState.isValid}
                 form={formId}
               >
-                Save Address
+                {t('CartPage.saveAddress')}
               </Button>
             </DialogClose>
           </DialogFooter>
