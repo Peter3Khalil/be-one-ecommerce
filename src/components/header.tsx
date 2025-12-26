@@ -7,6 +7,7 @@ import { CircleUserRound, Menu, Search, ShoppingCart, X } from 'lucide-react';
 import { Activity, useState } from 'react';
 import ThemeToggle from './theme-toggle';
 import { Link } from '@/i18n/navigation';
+import LanguageSwitcher from './language-switcher';
 
 const NAV_ITEMS = [
   { label: 'Home', href: '#' },
@@ -54,7 +55,7 @@ const Header = () => {
               placeholder="Search products..."
               className="hidden rounded-full border px-4 py-2 md:block lg:w-80"
             />
-            <div className="shrink-0">
+            <div className="flex shrink-0 items-center">
               <Button
                 variant="ghost"
                 className="text-muted-foreground duration-200 hover:text-foreground md:hidden"
@@ -81,6 +82,7 @@ const Header = () => {
                 <CircleUserRound />
               </Button>
               <ThemeToggle />
+              <LanguageSwitcher />
             </div>
           </div>
         </div>
