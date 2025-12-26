@@ -69,7 +69,7 @@ const CartList: FC<Props> = ({ products, onQuantityChange }) => {
           <Button
             variant="destructive"
             size="icon-sm"
-            className="absolute right-0"
+            className="absolute end-0"
           >
             <Trash2 />
           </Button>

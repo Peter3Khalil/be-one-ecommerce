@@ -8,7 +8,7 @@ import AddressDialog, {
   AddressFormData,
   addressSchema,
 } from './address-dialog';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 
 const STORAGE_KEY = 'address';
 
@@ -44,6 +44,7 @@ const PaymentSummary: FC<Props> = ({
   deliveryFee = 0,
   disabled,
 }) => {
+  const locale = useLocale();
   const total = subtotal - subtotal * discount + deliveryFee;
   const [isClicked, setIsClicked] = useState(false);
   const [address, setAddress] = useState<AddressFormData | undefined>(
@@ -59,7 +60,7 @@ const PaymentSummary: FC<Props> = ({
         <p className="text-sm font-medium text-muted-foreground">
           {t('CartPage.paymentMethod')}
         </p>
-        <RadioGroup defaultValue="cash_on_delivery">
+        <RadioGroup lang={locale} defaultValue="cash_on_delivery">
           <div className="flex items-center gap-3">
             <RadioGroupItem value="cash_on_delivery" id="r1" />
             <Label htmlFor="r1">{t('CartPage.cashOnDelivery')}</Label>
