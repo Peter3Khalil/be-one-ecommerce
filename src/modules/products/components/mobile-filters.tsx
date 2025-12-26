@@ -52,7 +52,7 @@ const MobileFilters = () => {
               <span>{t('Global.price')}</span>
               <ChevronRight
                 size={20}
-                className="transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90"
+                className="transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90 rtl:rotate-180"
               />
             </CollapsibleTrigger>
             <CollapsibleContent className="mt-4 space-y-4">
@@ -103,7 +103,7 @@ const MobileFilters = () => {
               <span>{t('Global.size')}</span>
               <ChevronRight
                 size={20}
-                className="transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90"
+                className="transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90 rtl:rotate-180"
               />
             </CollapsibleTrigger>
             <CollapsibleContent className="mt-4 space-y-4">
@@ -122,7 +122,7 @@ const MobileFilters = () => {
               <span>{t('ProductsPage.availability')}</span>
               <ChevronRight
                 size={20}
-                className="transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90"
+                className="transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90 rtl:rotate-180"
               />
             </CollapsibleTrigger>
             <CollapsibleContent className="mt-4 space-y-2">
