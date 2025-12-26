@@ -1,10 +1,11 @@
 'use client';
 
 import { cn } from '@/lib/utils';
+import { useProducts } from '@/modules/products/queries';
 import Counter from '@components/counter';
+import ProductsSection from '@components/products-section';
 import Rating from '@components/rating';
 import Reviews from '@components/reviews';
-import SimilarProducts from '@components/similar-products';
 import { Button } from '@ui/button';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
@@ -21,6 +22,8 @@ const ProductDetails = () => {
       'This is a detailed description of the product. It highlights the key features, specifications, and benefits of the product to entice potential buyers.',
   };
   const [currentImage, setCurrentImage] = useState('/products/1.jpg');
+  const { data, isLoading } = useProducts();
+  const products = data?.data.data || [];
   return (
     <div>
       <article className="container flex flex-col gap-8 py-10 md:flex-row md:py-16 md:*:h-[500px]">
@@ -107,7 +110,12 @@ const ProductDetails = () => {
         </div>
       </article>
       <Reviews />
-      <SimilarProducts />
+      <ProductsSection
+        title={t('Global.youMightAlsoLike')}
+        description={t('Global.youMightAlsoLikeDescription')}
+        products={products.slice(0, 4)}
+        isLoading={isLoading}
+      />
     </div>
   );
 };
