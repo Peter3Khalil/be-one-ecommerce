@@ -30,7 +30,7 @@ export const addressSchema = z.object({
   city: z.string().min(1, 'City is required'),
   region: z.string().min(1, 'Region is required'),
   postal_code: z.string().optional().or(z.literal('')),
-  country: z.string().min(1, 'Country is required'),
+  country: z.string().optional().default('egypt'),
 });
 export type AddressFormData = z.infer<typeof addressSchema>;
 
@@ -43,11 +43,8 @@ type Props = {
 const AddressDialog: FC<Props> = ({ onAddressAdd, defaultValues, trigger }) => {
   const t = useTranslations();
   const form = useForm<AddressFormData>({
-    resolver: zodResolver(addressSchema),
-    defaultValues: {
-      country: 'Egypt',
-      ...defaultValues,
-    },
+    resolver: zodResolver(addressSchema) as never,
+    defaultValues,
   });
 
   function onSubmit(data: AddressFormData) {
