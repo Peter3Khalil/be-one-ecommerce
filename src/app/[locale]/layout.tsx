@@ -52,14 +52,14 @@ export default async function RootLayout({
           [cairo.className]: locale === 'ar',
         })}
       >
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <NextTopLoader color="var(--primary)" showSpinner={false} />
-          <Header />
-          <NextIntlClientProvider messages={messages}>
+        <NextIntlClientProvider messages={messages}>
+          <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+            <NextTopLoader color="var(--primary)" showSpinner={false} />
+            <Header />
             <main>{children}</main>
-          </NextIntlClientProvider>
-          <Footer />
-        </ThemeProvider>
+            <Footer />
+          </ThemeProvider>
+        </NextIntlClientProvider>
       </body>
     </html>
   );

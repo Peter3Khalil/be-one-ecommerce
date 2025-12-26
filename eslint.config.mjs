@@ -40,6 +40,7 @@ const eslintConfig = defineConfig([
               'value',
               'onValueChange',
               "name",
+              "defaultTheme",
               /^data-/,
               /^aria-/,
             ],
