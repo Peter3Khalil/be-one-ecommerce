@@ -8,6 +8,7 @@ import NextTopLoader from 'nextjs-toploader';
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages, setRequestLocale } from 'next-intl/server';
 import { cn } from '@/lib/utils';
+import QueryClientProvider from '@components/query-client-provider';
 
 const roboto = Roboto({
   weight: ['400', '500', '600', '700', '800', '900'],
@@ -52,14 +53,16 @@ export default async function RootLayout({
           [cairo.className]: locale === 'ar',
         })}
       >
-        <NextIntlClientProvider messages={messages}>
-          <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-            <NextTopLoader color="var(--primary)" showSpinner={false} />
-            <Header />
-            <main>{children}</main>
-            <Footer />
-          </ThemeProvider>
-        </NextIntlClientProvider>
+        <QueryClientProvider>
+          <NextIntlClientProvider messages={messages}>
+            <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+              <NextTopLoader color="var(--primary)" showSpinner={false} />
+              <Header />
+              <main>{children}</main>
+              <Footer />
+            </ThemeProvider>
+          </NextIntlClientProvider>
+        </QueryClientProvider>
       </body>
     </html>
   );
