@@ -9,7 +9,7 @@ const Hero = () => {
     <section className="bg-accent pt-14 md:h-[calc(100svh-64px)] md:min-h-auto md:pt-24 dark:bg-background">
       <div className="container flex h-full flex-col justify-between gap-8 lg:flex-row">
         <div className="space-y-4">
-          <h1 className="flex flex-col text-4xl font-black uppercase *:text-nowrap md:text-5xl lg:text-6xl rtl:gap-3">
+          <h1 className="flex flex-col text-4xl font-black uppercase *:text-nowrap md:text-5xl lg:text-6xl rtl:gap-3 lg:rtl:gap-5">
             <span>{t('HomePage.hero.findClothes')}</span>
             <span>{t('HomePage.hero.thatMatches')}</span>
             <span>{t('HomePage.hero.yourStyle')}</span>
