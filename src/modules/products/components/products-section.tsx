@@ -4,7 +4,7 @@ import { Product } from '@/modules/products/types';
 import { ArrowRight } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { FC } from 'react';
-import { Button } from './ui/button';
+import { Button } from '../../../components/ui/button';
 import ProductCardSkeleton from '@/modules/products/components/product-card-skeleton';
 import { Link } from '@/i18n/navigation';
 type Props = {

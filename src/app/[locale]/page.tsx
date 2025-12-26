@@ -1,7 +1,7 @@
 'use client';
 import { useProducts } from '@/modules/products/queries';
 import Hero from '@components/hero';
-import ProductsSection from '@components/products-section';
+import ProductsSection from '@/modules/products/components/products-section';
 import { useTranslations } from 'next-intl';
 
 const Home = () => {

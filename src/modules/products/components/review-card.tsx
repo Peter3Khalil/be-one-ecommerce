@@ -1,5 +1,5 @@
 import { CheckCircle2 } from 'lucide-react';
-import Rating from './rating';
+import Rating from '../../../components/rating';
 import { useTranslations } from 'next-intl';
 
 interface ReviewCardProps {

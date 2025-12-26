@@ -3,9 +3,9 @@
 import { cn } from '@/lib/utils';
 import { useProducts } from '@/modules/products/queries';
 import Counter from '@components/counter';
-import ProductsSection from '@components/products-section';
+import ProductsSection from '@/modules/products/components/products-section';
 import Rating from '@components/rating';
-import Reviews from '@components/reviews';
+import Reviews from '@/modules/products/components/reviews';
 import { Button } from '@ui/button';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
