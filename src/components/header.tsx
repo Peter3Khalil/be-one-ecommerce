@@ -58,7 +58,7 @@ const Header = () => {
               <Button
                 variant="ghost"
                 className="text-muted-foreground duration-200 hover:text-foreground md:hidden"
-                size="icon"
+                size="icon-sm"
                 onClick={() => setIsSearchOpened(true)}
               >
                 <Search />
@@ -66,7 +66,7 @@ const Header = () => {
               <Button
                 variant="ghost"
                 className="text-muted-foreground duration-200 hover:text-foreground"
-                size="icon"
+                size="icon-sm"
                 asChild
               >
                 <Link href="/cart">
@@ -76,7 +76,7 @@ const Header = () => {
               <Button
                 variant="ghost"
                 className="text-muted-foreground duration-200 hover:text-foreground"
-                size="icon"
+                size="icon-sm"
               >
                 <CircleUserRound />
               </Button>

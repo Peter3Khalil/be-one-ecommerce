@@ -10,7 +10,7 @@ const ThemeToggle = () => {
     <Button
       variant="ghost"
       className="text-muted-foreground duration-200 hover:text-foreground"
-      size="icon"
+      size="icon-sm"
       onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}
     >
       {theme === 'light' ? <Moon /> : <Sun />}
