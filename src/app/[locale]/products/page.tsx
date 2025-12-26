@@ -1,7 +1,6 @@
 'use client';
-import { duplicateArray } from '@/lib/utils';
 import ProductCard from '@components/product-card';
-import { products } from '@public/data.json';
+import ProductCardSkeleton from '@components/product-card-skeleton';
 import { Button } from '@ui/button';
 import { Checkbox } from '@ui/checkbox';
 import {
@@ -9,6 +8,7 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from '@ui/collapsible';
+import CustomPagination from '@ui/custom-pagination';
 import {
   Drawer,
   DrawerClose,
@@ -20,20 +20,14 @@ import {
 import { Input } from '@ui/input';
 import { Slider } from '@ui/slider';
 import { ChevronRight, Filter } from 'lucide-react';
-import { useState } from 'react';
-import {
-  Pagination,
-  PaginationContent,
-  PaginationEllipsis,
-  PaginationItem,
-  PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
-} from '@ui/pagination';
 import { useTranslations } from 'next-intl';
+import { useState } from 'react';
+import { useProducts } from './queries';
 
 const Products = () => {
   const t = useTranslations();
+  const { data, isLoading } = useProducts();
+  const products = data?.data.data || [];
   return (
     <div className="container grid grid-cols-4 gap-6 py-10 lg:py-16">
       <DesktopFilters />
@@ -42,40 +36,31 @@ const Products = () => {
           <div className="flex w-full flex-col justify-between md:flex-row md:items-center">
             <h1 className="text-3xl font-bold">{t('ProductsPage.products')}</h1>
             <p className="text-muted-foreground">
-              {t('ProductsPage.showing')} 1-10 {t('ProductsPage.of')} 100{' '}
+              {t('ProductsPage.showing')} {products.length}{' '}
+              {t('ProductsPage.of')} {data?.data.pagination.total_items || 0}{' '}
               {t('ProductsPage.products')}
             </p>
           </div>
           <MobileFilters />
         </div>
-        <ul className="grid w-full grid-cols-2 gap-4 md:grid-cols-2 md:gap-6 lg:grid-cols-3">
-          {duplicateArray(products, 2).map((product, index) => (
-            <li key={index}>
-              <ProductCard {...product} />
-            </li>
-          ))}
-        </ul>
-        <Pagination>
-          <PaginationContent className="flex-wrap gap-4">
-            <PaginationItem>
-              <PaginationPrevious href="#" />
-            </PaginationItem>
-            <div className="flex items-center gap-2">
-              {Array.from({ length: 5 }).map((_, index) => (
-                <PaginationItem key={index}>
-                  <PaginationLink href="#">{index + 1}</PaginationLink>
-                </PaginationItem>
-              ))}
 
-              <PaginationItem>
-                <PaginationEllipsis />
-              </PaginationItem>
-            </div>
-            <PaginationItem>
-              <PaginationNext href="#" />
-            </PaginationItem>
-          </PaginationContent>
-        </Pagination>
+        <ul className="grid w-full grid-cols-2 gap-4 md:grid-cols-2 md:gap-6 lg:grid-cols-3">
+          {isLoading
+            ? Array.from({ length: 6 }).map((_, i) => (
+                <li key={i}>
+                  <ProductCardSkeleton />
+                </li>
+              ))
+            : products.map((product, index) => (
+                <li key={index}>
+                  <ProductCard {...product} />
+                </li>
+              ))}
+        </ul>
+        <CustomPagination
+          className="mx-auto"
+          totalPages={data?.data.pagination.total_pages || 1}
+        />
       </div>
     </div>
   );

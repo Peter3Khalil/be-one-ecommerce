@@ -1,12 +1,14 @@
 'use client';
+import { useProducts } from '@/app/[locale]/products/queries';
 import { ArrowRight } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import ProductCard from './product-card';
 import { Button } from './ui/button';
-import { products } from '@public/data.json';
-import { useTranslations } from 'next-intl';
 
 const NewArrivals = () => {
   const t = useTranslations();
+  const { data } = useProducts();
+  const products = data?.data.data || [];
   return (
     <section className="container flex flex-col gap-16 border-b py-16">
       <div className="text-center">
