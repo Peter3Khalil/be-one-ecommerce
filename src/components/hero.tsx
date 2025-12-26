@@ -44,8 +44,19 @@ const Hero = () => {
             className="mt-auto hidden w-full md:block md:w-[350px]"
           />
           <img src="/hero-mobile.png" className="mt-auto w-full md:hidden" />
-          <StarSvg className="absolute end-0 size-24 fill-primary lg:-end-10 lg:top-0 lg:size-32" />
-          <StarSvg className="absolute start-0 bottom-48 fill-primary lg:-start-14" />
+          <StarSvg
+            style={{
+              animationDuration: '15s',
+            }}
+            className="absolute end-0 size-24 animate-spin fill-primary lg:-end-10 lg:top-0 lg:size-32"
+          />
+          <StarSvg
+            style={{
+              animationDuration: '15s',
+              animationDirection: 'reverse',
+            }}
+            className="absolute start-0 bottom-48 animate-spin fill-primary lg:-start-14"
+          />
         </div>
       </div>
     </section>
