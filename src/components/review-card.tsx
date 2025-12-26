@@ -1,5 +1,6 @@
 import { CheckCircle2 } from 'lucide-react';
 import Rating from './rating';
+import { useTranslations } from 'next-intl';
 
 interface ReviewCardProps {
   name: string;
@@ -16,6 +17,7 @@ const ReviewCard = ({
   date,
   verified = false,
 }: ReviewCardProps) => {
+  const t = useTranslations();
   return (
     <article className="flex flex-col rounded-2xl border bg-card p-6">
       <div className="mb-4 flex items-start justify-between">
@@ -32,7 +34,7 @@ const ReviewCard = ({
       <p className="mb-4 leading-relaxed text-muted-foreground">{review}</p>
 
       <time className="mt-auto text-xs text-muted-foreground">
-        Posted on {date}
+        {t('Global.postedOn')} {date}
       </time>
     </article>
   );

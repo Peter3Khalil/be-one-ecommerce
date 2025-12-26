@@ -3,17 +3,18 @@ import { ArrowRight } from 'lucide-react';
 import ProductCard from './product-card';
 import { Button } from './ui/button';
 import { products } from '@public/data.json';
+import { useTranslations } from 'next-intl';
 
 const TopSelling = () => {
+  const t = useTranslations();
   return (
     <section className="container flex flex-col gap-16 border-b py-16">
       <div className="text-center">
         <h2 className="font-display text-4xl font-bold text-foreground md:text-5xl lg:text-6xl">
-          Top Selling
+          {t('Global.topSelling')}
         </h2>
         <p className="mx-auto mt-4 max-w-md text-muted-foreground">
-          Explore our top-selling fashion essentials, curated for style and
-          comfort.
+          {t('Global.topSellingDescription')}
         </p>
       </div>
 
@@ -30,7 +31,7 @@ const TopSelling = () => {
         size="lg"
         className="group mx-auto gap-2 rounded-full"
       >
-        View All Products
+        {t('Global.viewAllProducts')}
         <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
       </Button>
     </section>

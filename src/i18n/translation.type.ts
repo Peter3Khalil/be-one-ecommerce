@@ -1,5 +1,6 @@
 export type TranslationType = {
   HomePage: {
+    home: string;
     hero: {
       findClothes: string;
       thatMatches: string;
@@ -71,6 +72,7 @@ export type TranslationType = {
     selectColor: string;
   };
   Global: {
+    searchProductsPlaceholder: string;
     size: string;
     color: string;
     quantity: string;
@@ -85,14 +87,22 @@ export type TranslationType = {
     newArrivals: string;
     summerCollection: string;
     winterCollection: string;
+    viewAllProducts: string;
     topSelling: string;
+    topSellingDescription: string;
     customerService: string;
     contactUs: string;
+    youMightAlsoLike: string;
+    youMightAlsoLikeDescription: string;
     shippingInfo: string;
     returns: string;
     privacyPolicy: string;
     termsAndConditions: string;
     rightsReserved: string;
     footerDescription: string;
+    postedOn: string;
+    customerReviews: string;
+    writeReview: string;
+    newArrivalsDescription: string;
   };
 };

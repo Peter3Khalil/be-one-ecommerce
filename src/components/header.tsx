@@ -8,14 +8,12 @@ import { Activity, useState } from 'react';
 import ThemeToggle from './theme-toggle';
 import { Link } from '@/i18n/navigation';
 import LanguageSwitcher from './language-switcher';
+import { useTranslations } from 'next-intl';
 
-const NAV_ITEMS = [
-  { label: 'Home', href: '#' },
-  { label: 'Summer', href: '#' },
-  { label: 'Winter', href: '#' },
-];
 const Header = () => {
   const [isSearchOpened, setIsSearchOpened] = useState(false);
+  const navItems = useNavItems();
+  const t = useTranslations();
   return (
     <header
       className={cn(
@@ -38,7 +36,7 @@ const Header = () => {
               Be One.
             </Link>
             <ul className="hidden items-center gap-4 sm:flex">
-              {NAV_ITEMS.map((item) => (
+              {navItems.map((item) => (
                 <li
                   key={item.href}
                   className="text-muted-foreground duration-200 hover:text-foreground"
@@ -52,7 +50,7 @@ const Header = () => {
           <div className="flex w-fit items-center gap-4">
             <Input
               type="search"
-              placeholder="Search products..."
+              placeholder={t('Global.searchProductsPlaceholder')}
               className="hidden rounded-full border px-4 py-2 md:block lg:w-80"
             />
             <div className="flex shrink-0 items-center">
@@ -92,7 +90,7 @@ const Header = () => {
         <div className="flex h-full w-full items-center gap-2 px-2 py-2">
           <Input
             className="h-full max-w-full"
-            placeholder="Search products..."
+            placeholder={t('Global.searchProductsPlaceholder')}
           />
           <Button
             variant="ghost"
@@ -109,6 +107,7 @@ const Header = () => {
 };
 
 const MobileMenu = () => {
+  const navItems = useNavItems();
   return (
     <Sheet>
       <SheetTrigger asChild>
@@ -133,7 +132,7 @@ const MobileMenu = () => {
         </SheetHeader>
         <nav className="px-2">
           <ul>
-            {NAV_ITEMS.map((item) => (
+            {navItems.map((item) => (
               <li key={item.href}>
                 <Link
                   className="block rounded-md px-4 py-3 hover:bg-accent/50"
@@ -148,6 +147,15 @@ const MobileMenu = () => {
       </SheetContent>
     </Sheet>
   );
+};
+
+const useNavItems = () => {
+  const t = useTranslations();
+  return [
+    { label: t('HomePage.home'), href: '#' },
+    { label: t('Global.summerCollection'), href: '#' },
+    { label: t('Global.winterCollection'), href: '#' },
+  ];
 };
 
 export default Header;

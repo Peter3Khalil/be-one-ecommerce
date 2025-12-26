@@ -2,6 +2,7 @@ import { TranslationType } from '../translation.type';
 
 export default {
   HomePage: {
+    home: 'Home',
     hero: {
       findClothes: 'Find Clothes',
       thatMatches: 'That Matches',
@@ -74,6 +75,7 @@ export default {
     selectColor: 'Select Color',
   },
   Global: {
+    searchProductsPlaceholder: 'Search products...',
     soon: 'Soon',
     size: 'Size',
     color: 'Color',
@@ -93,10 +95,21 @@ export default {
     summerCollection: 'Summer Collection',
     topSelling: 'Top Selling',
     newArrivals: 'New Arrivals',
+    viewAllProducts: 'View All Products',
+    topSellingDescription:
+      'Explore our top-selling fashion essentials, curated for style and comfort.',
     shop: 'Shop',
     footerDescription:
       'Be One is your go-to destination for the latest fashion trends. We are committed to providing high-quality clothing that reflects your unique style.',
     returns: 'Returns & Exchanges',
     shippingInfo: 'Shipping Information',
+    youMightAlsoLike: 'You Might Also Like',
+    youMightAlsoLikeDescription:
+      'Explore our curated selection of products similar to your interests.',
+    postedOn: 'Posted on',
+    customerReviews: 'Customer Reviews',
+    writeReview: 'Write a Review',
+    newArrivalsDescription:
+      'Discover our latest collection of premium fashion essentials, crafted for the modern wardrobe.',
   },
 } satisfies TranslationType;

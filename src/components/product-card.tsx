@@ -6,6 +6,7 @@ import { ShoppingBag } from 'lucide-react';
 import { useState } from 'react';
 import Rating from './rating';
 import Link from 'next/link';
+import { useTranslations } from 'next-intl';
 
 type Props = {
   image: string;
@@ -29,6 +30,7 @@ const ProductCard = ({
   id,
 }: Props) => {
   const [isHovered, setIsHovered] = useState(false);
+  const t = useTranslations();
   return (
     <article
       className="group relative"
@@ -63,7 +65,7 @@ const ProductCard = ({
               className="flex w-full items-center justify-center gap-2 font-medium transition-all duration-300 hover:bg-primary hover:text-primary-foreground"
             >
               <ShoppingBag />
-              Add to Cart
+              {t('Global.addToCart')}
             </Button>
           </div>
         </Link>

@@ -2,6 +2,7 @@ import { TranslationType } from '../translation.type';
 
 export default {
   HomePage: {
+    home: 'الرئيسية',
     hero: {
       findClothes: 'ابحث عن الملابس',
       thatMatches: 'التي تناسب',
@@ -74,6 +75,7 @@ export default {
     selectColor: 'اختر اللون',
   },
   Global: {
+    searchProductsPlaceholder: 'ابحث عن المنتجات...',
     soon: 'قريباً',
     size: 'المقاس',
     color: 'اللون',
@@ -93,10 +95,21 @@ export default {
     summerCollection: 'مجموعة الصيف',
     topSelling: 'الأكثر مبيعاً',
     newArrivals: 'الوافدون الجدد',
+    topSellingDescription:
+      'استكشف أساسيات الموضة الأكثر مبيعًا لدينا، المختارة للأناقة والراحة.',
+    viewAllProducts: 'عرض جميع المنتجات',
     shop: 'تسوق',
     footerDescription:
       'Be One هو وجهتك الأولى لأحدث صيحات الموضة. نحن ملتزمون بتقديم ملابس عالية الجودة تعكس أسلوبك الفريد.',
     returns: 'الإرجاع والاستبدال',
     shippingInfo: 'معلومات الشحن',
+    youMightAlsoLike: 'قد يعجبك أيضاً',
+    youMightAlsoLikeDescription:
+      'استكشف تشكيلتنا المختارة من المنتجات المشابهة لاهتماماتك.',
+    postedOn: 'نشر في',
+    customerReviews: 'تقييمات العملاء',
+    writeReview: 'اكتب مراجعة',
+    newArrivalsDescription:
+      'اكتشف تشكيلتنا الأخيرة من أساسيات الموضة المميزة، المصممة لخزانة الملابس العصرية.',
   },
 } satisfies TranslationType;
