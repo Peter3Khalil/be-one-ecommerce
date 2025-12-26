@@ -79,6 +79,20 @@
     "optional": "Optional",
     "price": "Price",
     "addToCart": "Add to Cart",
-    "shopNow": "Shop Now"
+    "shopNow": "Shop Now",
+    "privacyPolicy": "Privacy Policy",
+    "termsAndConditions": "Terms of Service",
+    "rightsReserved": "All rights reserved",
+    "allProducts": "All Products",
+    "contactUs": "Contact Us",
+    "customerService": "Customer Service",
+    "winterCollection": "Winter Collection",
+    "summerCollection": "Summer Collection",
+    "topSelling": "Top Selling",
+    "newArrivals": "New Arrivals",
+    "shop": "Shop",
+    "footerDescription": "Be One is your go-to destination for the latest fashion trends. We are committed to providing high-quality clothing that reflects your unique style.",
+    "returns": "Returns & Exchanges",
+    "shippingInfo": "Shipping Information"
   }
 }
