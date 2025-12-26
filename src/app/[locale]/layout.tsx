@@ -9,6 +9,7 @@ import { NextIntlClientProvider } from 'next-intl';
 import { getMessages, setRequestLocale } from 'next-intl/server';
 import { cn } from '@/lib/utils';
 import QueryClientProvider from '@components/query-client-provider';
+import { NuqsAdapter } from 'nuqs/adapters/next/app';
 
 const roboto = Roboto({
   weight: ['400', '500', '600', '700', '800', '900'],
@@ -55,12 +56,18 @@ export default async function RootLayout({
       >
         <QueryClientProvider>
           <NextIntlClientProvider messages={messages}>
-            <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-              <NextTopLoader color="var(--primary)" showSpinner={false} />
-              <Header />
-              <main>{children}</main>
-              <Footer />
-            </ThemeProvider>
+            <NuqsAdapter>
+              <ThemeProvider
+                attribute="class"
+                defaultTheme="system"
+                enableSystem
+              >
+                <NextTopLoader color="var(--primary)" showSpinner={false} />
+                <Header />
+                <main>{children}</main>
+                <Footer />
+              </ThemeProvider>
+            </NuqsAdapter>
           </NextIntlClientProvider>
         </QueryClientProvider>
       </body>
