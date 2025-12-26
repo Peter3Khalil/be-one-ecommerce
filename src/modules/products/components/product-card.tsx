@@ -1,12 +1,12 @@
 'use client';
-import { Product } from '@/app/[locale]/products/types';
+import { Product } from '@/modules/products/types';
 import { Link } from '@/i18n/navigation';
 import { cn } from '@/lib/utils';
 import { Button } from '@ui/button';
 import { ShoppingBag } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
-import Rating from './rating';
+import Rating from '@components/rating';
 
 type Props = {
   delay?: number;

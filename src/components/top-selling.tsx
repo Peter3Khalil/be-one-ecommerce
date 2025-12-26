@@ -1,8 +1,8 @@
 'use client';
-import { useProducts } from '@/app/[locale]/products/queries';
+import ProductCard from '@/modules/products/components/product-card';
+import { useProducts } from '@/modules/products/queries';
 import { ArrowRight } from 'lucide-react';
 import { useTranslations } from 'next-intl';
-import ProductCard from './product-card';
 import { Button } from './ui/button';
 
 const TopSelling = () => {
