@@ -39,3 +39,7 @@ type Pagination = {
   total_pages: number;
   total_items: number;
 };
+
+export type ProductParams = {
+  product_name: string;
+};

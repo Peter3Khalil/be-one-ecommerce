@@ -69,6 +69,9 @@ export default {
     applyFilters: 'تطبيق الفلاتر',
     showing: 'عرض',
     of: 'من',
+    noProductsFound: 'لم يتم العثور على منتجات',
+    noProductsFoundDescription:
+      'عذراً، لم نتمكن من العثور على منتجات تطابق معايير البحث الخاصة بك.',
   },
   ProductDetailsPage: {
     chooseSize: 'اختر المقاس',

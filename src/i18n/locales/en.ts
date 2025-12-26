@@ -69,6 +69,9 @@ export default {
     applyFilters: 'Apply Filters',
     showing: 'Showing',
     of: 'of',
+    noProductsFound: 'No Products Found',
+    noProductsFoundDescription:
+      'Sorry, we could not find any products matching your search criteria.',
   },
   ProductDetailsPage: {
     chooseSize: 'Choose Size',

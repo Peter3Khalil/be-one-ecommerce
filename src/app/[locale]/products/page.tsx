@@ -1,15 +1,24 @@
 'use client';
+import useDebounce from '@/hooks/use-debounce';
 import DesktopFilters from '@/modules/products/components/desktop-filters';
 import MobileFilters from '@/modules/products/components/mobile-filters';
-import { useProducts } from '@/modules/products/queries';
 import ProductCardSkeleton from '@/modules/products/components/product-card-skeleton';
+import ProductList from '@/modules/products/components/product-list';
+import { useProducts } from '@/modules/products/queries';
 import CustomPagination from '@ui/custom-pagination';
 import { useTranslations } from 'next-intl';
-import ProductCard from '@/modules/products/components/product-card';
+import { parseAsString, useQueryStates } from 'nuqs';
 
 const Products = () => {
   const t = useTranslations();
-  const { data, isLoading } = useProducts();
+  const [params] = useQueryStates(
+    {
+      product_name: parseAsString.withDefault(''),
+    },
+    { history: 'replace' }
+  );
+  const debouncedParams = useDebounce(params);
+  const { data, isLoading } = useProducts(debouncedParams);
   const products = data?.data.data || [];
   return (
     <div className="container grid grid-cols-4 gap-6 py-10 lg:py-16">
@@ -27,19 +36,17 @@ const Products = () => {
           <MobileFilters />
         </div>
 
-        <ul className="grid w-full grid-cols-2 gap-4 md:grid-cols-2 md:gap-6 lg:grid-cols-3">
-          {isLoading
-            ? Array.from({ length: 6 }).map((_, i) => (
-                <li key={i}>
-                  <ProductCardSkeleton />
-                </li>
-              ))
-            : products.map((product, index) => (
-                <li key={index}>
-                  <ProductCard {...product} />
-                </li>
-              ))}
-        </ul>
+        {isLoading ? (
+          <ul className="grid w-full grid-cols-2 gap-4 md:grid-cols-2 md:gap-6 lg:grid-cols-3">
+            {Array.from({ length: 6 }).map((_, i) => (
+              <li key={i}>
+                <ProductCardSkeleton />
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <ProductList products={products} />
+        )}
         <CustomPagination
           className="mx-auto"
           totalPages={data?.data.pagination.total_pages || 1}

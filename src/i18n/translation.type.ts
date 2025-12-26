@@ -66,6 +66,8 @@ export type TranslationType = {
     applyFilters: string;
     showing: string;
     of: string;
+    noProductsFound: string;
+    noProductsFoundDescription: string;
   };
   ProductDetailsPage: {
     chooseSize: string;

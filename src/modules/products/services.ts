@@ -1,6 +1,6 @@
 import axiosClient from '@/lib/axios-client';
-import { ProductsResponse } from './types';
+import { ProductParams, ProductsResponse } from './types';
 
-export function getProducts() {
-  return axiosClient.get<ProductsResponse>('/products');
+export function getProducts(params?: Partial<ProductParams>) {
+  return axiosClient.get<ProductsResponse>('/products', { params });
 }

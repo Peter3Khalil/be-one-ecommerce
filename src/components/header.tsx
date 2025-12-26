@@ -1,19 +1,30 @@
 'use client';
+import { Link } from '@/i18n/navigation';
 import { cn } from '@/lib/utils';
 import { Button } from '@ui/button';
 import { Input } from '@ui/input';
 import { Sheet, SheetContent, SheetHeader, SheetTrigger } from '@ui/sheet';
 import { CircleUserRound, Menu, Search, ShoppingCart, X } from 'lucide-react';
-import { Activity, useState } from 'react';
-import ThemeToggle from './theme-toggle';
-import { Link } from '@/i18n/navigation';
-import LanguageSwitcher from './language-switcher';
 import { useTranslations } from 'next-intl';
+import { parseAsString, useQueryState } from 'nuqs';
+import { Activity, useEffect, useRef, useState } from 'react';
+import LanguageSwitcher from './language-switcher';
+import ThemeToggle from './theme-toggle';
 
 const Header = () => {
   const [isSearchOpened, setIsSearchOpened] = useState(false);
   const navItems = useNavItems();
+  const inputRef = useRef<HTMLInputElement>(null);
+  const [productName, setProductName] = useQueryState(
+    'product_name',
+    parseAsString.withDefault('')
+  );
   const t = useTranslations();
+  useEffect(() => {
+    if (isSearchOpened) {
+      inputRef.current?.focus();
+    }
+  }, [isSearchOpened]);
   return (
     <header
       className={cn(
@@ -52,6 +63,8 @@ const Header = () => {
               type="search"
               placeholder={t('Global.searchProductsPlaceholder')}
               className="hidden rounded-full border px-4 py-2 md:block lg:w-80"
+              onChange={(e) => setProductName(e.target.value)}
+              value={productName}
             />
             <div className="flex shrink-0 items-center">
               <Button
@@ -89,8 +102,12 @@ const Header = () => {
       <Activity mode={isSearchOpened ? 'visible' : 'hidden'}>
         <div className="flex h-full w-full items-center gap-2 px-2 py-2">
           <Input
+            type="search"
             className="h-full max-w-full"
             placeholder={t('Global.searchProductsPlaceholder')}
+            value={productName}
+            onChange={(e) => setProductName(e.target.value)}
+            ref={inputRef}
           />
           <Button
             variant="ghost"
