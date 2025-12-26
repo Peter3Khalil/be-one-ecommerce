@@ -12,7 +12,7 @@ const Hero = () => {
           <h1 className="flex flex-col text-4xl font-black uppercase *:text-nowrap md:text-5xl lg:text-6xl rtl:gap-3 lg:rtl:gap-5">
             <span>{t('HomePage.hero.findClothes')}</span>
             <span>{t('HomePage.hero.thatMatches')}</span>
-            <span>{t('HomePage.hero.yourStyle')}</span>
+            <span className="text-primary">{t('HomePage.hero.yourStyle')}</span>
           </h1>
           <p className="max-w-md text-base text-muted-foreground md:text-lg">
             {t('HomePage.hero.description')}
