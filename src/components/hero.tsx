@@ -1,3 +1,4 @@
+import { Link } from '@/i18n/navigation';
 import { Button } from '@ui/button';
 import { BadgeCheck, BadgeDollarSign, LucideIcon, Truck } from 'lucide-react';
 import { useTranslations } from 'next-intl';
@@ -17,8 +18,8 @@ const Hero = () => {
           <p className="max-w-md text-base text-muted-foreground md:text-lg">
             {t('HomePage.hero.description')}
           </p>
-          <Button size="lg" className="w-full sm:w-[200px]">
-            {t('Global.shopNow')}
+          <Button size="lg" className="w-full sm:w-[200px]" asChild>
+            <Link href="/products">{t('Global.shopNow')}</Link>
           </Button>
           <ul className="mt-8 grid grid-cols-2 gap-4 md:grid-cols-3">
             <FeatureItem

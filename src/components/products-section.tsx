@@ -6,6 +6,7 @@ import { useTranslations } from 'next-intl';
 import { FC } from 'react';
 import { Button } from './ui/button';
 import ProductCardSkeleton from '@/modules/products/components/product-card-skeleton';
+import { Link } from '@/i18n/navigation';
 type Props = {
   title: string;
   description: string;
@@ -52,9 +53,12 @@ const ProductsSection: FC<Props> = ({
         variant="outline"
         size="lg"
         className="group mx-auto gap-2 rounded-full"
+        asChild
       >
-        {t('Global.viewAllProducts')}
-        <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1 rtl:rotate-180" />
+        <Link href="/products">
+          {t('Global.viewAllProducts')}
+          <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1 rtl:rotate-180" />
+        </Link>
       </Button>
     </section>
   );
