@@ -4,7 +4,7 @@ import { cn } from '@/lib/utils';
 import { Button } from '@ui/button';
 import { useLocale } from 'next-intl';
 import { useSearchParams } from 'next/navigation';
-import React, { FC } from 'react';
+import React, { FC, Suspense } from 'react';
 type Props = Omit<React.ComponentProps<typeof Link>, 'href' | 'locale'>;
 const LanguageSwitcher: FC<Props> = ({ className, children, ...props }) => {
   const locale = useLocale();
@@ -34,10 +34,10 @@ const LanguageSwitcher: FC<Props> = ({ className, children, ...props }) => {
   );
 };
 
-// const Wrapper: FC<Props> = (props) => (
-//   <Suspense>
-//     <LanguageSwitcher {...props} />
-//   </Suspense>
-// );
+const Wrapper: FC<Props> = (props) => (
+  <Suspense>
+    <LanguageSwitcher {...props} />
+  </Suspense>
+);
 
-export default LanguageSwitcher;
+export default Wrapper;
