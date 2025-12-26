@@ -167,10 +167,8 @@
 
 :lang(ar) {
   direction: rtl;
-  font-family: 'Cairo', sans-serif;
 }
 
 :lang(en) {
   direction: ltr;
-  font-family: 'Roboto', sans-serif;
 }
