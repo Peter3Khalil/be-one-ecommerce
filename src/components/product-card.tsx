@@ -5,7 +5,7 @@ import { Button } from '@ui/button';
 import { ShoppingBag } from 'lucide-react';
 import { useState } from 'react';
 import Rating from './rating';
-import Link from 'next/link';
+import { Link } from '@/i18n/navigation';
 import { useTranslations } from 'next-intl';
 
 type Props = {

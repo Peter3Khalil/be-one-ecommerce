@@ -4,6 +4,7 @@ import ProductCard from './product-card';
 import { Button } from './ui/button';
 import { products } from '@public/data.json';
 import { useTranslations } from 'next-intl';
+import { Link } from '@/i18n/navigation';
 
 const SimilarProducts = () => {
   const t = useTranslations();
@@ -30,9 +31,12 @@ const SimilarProducts = () => {
         variant="outline"
         size="lg"
         className="group mx-auto gap-2 rounded-full"
+        asChild
       >
-        {t('Global.viewAllProducts')}
-        <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+        <Link href="/products">
+          {t('Global.viewAllProducts')}
+          <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1 rtl:rotate-180" />
+        </Link>
       </Button>
     </section>
   );

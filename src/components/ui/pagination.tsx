@@ -1,4 +1,3 @@
-/* eslint-disable i18next/no-literal-string */
 import * as React from 'react';
 import {
   ChevronLeftIcon,
@@ -8,6 +7,7 @@ import {
 
 import { cn } from '@/lib/utils';
 import { buttonVariants, type Button } from '@/components/ui/button';
+import { useTranslations } from 'next-intl';
 
 function Pagination({ className, ...props }: React.ComponentProps<'nav'>) {
   return (
@@ -70,6 +70,7 @@ function PaginationPrevious({
   className,
   ...props
 }: React.ComponentProps<typeof PaginationLink>) {
+  const t = useTranslations();
   return (
     <PaginationLink
       aria-label="Go to previous page"
@@ -77,8 +78,8 @@ function PaginationPrevious({
       className={cn('gap-1 px-2.5 sm:pl-2.5', className)}
       {...props}
     >
-      <ChevronLeftIcon />
-      <span className="hidden sm:block">Previous</span>
+      <ChevronLeftIcon className="rtl:rotate-180" />
+      <span className="hidden sm:block">{t('Global.previous')}</span>
     </PaginationLink>
   );
 }
@@ -87,6 +88,7 @@ function PaginationNext({
   className,
   ...props
 }: React.ComponentProps<typeof PaginationLink>) {
+  const t = useTranslations();
   return (
     <PaginationLink
       aria-label="Go to next page"
@@ -94,8 +96,8 @@ function PaginationNext({
       className={cn('gap-1 px-2.5 sm:pr-2.5', className)}
       {...props}
     >
-      <span className="hidden sm:block">Next</span>
-      <ChevronRightIcon />
+      <span className="hidden sm:block">{t('Global.next')}</span>
+      <ChevronRightIcon className="rtl:rotate-180" />
     </PaginationLink>
   );
 }
@@ -112,6 +114,7 @@ function PaginationEllipsis({
       {...props}
     >
       <MoreHorizontalIcon className="size-4" />
+      {/* eslint-disable-next-line i18next/no-literal-string */}
       <span className="sr-only">More pages</span>
     </span>
   );

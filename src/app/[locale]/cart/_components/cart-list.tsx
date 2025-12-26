@@ -2,7 +2,7 @@ import Counter from '@components/counter';
 import { Button } from '@ui/button';
 import { Trash2 } from 'lucide-react';
 import { useTranslations } from 'next-intl';
-import Link from 'next/link';
+import { Link } from '@/i18n/navigation';
 import React, { FC } from 'react';
 type Props = {
   products: Array<{

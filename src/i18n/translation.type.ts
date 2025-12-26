@@ -76,6 +76,9 @@ export type TranslationType = {
     size: string;
     color: string;
     quantity: string;
+    next: string;
+    previous: string;
+
     soon: string;
     cancel: string;
     optional: string;

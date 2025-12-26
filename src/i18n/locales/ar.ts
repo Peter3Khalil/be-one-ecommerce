@@ -76,6 +76,8 @@ export default {
   },
   Global: {
     searchProductsPlaceholder: 'ابحث عن المنتجات...',
+    next: 'التالي',
+    previous: 'السابق',
     soon: 'قريباً',
     size: 'المقاس',
     color: 'اللون',

@@ -76,6 +76,8 @@ export default {
   },
   Global: {
     searchProductsPlaceholder: 'Search products...',
+    next: 'Next',
+    previous: 'Previous',
     soon: 'Soon',
     size: 'Size',
     color: 'Color',
