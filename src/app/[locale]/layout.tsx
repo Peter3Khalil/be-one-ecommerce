@@ -34,11 +34,11 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
   params: Promise<{
-    locale: 'en' | 'ar';
+    locale: string;
   }>;
 }) {
   const locale = (await params).locale;
-  setRequestLocale(locale);
+  setRequestLocale(locale as 'en' | 'ar');
   const messages = await getMessages();
   return (
     <html
