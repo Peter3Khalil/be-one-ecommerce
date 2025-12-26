@@ -27,7 +27,7 @@ const InputFormField = <T extends FieldValues>({
       control={control}
       name={name}
       render={({ field }) => (
-        <FormItem className="flex w-full flex-1 flex-col gap-1 space-y-0">
+        <FormItem className="flex w-full flex-1 flex-col gap-1 space-y-0 rtl:gap-2">
           {label && (
             <FormLabel className="gap-1">
               {label}
