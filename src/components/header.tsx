@@ -1,5 +1,5 @@
 'use client';
-import { Link } from '@/i18n/navigation';
+import { Link, usePathname, useRouter } from '@/i18n/navigation';
 import { cn } from '@/lib/utils';
 import { Button } from '@ui/button';
 import { Input } from '@ui/input';
@@ -19,6 +19,8 @@ const Header = () => {
     'product_name',
     parseAsString.withDefault('')
   );
+  const router = useRouter();
+  const pathname = usePathname();
   const t = useTranslations();
   useEffect(() => {
     if (isSearchOpened) {
@@ -66,6 +68,21 @@ const Header = () => {
               onChange={(e) => setProductName(e.target.value)}
               value={productName}
             />
+            {pathname !== '/products' && (
+              <Button
+                variant="secondary"
+                className="hidden rounded-full text-muted-foreground duration-100 hover:text-secondary-foreground lg:flex"
+                size="icon"
+                onClick={() => {
+                  router.push({
+                    pathname: '/products',
+                    query: { product_name: productName },
+                  });
+                }}
+              >
+                <Search className="size-4" />
+              </Button>
+            )}
             <div className="flex shrink-0 items-center">
               <Button
                 variant="ghost"
@@ -109,6 +126,21 @@ const Header = () => {
             onChange={(e) => setProductName(e.target.value)}
             ref={inputRef}
           />
+          {pathname !== '/products' && (
+            <Button
+              variant="secondary"
+              className="rounded-full text-muted-foreground duration-100 hover:text-secondary-foreground"
+              size="icon"
+              onClick={() => {
+                router.push({
+                  pathname: '/products',
+                  query: { product_name: productName },
+                });
+              }}
+            >
+              <Search className="size-4" />
+            </Button>
+          )}
           <Button
             variant="ghost"
             className="text-muted-foreground duration-200 hover:text-foreground"

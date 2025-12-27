@@ -40,6 +40,22 @@ type Pagination = {
   total_items: number;
 };
 
-export type ProductParams = {
+export type ProductParams = Partial<{
   product_name: string;
+  offset: string;
+}>;
+
+export type FiltersResponse = {
+  success: boolean;
+  data: AvailableFilters;
+};
+
+export type AvailableFilters = {
+  categories: string[];
+  colors: string[];
+  sizes: string[];
+  price_range: {
+    min_price: string;
+    max_price: string;
+  };
 };

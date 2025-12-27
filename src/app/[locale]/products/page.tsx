@@ -1,24 +1,22 @@
 'use client';
-import useDebounce from '@/hooks/use-debounce';
 import DesktopFilters from '@/modules/products/components/desktop-filters';
 import MobileFilters from '@/modules/products/components/mobile-filters';
 import ProductCardSkeleton from '@/modules/products/components/product-card-skeleton';
 import ProductList from '@/modules/products/components/product-list';
-import { useProducts } from '@/modules/products/queries';
+import {
+  useProducts,
+  withProductsProvider,
+} from '@/modules/products/components/products-provider';
 import CustomPagination from '@ui/custom-pagination';
 import { useTranslations } from 'next-intl';
-import { parseAsString, useQueryStates } from 'nuqs';
 
 const Products = () => {
   const t = useTranslations();
-  const [params] = useQueryStates(
-    {
-      product_name: parseAsString.withDefault(''),
-    },
-    { history: 'replace' }
-  );
-  const debouncedParams = useDebounce(params);
-  const { data, isLoading } = useProducts(debouncedParams);
+  const {
+    queryResult: { data, isLoading },
+    dispatch,
+    params: { offset },
+  } = useProducts();
   const products = data?.data.data || [];
   return (
     <div className="container grid grid-cols-4 gap-6 py-10 lg:py-16">
@@ -49,6 +47,11 @@ const Products = () => {
         )}
         <CustomPagination
           className="mx-auto"
+          defaultPage={Number(offset || 1)}
+          key={offset}
+          onValueChange={(page) => {
+            dispatch({ type: 'SET_PAGE', payload: String(page) });
+          }}
           totalPages={data?.data.pagination.total_pages || 1}
         />
       </div>
@@ -56,4 +59,4 @@ const Products = () => {
   );
 };
 
-export default Products;
+export default withProductsProvider(Products);
