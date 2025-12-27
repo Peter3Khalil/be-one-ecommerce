@@ -1,7 +1,7 @@
 'use client';
 
 import { cn } from '@/lib/utils';
-import { useProducts } from '@/modules/products/queries';
+import { useProductsQuery } from '@/modules/products/queries';
 import Counter from '@components/counter';
 import ProductsSection from '@/modules/products/components/products-section';
 import Rating from '@components/rating';
@@ -22,7 +22,7 @@ const ProductDetails = () => {
       'This is a detailed description of the product. It highlights the key features, specifications, and benefits of the product to entice potential buyers.',
   };
   const [currentImage, setCurrentImage] = useState('/products/1.jpg');
-  const { data, isLoading } = useProducts();
+  const { data, isLoading } = useProductsQuery();
   const products = data?.data.data || [];
   return (
     <div>
