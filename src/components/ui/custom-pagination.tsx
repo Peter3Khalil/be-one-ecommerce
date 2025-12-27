@@ -9,17 +9,17 @@ import {
 } from '@ui/pagination';
 import { ChevronLeftIcon, ChevronRightIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
-import { type FC, useEffect } from 'react';
+import { type FC } from 'react';
 type CustomPaginationProps = React.ComponentProps<typeof Pagination> &
   Parameters<typeof usePagination>['0'] & {
     // eslint-disable-next-line no-unused-vars
-    onPaginate?: (page: number) => void;
+    onValueChange?: (page: number) => void;
   };
 const CustomPagination: FC<CustomPaginationProps> = ({
   totalPages,
   chunkSize,
   defaultPage,
-  onPaginate,
+  onValueChange,
   className,
   ...props
 }) => {
@@ -38,10 +38,8 @@ const CustomPagination: FC<CustomPaginationProps> = ({
     totalPages,
     chunkSize,
     defaultPage,
+    onValueChange,
   });
-  useEffect(() => {
-    onPaginate?.(currentPage);
-  }, [onPaginate, currentPage]);
   const t = useTranslations();
   return (
     <Pagination className={cn('mx-0 w-fit', className)} {...props}>
