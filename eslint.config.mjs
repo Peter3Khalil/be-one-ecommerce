@@ -22,6 +22,8 @@ const eslintConfig = defineConfig([
             exclude: [
               'className',
               'styleName',
+              "options",
+              "defaultValues",
               'side',
               'mode',
               'alt',
