@@ -6,7 +6,7 @@ import { Input } from '@ui/input';
 import { Sheet, SheetContent, SheetHeader, SheetTrigger } from '@ui/sheet';
 import { CircleUserRound, Menu, Search, ShoppingCart, X } from 'lucide-react';
 import { useTranslations } from 'next-intl';
-import { parseAsString, useQueryState } from 'nuqs';
+import { parseAsString, useQueryStates } from 'nuqs';
 import { Activity, useEffect, useRef, useState } from 'react';
 import LanguageSwitcher from './language-switcher';
 import ThemeToggle from './theme-toggle';
@@ -15,10 +15,10 @@ const Header = () => {
   const [isSearchOpened, setIsSearchOpened] = useState(false);
   const navItems = useNavItems();
   const inputRef = useRef<HTMLInputElement>(null);
-  const [productName, setProductName] = useQueryState(
-    'product_name',
-    parseAsString.withDefault('')
-  );
+  const [query, setQuery] = useQueryStates({
+    product_name: parseAsString.withDefault(''),
+    offset: parseAsString.withDefault('1'),
+  });
   const router = useRouter();
   const pathname = usePathname();
   const t = useTranslations();
@@ -65,8 +65,10 @@ const Header = () => {
               type="search"
               placeholder={t('Global.searchProductsPlaceholder')}
               className="hidden rounded-full border px-4 py-2 md:block lg:w-80"
-              onChange={(e) => setProductName(e.target.value)}
-              value={productName}
+              onChange={(e) =>
+                setQuery({ product_name: e.target.value, offset: '1' })
+              }
+              value={query.product_name}
             />
             {pathname !== '/products' && (
               <Button
@@ -76,7 +78,7 @@ const Header = () => {
                 onClick={() => {
                   router.push({
                     pathname: '/products',
-                    query: { product_name: productName },
+                    query: { product_name: query.product_name },
                   });
                 }}
               >
@@ -122,8 +124,10 @@ const Header = () => {
             type="search"
             className="h-full max-w-full"
             placeholder={t('Global.searchProductsPlaceholder')}
-            value={productName}
-            onChange={(e) => setProductName(e.target.value)}
+            value={query.product_name}
+            onChange={(e) =>
+              setQuery({ product_name: e.target.value, offset: '1' })
+            }
             ref={inputRef}
           />
           {pathname !== '/products' && (
@@ -134,7 +138,7 @@ const Header = () => {
               onClick={() => {
                 router.push({
                   pathname: '/products',
-                  query: { product_name: productName },
+                  query: { product_name: query.product_name },
                 });
               }}
             >
