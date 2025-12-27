@@ -1,6 +1,7 @@
 import React from 'react';
 import RootLayout, { metadata } from '../[locale]/layout';
 import { routing } from '@/i18n/routing';
+export const dynamic = 'force-dynamic';
 
 export async function generateMetadata() {
   return metadata;
