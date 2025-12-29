@@ -47,10 +47,10 @@ const Products = () => {
         )}
         <CustomPagination
           className="mx-auto"
-          defaultPage={Number(offset || 1)}
+          defaultPage={Number(offset || 0) + 1}
           key={offset}
           onValueChange={(page) => {
-            dispatch({ type: 'SET_PAGE', payload: String(page) });
+            dispatch({ type: 'SET_PAGE', payload: String(page - 1) });
           }}
           totalPages={data?.data.pagination.total_pages || 1}
         />
