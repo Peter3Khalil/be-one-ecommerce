@@ -8,21 +8,23 @@ import { Skeleton } from '@ui/skeleton';
 import { useTranslations } from 'next-intl';
 import { FC, useState } from 'react';
 import { Product } from '../types';
+import { useCart } from '@/modules/cart/components/cart-provider';
 type Props = {
   product: Product;
 };
 const ProductView: FC<Props> = ({
-  product: { images, description, price, name, variants },
+  product: { images, description, price, name, variants, id },
 }) => {
   const t = useTranslations();
   const [currentColor, setCurrentColor] = useState(variants[0].color || '');
   const [currentSize, setCurrentSize] = useState(variants[0].size || '');
   const distinctColors = getDistinctColors({ variants });
   const [quantity, setQuantity] = useState(1);
+  const { addProduct } = useCart();
   const sizes = distinctColors.get(currentColor)?.sizes || [];
-  // const currentVariantId = variants.find(
-  //   (v) => v.color === currentColor && v.size === currentSize
-  // )?.id;
+  const currentVariantId = variants.find(
+    (v) => v.color === currentColor && v.size === currentSize
+  )?.id;
 
   return (
     <article className="container flex flex-col gap-8 py-10 *:flex-1 md:flex-row md:py-16">
@@ -115,6 +117,20 @@ const ProductView: FC<Props> = ({
             size="lg"
             className="flex-1"
             disabled={!currentSize || !currentColor}
+            onClick={() => {
+              if (currentVariantId) {
+                addProduct({
+                  variantId: currentVariantId,
+                  quantity,
+                  color: currentColor,
+                  size: currentSize,
+                  image: images[currentColor][0].urls.thumbnail,
+                  title: name,
+                  price: +price,
+                  productId: id,
+                });
+              }
+            }}
           >
             {t('Global.addToCart')}
           </Button>

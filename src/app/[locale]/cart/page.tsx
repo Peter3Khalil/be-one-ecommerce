@@ -1,68 +1,31 @@
 'use client';
-import { useState } from 'react';
-import CartList from './_components/cart-list';
-import PaymentSummary from './_components/payment-summary';
+import CartList from '@/modules/cart/components/cart-list';
+import { useCart } from '@/modules/cart/components/cart-provider';
+import PaymentSummary from '@/modules/cart/components/payment-summary';
 import { useTranslations } from 'next-intl';
 
-const Cart = () => {
+const CartPage = () => {
   const t = useTranslations();
-  const [products, setProducts] = useState([
-    {
-      id: 1,
-      image: '/products/1.jpg',
-      title: 'Satin Drape Blouse',
-      size: 'Large',
-      color: 'Red',
-      price: 50,
-      quantity: 5,
-    },
-    {
-      id: 1,
-      image: '/products/1.jpg',
-      title: 'Satin Drape Blouse',
-      size: 'Large',
-      color: 'Red',
-      price: 50,
-      quantity: 1,
-    },
-    {
-      id: 1,
-      image: '/products/1.jpg',
-      title: 'Satin Drape Blouse',
-      size: 'Large',
-      color: 'Red',
-      price: 50,
-      quantity: 1,
-    },
-  ]);
-  const subtotal = products.reduce(
-    (acc, product) => acc + product.price * product.quantity,
-    0
-  );
-  const isEmpty = products.length === 0;
+  const { products, subtotal, isEmpty, updateQuantity, removeProduct } =
+    useCart();
+
   return (
     <div className="container space-y-4 py-6 sm:py-10">
       <h1 className="text-3xl font-bold">{t('CartPage.yourCart')}</h1>
       <div className="grid gap-4 *:rounded-xl *:border md:grid-cols-5">
         <CartList
           products={products}
-          onQuantityChange={(index, quantity) => {
-            setProducts((prev) => {
-              const newProducts = [...prev];
-              newProducts[index].quantity = quantity;
-              return newProducts;
-            });
-          }}
+          onQuantityChange={updateQuantity}
+          onRemoveProduct={removeProduct}
         />
         <PaymentSummary
           disabled={isEmpty}
           subtotal={subtotal}
-          deliveryFee={isEmpty ? 0 : 50}
-          discount={isEmpty ? 0 : 0.5}
+          deliveryFee={isEmpty ? 0 : 5}
         />
       </div>
     </div>
   );
 };
 
-export default Cart;
+export default CartPage;

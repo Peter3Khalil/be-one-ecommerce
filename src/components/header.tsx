@@ -10,14 +10,15 @@ import { parseAsString, useQueryStates } from 'nuqs';
 import { Activity, useEffect, useRef, useState } from 'react';
 import LanguageSwitcher from './language-switcher';
 import ThemeToggle from './theme-toggle';
-
+import { useCart } from '@/modules/cart/components/cart-provider';
 const Header = () => {
   const [isSearchOpened, setIsSearchOpened] = useState(false);
+  const { count } = useCart();
   const navItems = useNavItems();
   const inputRef = useRef<HTMLInputElement>(null);
   const [query, setQuery] = useQueryStates({
     product_name: parseAsString.withDefault(''),
-    offset: parseAsString.withDefault('1'),
+    offset: parseAsString.withDefault('0'),
   });
   const router = useRouter();
   const pathname = usePathname();
@@ -100,8 +101,13 @@ const Header = () => {
                 size="icon-sm"
                 asChild
               >
-                <Link href="/cart">
+                <Link href="/cart" className="relative">
                   <ShoppingCart />
+                  {count > 0 && (
+                    <span className="absolute end-0 -top-1 inline-flex aspect-square size-5 items-center justify-center rounded-full bg-red-600 p-1 text-xs leading-none font-bold text-red-100">
+                      {count}
+                    </span>
+                  )}
                 </Link>
               </Button>
               <Button

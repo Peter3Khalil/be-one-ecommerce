@@ -1,12 +1,9 @@
 'use client';
-import { Product } from '@/modules/products/types';
 import { Link } from '@/i18n/navigation';
 import { cn } from '@/lib/utils';
-import { Button } from '@ui/button';
-import { ShoppingBag } from 'lucide-react';
-import { useTranslations } from 'next-intl';
-import { useState } from 'react';
+import { Product } from '@/modules/products/types';
 import Rating from '@components/rating';
+import { useState } from 'react';
 
 type Props = {
   delay?: number;
@@ -14,7 +11,6 @@ type Props = {
 
 const ProductCard = ({ id, name, price, images, delay = 0 }: Props) => {
   const [isHovered, setIsHovered] = useState(false);
-  const t = useTranslations();
   const colors = Object.keys(images || {});
   const image =
     colors.length > 0
@@ -43,16 +39,7 @@ const ProductCard = ({ id, name, price, images, delay = 0 }: Props) => {
               'absolute inset-0 flex items-end justify-center bg-linear-to-t from-foreground/20 to-transparent p-4 transition-all duration-300',
               isHovered ? 'opacity-100' : 'opacity-0'
             )}
-          >
-            <Button
-              size="lg"
-              variant="secondary"
-              className="flex w-full items-center justify-center gap-2 font-medium transition-all duration-300 hover:bg-primary hover:text-primary-foreground"
-            >
-              <ShoppingBag />
-              {t('Global.addToCart')}
-            </Button>
-          </div>
+          />
         </Link>
       </div>
 
