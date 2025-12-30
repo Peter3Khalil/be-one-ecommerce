@@ -10,9 +10,9 @@ import {
 } from '@ui/drawer';
 import { Filter } from 'lucide-react';
 import { useTranslations } from 'next-intl';
-import { FiltersOptions } from './filters-options';
-import { AvailableFilters } from '../types';
 import { FC } from 'react';
+import { AvailableFilters } from '../types';
+import { FiltersOptions } from './filters-options';
 
 type Props = {
   filtersOptions?: AvailableFilters;
@@ -22,12 +22,14 @@ type Props = {
   // eslint-disable-next-line no-unused-vars
   onOptionsChange?: (options: AvailableFilters) => void;
   onReset?: () => void;
+  disabled?: boolean;
 };
 const MobileFilters: FC<Props> = ({
   defaultValues,
   filtersOptions,
   onOptionsChange,
   onReset,
+  disabled,
 }) => {
   const t = useTranslations();
   if (!filtersOptions) {
@@ -35,7 +37,7 @@ const MobileFilters: FC<Props> = ({
   }
   return (
     <Drawer>
-      <DrawerTrigger asChild>
+      <DrawerTrigger disabled={disabled} asChild>
         <Button
           variant="secondary"
           className="rounded-full md:hidden"

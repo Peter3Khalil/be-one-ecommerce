@@ -1,5 +1,7 @@
 'use client';
-import DesktopFilters from '@/modules/products/components/desktop-filters';
+import DesktopFilters, {
+  DesktopFiltersSkeleton,
+} from '@/modules/products/components/desktop-filters';
 import MobileFilters from '@/modules/products/components/mobile-filters';
 import ProductCardSkeleton from '@/modules/products/components/product-card-skeleton';
 import ProductList from '@/modules/products/components/product-list';
@@ -20,29 +22,33 @@ const Products = () => {
     params,
   } = useProducts();
   const products = data?.data.data || [];
-  const { data: filtersData } = useFiltersQuery();
+  const { data: filtersData, isLoading: isLoadingFilters } = useFiltersQuery();
   const filtersOptions = filtersData?.data.data;
   const [isResetting, setIsResetting] = useState(false);
   return (
     <div className="container grid grid-cols-4 gap-6 py-10 lg:py-16">
-      <DesktopFilters
-        filtersOptions={filtersOptions}
-        onOptionsChange={(options) => {
-          dispatch({ type: 'SET_CATEGORIES', payload: options.categories });
-          dispatch({ type: 'SET_COLORS', payload: options.colors });
-          dispatch({ type: 'SET_SIZES', payload: options.sizes });
-        }}
-        defaultValues={{
-          categories: params.category_name,
-          colors: params.color,
-          sizes: params.size,
-        }}
-        onReset={() => {
-          dispatch({ type: 'RESET_FILTERS' });
-          setIsResetting((prev) => !prev);
-        }}
-        key={String(isResetting)}
-      />
+      {isLoadingFilters ? (
+        <DesktopFiltersSkeleton />
+      ) : (
+        <DesktopFilters
+          filtersOptions={filtersOptions}
+          onOptionsChange={(options) => {
+            dispatch({ type: 'SET_CATEGORIES', payload: options.categories });
+            dispatch({ type: 'SET_COLORS', payload: options.colors });
+            dispatch({ type: 'SET_SIZES', payload: options.sizes });
+          }}
+          defaultValues={{
+            categories: params.category_name,
+            colors: params.color,
+            sizes: params.size,
+          }}
+          onReset={() => {
+            dispatch({ type: 'RESET_FILTERS' });
+            setIsResetting((prev) => !prev);
+          }}
+          key={String(isResetting)}
+        />
+      )}
       <div className="col-span-full space-y-6 md:col-span-3">
         <div className="flex items-center justify-between">
           <div className="flex w-full flex-col justify-between md:flex-row md:items-center">
@@ -55,6 +61,7 @@ const Products = () => {
           </div>
           <MobileFilters
             filtersOptions={filtersOptions}
+            disabled={isLoadingFilters}
             onOptionsChange={(options) => {
               dispatch({ type: 'SET_CATEGORIES', payload: options.categories });
               dispatch({ type: 'SET_COLORS', payload: options.colors });
