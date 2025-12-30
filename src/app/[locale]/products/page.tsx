@@ -10,6 +10,7 @@ import {
   withProductsProvider,
 } from '@/modules/products/components/products-provider';
 import { useFiltersQuery } from '@/modules/products/queries';
+import { AvailableFilters } from '@/modules/products/types';
 import CustomPagination from '@ui/custom-pagination';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
@@ -25,6 +26,27 @@ const Products = () => {
   const { data: filtersData, isLoading: isLoadingFilters } = useFiltersQuery();
   const filtersOptions = filtersData?.data.data;
   const [isResetting, setIsResetting] = useState(false);
+  const handleOnOptionsChange = (options: AvailableFilters) => {
+    dispatch({ type: 'SET_CATEGORIES', payload: options.categories });
+    dispatch({ type: 'SET_COLORS', payload: options.colors });
+    dispatch({ type: 'SET_SIZES', payload: options.sizes });
+    dispatch({ type: 'SET_PRICE_RANGE', payload: options.price_range });
+  };
+  const handleReset = () => {
+    dispatch({ type: 'RESET_FILTERS' });
+    setIsResetting((prev) => !prev);
+  };
+  const defaultValues = {
+    categories: params.category_name,
+    colors: params.color,
+    sizes: params.size,
+    price_range: {
+      min_price:
+        params.min_price || filtersOptions?.price_range.min_price || '',
+      max_price:
+        params.max_price || filtersOptions?.price_range.max_price || '',
+    },
+  };
   return (
     <div className="container grid grid-cols-4 gap-6 py-10 lg:py-16">
       {isLoadingFilters ? (
@@ -32,20 +54,9 @@ const Products = () => {
       ) : (
         <DesktopFilters
           filtersOptions={filtersOptions}
-          onOptionsChange={(options) => {
-            dispatch({ type: 'SET_CATEGORIES', payload: options.categories });
-            dispatch({ type: 'SET_COLORS', payload: options.colors });
-            dispatch({ type: 'SET_SIZES', payload: options.sizes });
-          }}
-          defaultValues={{
-            categories: params.category_name,
-            colors: params.color,
-            sizes: params.size,
-          }}
-          onReset={() => {
-            dispatch({ type: 'RESET_FILTERS' });
-            setIsResetting((prev) => !prev);
-          }}
+          onOptionsChange={handleOnOptionsChange}
+          defaultValues={defaultValues}
+          onReset={handleReset}
           key={String(isResetting)}
         />
       )}
@@ -62,20 +73,9 @@ const Products = () => {
           <MobileFilters
             filtersOptions={filtersOptions}
             disabled={isLoadingFilters}
-            onOptionsChange={(options) => {
-              dispatch({ type: 'SET_CATEGORIES', payload: options.categories });
-              dispatch({ type: 'SET_COLORS', payload: options.colors });
-              dispatch({ type: 'SET_SIZES', payload: options.sizes });
-            }}
-            defaultValues={{
-              categories: params.category_name,
-              colors: params.color,
-              sizes: params.size,
-            }}
-            onReset={() => {
-              dispatch({ type: 'RESET_FILTERS' });
-              setIsResetting((prev) => !prev);
-            }}
+            onOptionsChange={handleOnOptionsChange}
+            defaultValues={defaultValues}
+            onReset={handleReset}
             key={String(isResetting)}
           />
         </div>

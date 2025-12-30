@@ -56,7 +56,7 @@ const INITIAL_OPTIONS: Options = {
   },
 };
 export const FiltersOptions: FC<Props> = ({
-  options: { colors = [], sizes = [], categories = [] } = {},
+  options: { colors = [], sizes = [], categories = [], price_range } = {},
   onOptionsChange,
   defaultValues = INITIAL_OPTIONS,
   className,
@@ -82,8 +82,8 @@ export const FiltersOptions: FC<Props> = ({
               },
             });
           }}
-          max={+values.price_range?.max_price || 1000}
-          min={+values.price_range?.min_price || 1}
+          max={Number(price_range?.max_price) || 1000}
+          min={Number(price_range?.min_price) || 1}
           step={1}
         />
         <div className="flex items-center gap-4">
@@ -94,7 +94,7 @@ export const FiltersOptions: FC<Props> = ({
             <Input
               id="from"
               type="number"
-              min={+values.price_range?.min_price || 1}
+              min={Number(price_range?.min_price) || 1}
               value={parsePriceRange(values.price_range)[0]}
               onChange={(e) => {
                 const newValue = Math.min(Number(e.target.value), 100);
@@ -119,7 +119,7 @@ export const FiltersOptions: FC<Props> = ({
             <Input
               id="to"
               type="number"
-              max={+values.price_range?.max_price || 1000}
+              max={Number(price_range?.max_price) || 1000}
               value={parsePriceRange(values.price_range)[1]}
               onChange={(e) => {
                 const newValue = Math.max(Number(e.target.value), 1);

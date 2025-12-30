@@ -48,6 +48,13 @@ function reducer(state: ProductParams, action: Actions): ProductParams {
       return { ...state, color: action.payload, offset: '0' };
     case 'SET_SIZES':
       return { ...state, size: action.payload, offset: '0' };
+    case 'SET_PRICE_RANGE':
+      return {
+        ...state,
+        min_price: action.payload.min_price,
+        max_price: action.payload.max_price,
+        offset: '0',
+      };
     case 'RESET_FILTERS':
       return {
         product_name: '',
