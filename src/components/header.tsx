@@ -220,9 +220,9 @@ const MobileMenu = () => {
 const useNavItems = () => {
   const t = useTranslations();
   return [
-    { label: t('HomePage.home'), href: '#' },
-    { label: t('Global.summerCollection'), href: '#' },
-    { label: t('Global.winterCollection'), href: '#' },
+    { label: t('HomePage.home'), href: '/' },
+    { label: t('Global.summerCollection'), href: '/products?category=summer' },
+    { label: t('Global.winterCollection'), href: '/products?category=winter' },
   ];
 };
 
