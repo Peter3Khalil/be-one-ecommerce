@@ -20,6 +20,12 @@ interface CartContextType {
   // eslint-disable-next-line no-unused-vars
   addProduct: (product: CartProduct) => void;
   clearCart: () => void;
+  // eslint-disable-next-line no-unused-vars
+  checkVariantInCart: (variantId: string) => boolean;
+  // eslint-disable-next-line no-unused-vars
+  getVariantIndex: (variantId: string) => number | null;
+  // eslint-disable-next-line no-unused-vars
+  getVariantQuantity: (variantId: string) => number;
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
@@ -92,6 +98,19 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
   const clearCart = () => {
     setProducts([]);
   };
+  const checkVariantInCart = (variantId: string): boolean => {
+    return products.some((product) => product.variantId === variantId);
+  };
+  const getVariantIndex = (variantId: string): number | null => {
+    const index = products.findIndex(
+      (product) => product.variantId === variantId
+    );
+    return index !== -1 ? index : null;
+  };
+  const getVariantQuantity = (variantId: string): number => {
+    const product = products.find((product) => product.variantId === variantId);
+    return product ? product.quantity : 0;
+  };
 
   return (
     <CartContext.Provider
@@ -104,6 +123,9 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
         removeProduct,
         addProduct,
         clearCart,
+        checkVariantInCart,
+        getVariantIndex,
+        getVariantQuantity,
       }}
     >
       {children}

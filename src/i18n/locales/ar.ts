@@ -85,6 +85,7 @@ export default {
   ProductDetailsPage: {
     chooseSize: 'اختر المقاس',
     selectColor: 'اختر اللون',
+    viewCart: 'عرض العربة',
   },
   Global: {
     searchProductsPlaceholder: 'ابحث عن المنتجات...',

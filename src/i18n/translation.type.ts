@@ -81,6 +81,7 @@ export type TranslationType = {
   ProductDetailsPage: {
     chooseSize: string;
     selectColor: string;
+    viewCart: string;
   };
   Global: {
     searchProductsPlaceholder: string;

@@ -10,6 +10,8 @@ import { FC, useState } from 'react';
 import { Product } from '../types';
 import { useCart } from '@/modules/cart/components/cart-provider';
 import { formatPrice } from '@/lib/utils';
+import { Link } from '@/i18n/navigation';
+import { ShoppingCart } from 'lucide-react';
 type Props = {
   product: Product;
 };
@@ -21,11 +23,17 @@ const ProductView: FC<Props> = ({
   const [currentSize, setCurrentSize] = useState(variants[0].size || '');
   const distinctColors = getDistinctColors({ variants });
   const [quantity, setQuantity] = useState(1);
-  const { addProduct } = useCart();
+  const {
+    addProduct,
+    checkVariantInCart,
+    updateQuantity,
+    getVariantIndex,
+    getVariantQuantity,
+  } = useCart();
   const sizes = distinctColors.get(currentColor)?.sizes || [];
-  const currentVariantId = variants.find(
-    (v) => v.color === currentColor && v.size === currentSize
-  )?.id;
+  const currentVariantId =
+    variants.find((v) => v.color === currentColor && v.size === currentSize)
+      ?.id || '';
 
   return (
     <article className="container flex flex-col gap-8 py-10 *:flex-1 md:flex-row md:py-16">
@@ -112,31 +120,55 @@ const ProductView: FC<Props> = ({
           </div>
         </div>
         <div className="flex items-center gap-4">
-          <Counter
-            initialValue={quantity}
-            onChange={(val) => setQuantity(val)}
-          />
-          <Button
-            size="lg"
-            className="flex-1"
-            disabled={!currentSize || !currentColor}
-            onClick={() => {
-              if (currentVariantId) {
-                addProduct({
-                  variantId: currentVariantId,
-                  quantity,
-                  color: currentColor,
-                  size: currentSize,
-                  image: images[currentColor][0].urls.thumbnail,
-                  title: name,
-                  price: +price,
-                  productId: id,
-                });
-              }
-            }}
-          >
-            {t('Global.addToCart')}
-          </Button>
+          {checkVariantInCart(currentVariantId) ? (
+            <Counter
+              key={currentVariantId}
+              initialValue={getVariantQuantity(currentVariantId)}
+              onChange={(val) => {
+                const index = getVariantIndex(currentVariantId);
+                if (index !== null) {
+                  updateQuantity(index, val);
+                }
+              }}
+            />
+          ) : (
+            <Counter
+              initialValue={quantity}
+              onChange={(val) => {
+                setQuantity(val);
+              }}
+            />
+          )}
+          {checkVariantInCart(currentVariantId) ? (
+            <Button size="lg" className="flex-1" variant="outline" asChild>
+              <Link href="/cart" className="flex items-center gap-2">
+                <ShoppingCart className="h-5 w-5" />
+                {t('ProductDetailsPage.viewCart')}
+              </Link>
+            </Button>
+          ) : (
+            <Button
+              size="lg"
+              className="flex-1"
+              disabled={!currentSize || !currentColor}
+              onClick={() => {
+                if (currentVariantId) {
+                  addProduct({
+                    variantId: currentVariantId,
+                    quantity,
+                    color: currentColor,
+                    size: currentSize,
+                    image: images[currentColor][0].urls.thumbnail,
+                    title: name,
+                    price: +price,
+                    productId: id,
+                  });
+                }
+              }}
+            >
+              {t('Global.addToCart')}
+            </Button>
+          )}
         </div>
       </div>
     </article>

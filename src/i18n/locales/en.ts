@@ -76,6 +76,7 @@ export default {
   ProductDetailsPage: {
     chooseSize: 'Choose Size',
     selectColor: 'Select Color',
+    viewCart: 'View Cart',
   },
   OrderSuccess: {
     title: 'Your order has been successfully placed!',

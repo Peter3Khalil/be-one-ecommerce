@@ -80,7 +80,8 @@
   },
   "ProductDetailsPage": {
     "chooseSize": "اختر المقاس",
-    "selectColor": "اختر اللون"
+    "selectColor": "اختر اللون",
+    "viewCart": "عرض العربة"
   },
   "Global": {
     "searchProductsPlaceholder": "ابحث عن المنتجات...",

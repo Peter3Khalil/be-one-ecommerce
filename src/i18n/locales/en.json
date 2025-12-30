@@ -71,7 +71,8 @@
   },
   "ProductDetailsPage": {
     "chooseSize": "Choose Size",
-    "selectColor": "Select Color"
+    "selectColor": "Select Color",
+    "viewCart": "View Cart"
   },
   "OrderSuccess": {
     "title": "Your order has been successfully placed!",
