@@ -49,6 +49,7 @@ const eslintConfig = defineConfig([
               'locale',
               'defaultValue',
               'htmlFor',
+              'align',
               /^data-/,
               /^aria-/,
             ],

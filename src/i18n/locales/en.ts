@@ -77,6 +77,9 @@ export default {
     chooseSize: 'Choose Size',
     selectColor: 'Select Color',
     viewCart: 'View Cart',
+    copyLink: 'Copy Link',
+    share: 'Share',
+    shareVia: 'Share via',
   },
   OrderSuccess: {
     title: 'Your order has been successfully placed!',

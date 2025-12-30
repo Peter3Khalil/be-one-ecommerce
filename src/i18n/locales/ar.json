@@ -81,7 +81,10 @@
   "ProductDetailsPage": {
     "chooseSize": "اختر المقاس",
     "selectColor": "اختر اللون",
-    "viewCart": "عرض العربة"
+    "viewCart": "عرض العربة",
+    "share": "مشاركة",
+    "shareVia": "مشاركة عبر",
+    "copyLink": "نسخ الرابط"
   },
   "Global": {
     "searchProductsPlaceholder": "ابحث عن المنتجات...",

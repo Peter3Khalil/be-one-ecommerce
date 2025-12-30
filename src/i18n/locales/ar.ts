@@ -86,6 +86,9 @@ export default {
     chooseSize: 'اختر المقاس',
     selectColor: 'اختر اللون',
     viewCart: 'عرض العربة',
+    copyLink: 'نسخ الرابط',
+    share: 'مشاركة',
+    shareVia: 'مشاركة عبر',
   },
   Global: {
     searchProductsPlaceholder: 'ابحث عن المنتجات...',

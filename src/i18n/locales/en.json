@@ -72,7 +72,10 @@
   "ProductDetailsPage": {
     "chooseSize": "Choose Size",
     "selectColor": "Select Color",
-    "viewCart": "View Cart"
+    "viewCart": "View Cart",
+    "share": "Share",
+    "shareVia": "Share via",
+    "copyLink": "Copy Link"
   },
   "OrderSuccess": {
     "title": "Your order has been successfully placed!",
