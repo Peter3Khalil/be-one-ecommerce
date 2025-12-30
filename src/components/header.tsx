@@ -1,16 +1,16 @@
 'use client';
 import { Link, usePathname, useRouter } from '@/i18n/navigation';
 import { cn } from '@/lib/utils';
+import { useCart } from '@/modules/cart/components/cart-provider';
 import { Button } from '@ui/button';
 import { Input } from '@ui/input';
 import { Sheet, SheetContent, SheetHeader, SheetTrigger } from '@ui/sheet';
-import { CircleUserRound, Menu, Search, ShoppingCart, X } from 'lucide-react';
+import { Menu, Search, ShoppingCart, X } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { parseAsString, useQueryStates } from 'nuqs';
 import { Activity, useEffect, useRef, useState } from 'react';
 import LanguageSwitcher from './language-switcher';
 import ThemeToggle from './theme-toggle';
-import { useCart } from '@/modules/cart/components/cart-provider';
 const Header = () => {
   const [isSearchOpened, setIsSearchOpened] = useState(false);
   const { count } = useCart();
@@ -117,13 +117,6 @@ const Header = () => {
                     </span>
                   )}
                 </Link>
-              </Button>
-              <Button
-                variant="ghost"
-                className="text-muted-foreground duration-200 hover:text-foreground"
-                size="icon-sm"
-              >
-                <CircleUserRound />
               </Button>
               <ThemeToggle />
               <LanguageSwitcher />
