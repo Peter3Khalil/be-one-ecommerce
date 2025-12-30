@@ -24,3 +24,21 @@ export function getAllGovernorates() {
   const allCovernorates = [...englishGovernorates, ...arabicGovernorates];
   return allCovernorates;
 }
+
+export function createQueryString(
+  params: Record<string, Array<unknown> | string | number>
+) {
+  let s = '';
+  Object.entries(params).map(([key, value]) => {
+    if (Array.isArray(value)) {
+      value.forEach((v) => (s += `${key}=${v}&`));
+    } else {
+      if (
+        (typeof value === 'string' || typeof value === 'number') &&
+        value !== ''
+      )
+        s += `${key}=${value}&`;
+    }
+  });
+  return s.endsWith('&') ? s.slice(0, -1) : s;
+}

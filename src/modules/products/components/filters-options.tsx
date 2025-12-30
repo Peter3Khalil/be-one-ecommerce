@@ -7,6 +7,7 @@ import { Slider } from '@ui/slider';
 import { ChevronRight } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import React, { FC, useReducer } from 'react';
+import { AvailableFilters } from '../types';
 type FilterOptionsProps = {
   title: string;
   children: React.ReactNode;
@@ -27,64 +28,62 @@ export const FilterOption = ({ title, children }: FilterOptionsProps) => {
     </Collapsible>
   );
 };
-
-type Props = {
-  options?: {
-    sizes?: string[];
-    priceRange?: [number, number];
-    colors?: string[];
+type Options = AvailableFilters & {
+  availability: {
+    inStock: boolean;
+    outOfStock: boolean;
   };
+};
+type Props = {
+  options: Options;
   className?: string;
   // eslint-disable-next-line no-unused-vars
-  onOptionsChange?: (options: {
-    sizes: string[];
-    colors: string[];
-    priceRange: [number, number];
-    availability: {
-      inStock: boolean;
-      outOfStock: boolean;
-    };
-  }) => void;
-  defaultValues?: Partial<{
-    sizes: string[];
-    colors: string[];
-    priceRange: [number, number];
-    availability: {
-      inStock?: boolean;
-      outOfStock?: boolean;
-    };
-  }>;
+  onOptionsChange?: (options: Options) => void;
+  defaultValues?: Partial<Options>;
+};
+
+const INITIAL_OPTIONS: Options = {
+  colors: [],
+  sizes: [],
+  categories: [],
+  price_range: {
+    min_price: '0',
+    max_price: '1000',
+  },
+  availability: {
+    inStock: false,
+    outOfStock: false,
+  },
 };
 export const FiltersOptions: FC<Props> = ({
-  options: { colors = [], priceRange, sizes = [] } = {},
+  options: { colors = [], sizes = [], categories = [] } = {},
   onOptionsChange,
-  defaultValues,
+  defaultValues = INITIAL_OPTIONS,
   className,
 }) => {
   const t = useTranslations();
-  const { availability, ...rest } = defaultValues || {};
-  const [options, dispatch] = useReducer(reducer, {
-    sizes: [],
-    colors: [],
-    priceRange: priceRange ? [...priceRange] : [0, 100],
-    availability: {
-      inStock: availability?.inStock ?? false,
-      outOfStock: availability?.outOfStock ?? false,
-    },
-    ...rest,
+  const [values, dispatch] = useReducer(reducer, {
+    ...INITIAL_OPTIONS,
+    ...defaultValues,
   });
   return (
     <div className={className}>
       <FilterOption title={t('Global.price')}>
         <Slider
-          value={options.priceRange}
-          defaultValue={priceRange}
+          value={parsePriceRange(values.price_range)}
+          defaultValue={parsePriceRange(values.price_range)}
           onValueChange={(value: [number, number]) => {
             dispatch({ type: 'SET_PRICE_RANGE', payload: value });
-            onOptionsChange?.({ ...options, priceRange: value });
+            onOptionsChange?.({
+              ...values,
+              price_range: {
+                min_price: value[0].toString(),
+                max_price: value[1].toString(),
+              },
+            });
           }}
-          max={priceRange ? priceRange[1] : 1000}
-          min={priceRange ? priceRange[0] : 1}
+          max={+values.price_range?.max_price || 1000}
+          min={+values.price_range?.min_price || 1}
           step={1}
         />
         <div className="flex items-center gap-4">
@@ -95,17 +94,20 @@ export const FiltersOptions: FC<Props> = ({
             <Input
               id="from"
               type="number"
-              min={priceRange ? priceRange[0] : 1}
-              value={options.priceRange[0]}
+              min={+values.price_range?.min_price || 1}
+              value={parsePriceRange(values.price_range)[0]}
               onChange={(e) => {
                 const newValue = Math.min(Number(e.target.value), 100);
                 dispatch({
                   type: 'SET_PRICE_RANGE',
-                  payload: [newValue, options.priceRange[1]],
+                  payload: [newValue, parsePriceRange(values.price_range)[1]],
                 });
                 onOptionsChange?.({
-                  ...options,
-                  priceRange: [newValue, options.priceRange[1]],
+                  ...values,
+                  price_range: {
+                    min_price: newValue.toString(),
+                    max_price: values.price_range.max_price,
+                  },
                 });
               }}
             />
@@ -117,17 +119,20 @@ export const FiltersOptions: FC<Props> = ({
             <Input
               id="to"
               type="number"
-              max={priceRange ? priceRange[1] : undefined}
-              value={options.priceRange[1]}
+              max={+values.price_range?.max_price || 1000}
+              value={parsePriceRange(values.price_range)[1]}
               onChange={(e) => {
                 const newValue = Math.max(Number(e.target.value), 1);
                 dispatch({
                   type: 'SET_PRICE_RANGE',
-                  payload: [options.priceRange[0], newValue],
+                  payload: [parsePriceRange(values.price_range)[0], newValue],
                 });
                 onOptionsChange?.({
-                  ...options,
-                  priceRange: [options.priceRange[0], newValue],
+                  ...values,
+                  price_range: {
+                    min_price: values.price_range.min_price,
+                    max_price: newValue.toString(),
+                  },
                 });
               }}
             />
@@ -140,19 +145,19 @@ export const FiltersOptions: FC<Props> = ({
             {sizes.map((size) => (
               <li key={size}>
                 <CustomCheckbox
-                  checked={options.sizes.includes(size)}
+                  checked={values.sizes.includes(size)}
                   onChecked={(checked) => {
                     if (checked) {
                       dispatch({ type: 'ADD_SIZE', payload: size });
                       onOptionsChange?.({
-                        ...options,
-                        sizes: [...options.sizes, size],
+                        ...values,
+                        sizes: [...values.sizes, size],
                       });
                     } else {
                       dispatch({ type: 'REMOVE_SIZE', payload: size });
                       onOptionsChange?.({
-                        ...options,
-                        sizes: options.sizes.filter((s) => s !== size),
+                        ...values,
+                        sizes: values.sizes.filter((s) => s !== size),
                       });
                     }
                   }}
@@ -172,19 +177,19 @@ export const FiltersOptions: FC<Props> = ({
             {colors.map((color) => (
               <li key={color}>
                 <CustomCheckbox
-                  checked={options.colors.includes(color)}
+                  checked={values.colors.includes(color)}
                   onChecked={(checked) => {
                     if (checked) {
                       dispatch({ type: 'ADD_COLOR', payload: color });
                       onOptionsChange?.({
-                        ...options,
-                        colors: [...options.colors, color],
+                        ...values,
+                        colors: [...values.colors, color],
                       });
                     } else {
                       dispatch({ type: 'REMOVE_COLOR', payload: color });
                       onOptionsChange?.({
-                        ...options,
-                        colors: options.colors.filter((c) => c !== color),
+                        ...values,
+                        colors: values.colors.filter((c) => c !== color),
                       });
                     }
                   }}
@@ -198,22 +203,56 @@ export const FiltersOptions: FC<Props> = ({
         </FilterOption>
       )}
 
+      {categories.length > 0 && (
+        <FilterOption title={t('Global.category')}>
+          <ul className="flex flex-wrap gap-2">
+            {categories.map((category) => (
+              <li key={category}>
+                <CustomCheckbox
+                  checked={values.categories.includes(category)}
+                  onChecked={(checked) => {
+                    if (checked) {
+                      dispatch({ type: 'ADD_CATEGORY', payload: category });
+                      onOptionsChange?.({
+                        ...values,
+                        categories: [...values.categories, category],
+                      });
+                    } else {
+                      dispatch({ type: 'REMOVE_CATEGORY', payload: category });
+                      onOptionsChange?.({
+                        ...values,
+                        categories: values.categories.filter(
+                          (c) => c !== category
+                        ),
+                      });
+                    }
+                  }}
+                  key={category}
+                >
+                  {category}
+                </CustomCheckbox>
+              </li>
+            ))}
+          </ul>
+        </FilterOption>
+      )}
+
       <FilterOption title={t('ProductsPage.availability')}>
         <label className="flex items-center gap-2">
           <Checkbox
-            checked={options.availability.inStock}
+            checked={values.availability.inStock}
             onCheckedChange={(checked) => {
               dispatch({
                 type: 'SET_AVAILABILITY',
                 payload: {
-                  ...options.availability,
+                  ...values.availability,
                   inStock: checked as boolean,
                 },
               });
               onOptionsChange?.({
-                ...options,
+                ...values,
                 availability: {
-                  ...options.availability,
+                  ...values.availability,
                   inStock: checked as boolean,
                 },
               });
@@ -225,19 +264,19 @@ export const FiltersOptions: FC<Props> = ({
         </label>
         <label className="flex items-center gap-2">
           <Checkbox
-            checked={options.availability.outOfStock}
+            checked={values.availability.outOfStock}
             onCheckedChange={(checked) => {
               dispatch({
                 type: 'SET_AVAILABILITY',
                 payload: {
-                  ...options.availability,
+                  ...values.availability,
                   outOfStock: checked as boolean,
                 },
               });
               onOptionsChange?.({
-                ...options,
+                ...values,
                 availability: {
-                  ...options.availability,
+                  ...values.availability,
                   outOfStock: checked as boolean,
                 },
               });
@@ -252,23 +291,20 @@ export const FiltersOptions: FC<Props> = ({
   );
 };
 
-type Options = {
-  sizes: string[];
-  colors: string[];
-  priceRange: [number, number];
-  availability: {
-    inStock: boolean;
-    outOfStock: boolean;
-  };
-};
-
 type Actions =
   | {
-      type: 'SET_SIZES' | 'SET_COLORS';
+      type: 'SET_SIZES' | 'SET_COLORS' | 'SET_CATEGORIES';
       payload: string[];
     }
   | {
-      type: 'REMOVE_SIZE' | 'REMOVE_COLOR' | 'ADD_SIZE' | 'ADD_COLOR';
+      type:
+        | 'REMOVE_SIZE'
+        | 'REMOVE_COLOR'
+        | 'REMOVE_CATEGORY'
+        | 'ADD_SIZE'
+        | 'ADD_COLOR'
+        | 'ADD_CATEGORY'
+        | 'REMOVE_CATEGORY';
       payload: string;
     }
   | {
@@ -281,33 +317,71 @@ type Actions =
         inStock: boolean;
         outOfStock: boolean;
       };
+    }
+  | {
+      type: 'RESET_FILTERS';
     };
 
-function reducer(state: Options, action: Actions) {
+function reducer(state: Options, action: Actions): Options {
   switch (action.type) {
     case 'SET_SIZES':
       return { ...state, sizes: action.payload };
     case 'SET_COLORS':
       return { ...state, colors: action.payload };
+    case 'SET_CATEGORIES':
+      return { ...state, categories: action.payload };
+    case 'ADD_SIZE':
+      return { ...state, sizes: [...state.sizes, action.payload] };
     case 'REMOVE_SIZE':
       return {
         ...state,
         sizes: state.sizes.filter((size) => size !== action.payload),
       };
+    case 'ADD_COLOR':
+      return { ...state, colors: [...state.colors, action.payload] };
     case 'REMOVE_COLOR':
       return {
         ...state,
         colors: state.colors.filter((color) => color !== action.payload),
       };
-    case 'ADD_SIZE':
-      return { ...state, sizes: [...state.sizes, action.payload] };
-    case 'ADD_COLOR':
-      return { ...state, colors: [...state.colors, action.payload] };
+    case 'ADD_CATEGORY':
+      return { ...state, categories: [...state.categories, action.payload] };
+    case 'REMOVE_CATEGORY':
+      return {
+        ...state,
+        categories: state.categories.filter(
+          (category) => category !== action.payload
+        ),
+      };
     case 'SET_PRICE_RANGE':
-      return { ...state, priceRange: action.payload };
+      return {
+        ...state,
+        price_range: {
+          max_price: action.payload[1].toString(),
+          min_price: action.payload[0].toString(),
+        },
+      };
     case 'SET_AVAILABILITY':
       return { ...state, availability: action.payload };
+    case 'RESET_FILTERS':
+      return {
+        sizes: [],
+        colors: [],
+        categories: [],
+        price_range: {
+          min_price: '0',
+          max_price: '1000',
+        },
+        availability: {
+          inStock: false,
+          outOfStock: false,
+        },
+      };
     default:
       return state;
   }
+}
+
+function parsePriceRange(priceRange: Options['price_range']): [number, number] {
+  return [Number(priceRange.min_price), Number(priceRange.max_price)];
 }

@@ -90,6 +90,8 @@ export default {
     searchProductsPlaceholder: 'ابحث عن المنتجات...',
     next: 'التالي',
     previous: 'السابق',
+    categories: 'التصنيفات',
+    category: 'التصنيف',
     soon: 'قريباً',
     size: 'المقاس',
     color: 'اللون',

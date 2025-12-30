@@ -43,6 +43,12 @@ type Pagination = {
 export type ProductParams = Partial<{
   product_name: string;
   offset: string;
+  category_name: string[];
+  color: string[];
+  size: string[];
+  price: string;
+  max_price: string;
+  min_price: string;
 }>;
 
 export type FiltersResponse = {

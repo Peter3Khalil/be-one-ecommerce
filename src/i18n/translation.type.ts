@@ -89,7 +89,6 @@ export type TranslationType = {
     quantity: string;
     next: string;
     previous: string;
-
     soon: string;
     cancel: string;
     optional: string;
@@ -101,6 +100,8 @@ export type TranslationType = {
     newArrivals: string;
     summerCollection: string;
     winterCollection: string;
+    categories: string;
+    category: string;
     viewAllProducts: string;
     topSelling: string;
     topSellingDescription: string;

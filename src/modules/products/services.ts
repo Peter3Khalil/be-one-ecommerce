@@ -1,8 +1,16 @@
 import axiosClient from '@/lib/axios-client';
-import { Product, ProductParams, ProductsResponse } from './types';
+import {
+  FiltersResponse,
+  Product,
+  ProductParams,
+  ProductsResponse,
+} from './types';
+import { createQueryString } from '@/lib/utils';
 
 export function getProducts(params?: Partial<ProductParams>) {
-  return axiosClient.get<ProductsResponse>('/products', { params });
+  return axiosClient.get<ProductsResponse>(
+    `/products?${createQueryString(params || {})}`
+  );
 }
 
 export function getProductById(productId: string) {
@@ -10,4 +18,8 @@ export function getProductById(productId: string) {
     success: boolean;
     data: Product;
   }>(`/products/${productId}`);
+}
+
+export function getAvailableFilters() {
+  return axiosClient.get<FiltersResponse>('/products/filters');
 }

@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { getProductById, getProducts } from './services';
+import { getAvailableFilters, getProductById, getProducts } from './services';
 import { ProductParams } from './types';
 
 export function useProductsQuery(params?: Partial<ProductParams>) {
@@ -13,5 +13,12 @@ export function useProductByIdQuery(productId: string) {
   return useQuery({
     queryKey: ['product', productId],
     queryFn: () => getProductById(productId),
+  });
+}
+
+export function useFiltersQuery() {
+  return useQuery({
+    queryKey: ['product-filters'],
+    queryFn: getAvailableFilters,
   });
 }

@@ -91,6 +91,8 @@ export default {
     searchProductsPlaceholder: 'Search products...',
     next: 'Next',
     previous: 'Previous',
+    categories: 'Categories',
+    category: 'Category',
     soon: 'Soon',
     size: 'Size',
     color: 'Color',

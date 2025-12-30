@@ -1,12 +1,28 @@
 'use client';
 import { Button } from '@ui/button';
 import { useTranslations } from 'next-intl';
+import { FC } from 'react';
+import { AvailableFilters } from '../types';
 import { FiltersOptions } from './filters-options';
-import { useProducts } from './products-provider';
-
-const DesktopFilters = () => {
+type Props = {
+  filtersOptions?: AvailableFilters;
+  defaultValues?: Partial<AvailableFilters> & {
+    availability?: { inStock: boolean; outOfStock: boolean };
+  };
+  // eslint-disable-next-line no-unused-vars
+  onOptionsChange?: (options: AvailableFilters) => void;
+  onReset?: () => void;
+};
+const DesktopFilters: FC<Props> = ({
+  filtersOptions,
+  defaultValues,
+  onOptionsChange,
+  onReset,
+}) => {
   const t = useTranslations();
-  const { dispatch } = useProducts();
+  if (!filtersOptions) {
+    return null;
+  }
   return (
     <div className="col-span-1 hidden h-fit rounded-2xl border bg-card px-6 py-4 md:block">
       <div className="flex items-center justify-between border-b pb-4">
@@ -14,9 +30,7 @@ const DesktopFilters = () => {
           {t('ProductsPage.filters')}
         </h3>
         <Button
-          onClick={() => {
-            dispatch({ type: 'RESET_FILTERS' });
-          }}
+          onClick={onReset}
           variant="outline"
           size="sm"
           className="rounded-full"
@@ -25,13 +39,13 @@ const DesktopFilters = () => {
         </Button>
       </div>
       <FiltersOptions
+        defaultValues={defaultValues}
         onOptionsChange={(options) => {
-          console.log(options);
+          onOptionsChange?.(options);
         }}
         options={{
-          colors: ['Red', 'Blue'],
-          priceRange: [50, 100],
-          sizes: ['S', 'XL'],
+          ...filtersOptions,
+          availability: { inStock: false, outOfStock: false },
         }}
         className="*:not-last:border-b *:not-last:py-4 *:last:pt-4"
       />

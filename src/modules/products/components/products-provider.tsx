@@ -2,7 +2,7 @@
 import useDebounce from '@/hooks/use-debounce';
 import { UseQueryResult } from '@tanstack/react-query';
 import { AxiosResponse } from 'axios';
-import { parseAsString, useQueryStates } from 'nuqs';
+import { parseAsArrayOf, parseAsString, useQueryStates } from 'nuqs';
 import {
   createContext,
   Dispatch,
@@ -25,6 +25,14 @@ type Actions =
       payload: string;
     }
   | {
+      type: 'SET_CATEGORIES' | 'SET_COLORS' | 'SET_SIZES';
+      payload: string[];
+    }
+  | {
+      type: 'SET_PRICE_RANGE';
+      payload: { min_price: string; max_price: string };
+    }
+  | {
       type: 'RESET_FILTERS';
     };
 
@@ -34,8 +42,23 @@ function reducer(state: ProductParams, action: Actions): ProductParams {
       return { ...state, product_name: action.payload, offset: '0' };
     case 'SET_PAGE':
       return { ...state, offset: action.payload };
+    case 'SET_CATEGORIES':
+      return { ...state, category_name: action.payload, offset: '0' };
+    case 'SET_COLORS':
+      return { ...state, color: action.payload, offset: '0' };
+    case 'SET_SIZES':
+      return { ...state, size: action.payload, offset: '0' };
     case 'RESET_FILTERS':
-      return { product_name: '', offset: '0' };
+      return {
+        product_name: '',
+        offset: '0',
+        category_name: [],
+        color: [],
+        size: [],
+        price: '',
+        min_price: '',
+        max_price: '',
+      };
     default:
       return state;
   }
@@ -47,6 +70,12 @@ const ProductsProvider = ({ children }: { children: React.ReactNode }) => {
     {
       product_name: parseAsString.withDefault(''),
       offset: parseAsString.withDefault('0'),
+      category_name: parseAsArrayOf(parseAsString).withDefault([]),
+      color: parseAsArrayOf(parseAsString).withDefault([]),
+      size: parseAsArrayOf(parseAsString).withDefault([]),
+      price: parseAsString.withDefault(''),
+      max_price: parseAsString.withDefault(''),
+      min_price: parseAsString.withDefault(''),
     },
     { history: 'replace' }
   );
