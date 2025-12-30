@@ -54,6 +54,15 @@
     "countryPlaceholder": "مصر",
     "namePlaceholder": "ياسمين عبدالعزيز"
   },
+  "OrderSuccess": {
+    "title": "تم تقديم طلبك بنجاح!",
+    "message": "شكراً لتسوقك معنا. تم استلام طلبك وسيتم معالجته قريباً.",
+    "orderId": "معرف الطلب",
+    "deliveryDetails": "تفاصيل التوصيل",
+    "continueShopping": "متابعة التسوق",
+    "viewOrderDetails": "عرض تفاصيل الطلب",
+    "confirmationNote": "لقد تم إرسال تأكيد طلب إلى بريدك الإلكتروني."
+  },
   "ProductsPage": {
     "products": "المنتجات",
     "filters": "الفلاتر",

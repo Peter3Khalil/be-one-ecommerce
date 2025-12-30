@@ -3,15 +3,16 @@ import { cn } from '@/lib/utils';
 import { Button } from '@ui/button';
 import { Label } from '@ui/label';
 import { RadioGroup, RadioGroupItem } from '@ui/radio-group';
+import { Loader2 } from 'lucide-react';
+import { useLocale, useTranslations } from 'next-intl';
 import { FC, useState } from 'react';
+import { useCreateOrder } from '../mutations';
 import AddressDialog, {
   AddressFormData,
   addressSchema,
 } from './address-dialog';
-import { useLocale, useTranslations } from 'next-intl';
-import { useCreateOrder } from '../mutations';
 import { useCart } from './cart-provider';
-import { Loader2 } from 'lucide-react';
+import OrderSuccess from './order-success';
 
 const STORAGE_KEY = 'address';
 
@@ -49,13 +50,20 @@ const PaymentSummary: FC<Props> = ({
 }) => {
   const locale = useLocale();
   const total = subtotal - subtotal * discount + deliveryFee;
-  const { mutate, isPending } = useCreateOrder();
+  const { mutate, isPending, data, isSuccess } = useCreateOrder();
   const { products } = useCart();
   const [isClicked, setIsClicked] = useState(false);
   const [address, setAddress] = useState<AddressFormData | undefined>(
     loadAddressFromStorage
   );
   const t = useTranslations();
+
+  if (isSuccess && data && address) {
+    return (
+      <OrderSuccess orderId={data.data.data.id.toString()} address={address} />
+    );
+  }
+
   return (
     <div className="h-fit space-y-4 bg-card p-4 md:col-span-2">
       <h3 className="border-b pb-4 text-2xl font-semibold">

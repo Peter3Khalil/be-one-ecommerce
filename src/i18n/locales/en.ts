@@ -77,6 +77,16 @@ export default {
     chooseSize: 'Choose Size',
     selectColor: 'Select Color',
   },
+  OrderSuccess: {
+    title: 'Your order has been successfully placed!',
+    message:
+      'Thank you for your order. We will send you a confirmation email shortly.',
+    orderId: 'Order ID',
+    deliveryDetails: 'Delivery Details',
+    continueShopping: 'Continue Shopping',
+    viewOrderDetails: 'View Order Details',
+    confirmationNote: 'You will receive order updates via email and phone.',
+  },
   Global: {
     searchProductsPlaceholder: 'Search products...',
     next: 'Next',

@@ -54,6 +54,15 @@ export type TranslationType = {
     countryPlaceholder: string;
     namePlaceholder: string;
   };
+  OrderSuccess: {
+    title: string;
+    message: string;
+    orderId: string;
+    deliveryDetails: string;
+    continueShopping: string;
+    viewOrderDetails: string;
+    confirmationNote: string;
+  };
   ProductsPage: {
     products: string;
     filters: string;
