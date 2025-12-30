@@ -11,12 +11,17 @@ import {
 } from '@/modules/products/queries';
 import { useTranslations } from 'next-intl';
 import { notFound, useParams } from 'next/navigation';
+import { parseAsString, useQueryStates } from 'nuqs';
 
 const ProductDetails = () => {
   const t = useTranslations();
   const { id: productId } = useParams();
   const { data: productData, isLoading: isProductLoading } =
     useProductByIdQuery(productId as string);
+  const [params] = useQueryStates({
+    color: parseAsString,
+    size: parseAsString,
+  });
 
   const productDetails = productData?.data.data;
 
@@ -26,7 +31,11 @@ const ProductDetails = () => {
   if (!productDetails) return notFound();
   return (
     <div>
-      <ProductView product={productDetails} />
+      <ProductView
+        product={productDetails}
+        defaultColor={params.color}
+        defaultSize={params.size}
+      />
       <Reviews />
       <ProductsSection
         title={t('Global.youMightAlsoLike')}

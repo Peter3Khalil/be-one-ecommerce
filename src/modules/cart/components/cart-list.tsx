@@ -57,7 +57,7 @@ const CartList: FC<Props> = ({
             </Link>
             <div className="flex w-full flex-col">
               <Link
-                href={`/products/${productId}`}
+                href={`/products/${productId}?color=${color}&size=${size}`}
                 className="underline-offset-2 hover:underline"
               >
                 <h2 className="max-w-[154px] text-base font-semibold md:max-w-md md:text-lg md:text-xl">

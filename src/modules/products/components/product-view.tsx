@@ -14,13 +14,21 @@ import { Link } from '@/i18n/navigation';
 import { ShoppingCart } from 'lucide-react';
 type Props = {
   product: Product;
+  defaultColor?: string | null;
+  defaultSize?: string | null;
 };
 const ProductView: FC<Props> = ({
   product: { images, description, price, name, variants, id },
+  defaultColor,
+  defaultSize,
 }) => {
   const t = useTranslations();
-  const [currentColor, setCurrentColor] = useState(variants[0].color || '');
-  const [currentSize, setCurrentSize] = useState(variants[0].size || '');
+  const [currentColor, setCurrentColor] = useState(
+    defaultColor || variants[0].color || ''
+  );
+  const [currentSize, setCurrentSize] = useState(
+    defaultSize || variants[0].size || ''
+  );
   const distinctColors = getDistinctColors({ variants });
   const [quantity, setQuantity] = useState(1);
   const {
