@@ -9,6 +9,9 @@ import AddressDialog, {
   addressSchema,
 } from './address-dialog';
 import { useLocale, useTranslations } from 'next-intl';
+import { useCreateOrder } from '../mutations';
+import { useCart } from './cart-provider';
+import { Loader2 } from 'lucide-react';
 
 const STORAGE_KEY = 'address';
 
@@ -46,6 +49,8 @@ const PaymentSummary: FC<Props> = ({
 }) => {
   const locale = useLocale();
   const total = subtotal - subtotal * discount + deliveryFee;
+  const { mutate, isPending } = useCreateOrder();
+  const { products } = useCart();
   const [isClicked, setIsClicked] = useState(false);
   const [address, setAddress] = useState<AddressFormData | undefined>(
     loadAddressFromStorage
@@ -178,11 +183,22 @@ const PaymentSummary: FC<Props> = ({
         <span>${total.toFixed(2)}</span>
       </div>
       <Button
-        onClick={() => setIsClicked(true)}
-        disabled={(!address && isClicked) || disabled}
+        onClick={() => {
+          setIsClicked(true);
+          if (address)
+            mutate({
+              cartItems: products.map(({ variantId, quantity }) => ({
+                product_variant_id: +variantId,
+                quantity,
+              })),
+              shippingData: address,
+            });
+        }}
+        disabled={(!address && isClicked) || disabled || isPending}
         className="w-full rounded-full"
         size="lg"
       >
+        {isPending && <Loader2 className="animate-spin" />}
         {t('CartPage.placeOrder')}
       </Button>
     </div>
