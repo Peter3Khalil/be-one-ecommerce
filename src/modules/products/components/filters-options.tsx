@@ -1,5 +1,4 @@
 import { CollapsibleTrigger } from '@radix-ui/react-collapsible';
-import { Checkbox } from '@ui/checkbox';
 import { Collapsible, CollapsibleContent } from '@ui/collapsible';
 import CustomCheckbox from '@ui/custom-checkbox';
 import { Input } from '@ui/input';
@@ -28,12 +27,7 @@ export const FilterOption = ({ title, children }: FilterOptionsProps) => {
     </Collapsible>
   );
 };
-type Options = AvailableFilters & {
-  availability: {
-    inStock: boolean;
-    outOfStock: boolean;
-  };
-};
+type Options = AvailableFilters;
 type Props = {
   options: Options;
   className?: string;
@@ -49,10 +43,6 @@ const INITIAL_OPTIONS: Options = {
   price_range: {
     min_price: '0',
     max_price: '1000',
-  },
-  availability: {
-    inStock: false,
-    outOfStock: false,
   },
 };
 export const FiltersOptions: FC<Props> = ({
@@ -236,57 +226,6 @@ export const FiltersOptions: FC<Props> = ({
           </ul>
         </FilterOption>
       )}
-
-      <FilterOption title={t('ProductsPage.availability')}>
-        <label className="flex items-center gap-2">
-          <Checkbox
-            checked={values.availability.inStock}
-            onCheckedChange={(checked) => {
-              dispatch({
-                type: 'SET_AVAILABILITY',
-                payload: {
-                  ...values.availability,
-                  inStock: checked as boolean,
-                },
-              });
-              onOptionsChange?.({
-                ...values,
-                availability: {
-                  ...values.availability,
-                  inStock: checked as boolean,
-                },
-              });
-            }}
-          />
-          <span className="cursor-pointer text-muted-foreground peer-data-[state=checked]:text-foreground">
-            {t('ProductsPage.inStock')}
-          </span>
-        </label>
-        <label className="flex items-center gap-2">
-          <Checkbox
-            checked={values.availability.outOfStock}
-            onCheckedChange={(checked) => {
-              dispatch({
-                type: 'SET_AVAILABILITY',
-                payload: {
-                  ...values.availability,
-                  outOfStock: checked as boolean,
-                },
-              });
-              onOptionsChange?.({
-                ...values,
-                availability: {
-                  ...values.availability,
-                  outOfStock: checked as boolean,
-                },
-              });
-            }}
-          />
-          <span className="cursor-pointer text-muted-foreground peer-data-[state=checked]:text-foreground">
-            {t('ProductsPage.outOfStock')}
-          </span>
-        </label>
-      </FilterOption>
     </div>
   );
 };
@@ -310,13 +249,6 @@ type Actions =
   | {
       type: 'SET_PRICE_RANGE';
       payload: [number, number];
-    }
-  | {
-      type: 'SET_AVAILABILITY';
-      payload: {
-        inStock: boolean;
-        outOfStock: boolean;
-      };
     }
   | {
       type: 'RESET_FILTERS';
@@ -361,8 +293,6 @@ function reducer(state: Options, action: Actions): Options {
           min_price: action.payload[0].toString(),
         },
       };
-    case 'SET_AVAILABILITY':
-      return { ...state, availability: action.payload };
     case 'RESET_FILTERS':
       return {
         sizes: [],
@@ -371,10 +301,6 @@ function reducer(state: Options, action: Actions): Options {
         price_range: {
           min_price: '0',
           max_price: '1000',
-        },
-        availability: {
-          inStock: false,
-          outOfStock: false,
         },
       };
     default:

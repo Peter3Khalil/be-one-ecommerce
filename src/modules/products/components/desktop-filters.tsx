@@ -44,10 +44,7 @@ const DesktopFilters: FC<Props> = ({
         onOptionsChange={(options) => {
           onOptionsChange?.(options);
         }}
-        options={{
-          ...filtersOptions,
-          availability: { inStock: false, outOfStock: false },
-        }}
+        options={filtersOptions}
         className="*:not-last:border-b *:not-last:py-4 *:last:pt-4"
       />
     </div>

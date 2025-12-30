@@ -66,10 +66,7 @@ const MobileFilters: FC<Props> = ({
           onOptionsChange={(options) => {
             onOptionsChange?.(options);
           }}
-          options={{
-            ...filtersOptions,
-            availability: { inStock: false, outOfStock: false },
-          }}
+          options={filtersOptions}
           className="px-4 *:py-4 *:not-last:border-b *:last:pt-4"
           defaultValues={defaultValues}
         />
