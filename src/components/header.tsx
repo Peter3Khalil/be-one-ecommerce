@@ -67,8 +67,16 @@ const Header = () => {
               placeholder={t('Global.searchProductsPlaceholder')}
               className="hidden rounded-full border px-4 py-2 md:block lg:w-80"
               onChange={(e) =>
-                setQuery({ product_name: e.target.value, offset: '1' })
+                setQuery({ product_name: e.target.value, offset: '0' })
               }
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' && pathname !== '/products') {
+                  router.push({
+                    pathname: '/products',
+                    query: { product_name: query.product_name },
+                  });
+                }
+              }}
               value={query.product_name}
             />
             {pathname !== '/products' && (
@@ -132,8 +140,16 @@ const Header = () => {
             placeholder={t('Global.searchProductsPlaceholder')}
             value={query.product_name}
             onChange={(e) =>
-              setQuery({ product_name: e.target.value, offset: '1' })
+              setQuery({ product_name: e.target.value, offset: '0' })
             }
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' && pathname !== '/products') {
+                router.push({
+                  pathname: '/products',
+                  query: { product_name: query.product_name },
+                });
+              }
+            }}
             ref={inputRef}
           />
           {pathname !== '/products' && (
