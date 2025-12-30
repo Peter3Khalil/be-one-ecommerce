@@ -31,11 +31,11 @@ type Actions =
 function reducer(state: ProductParams, action: Actions): ProductParams {
   switch (action.type) {
     case 'SET_PRODUCT_NAME':
-      return { ...state, product_name: action.payload, offset: '1' };
+      return { ...state, product_name: action.payload, offset: '0' };
     case 'SET_PAGE':
       return { ...state, offset: action.payload };
     case 'RESET_FILTERS':
-      return { product_name: '', offset: '1' };
+      return { product_name: '', offset: '0' };
     default:
       return state;
   }
