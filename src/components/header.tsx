@@ -2,10 +2,17 @@
 import { Link, usePathname, useRouter } from '@/i18n/navigation';
 import { cn } from '@/lib/utils';
 import { useCart } from '@/modules/cart/components/cart-provider';
+import { useCategoriesQuery } from '@/modules/products/queries';
 import { Button } from '@ui/button';
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from '@ui/collapsible';
+import CustomNavigationMenu from '@ui/custom-navigation-menu';
 import { Input } from '@ui/input';
 import { Sheet, SheetContent, SheetHeader, SheetTrigger } from '@ui/sheet';
-import { Menu, Search, ShoppingCart, X } from 'lucide-react';
+import { ChevronRight, Menu, Search, ShoppingCart, X } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { parseAsString, useQueryStates } from 'nuqs';
 import { Activity, useEffect, useRef, useState } from 'react';
@@ -16,6 +23,8 @@ const Header = () => {
   const { count } = useCart();
   const navItems = useNavItems();
   const inputRef = useRef<HTMLInputElement>(null);
+  const { data: categoriesData } = useCategoriesQuery();
+  const categories = categoriesData?.data.data || [];
   const [query, setQuery] = useQueryStates({
     product_name: parseAsString.withDefault(''),
     offset: parseAsString.withDefault('0'),
@@ -40,7 +49,8 @@ const Header = () => {
       {!isSearchOpened && (
         <div className="container flex items-center justify-between gap-8">
           <nav className="flex items-center sm:gap-8">
-            <MobileMenu />
+            <MobileMenu categories={categories.map(({ name }) => name)} />
+
             <Link
               href="/"
               className="text-3xl leading-none font-bold text-nowrap"
@@ -49,16 +59,25 @@ const Header = () => {
             >
               Be One.
             </Link>
-            <ul className="hidden items-center gap-4 sm:flex">
-              {navItems.map((item) => (
-                <li
-                  key={item.href}
-                  className="text-muted-foreground duration-200 hover:text-foreground"
-                >
-                  <Link href={item.href}>{item.label}</Link>
-                </li>
-              ))}
-            </ul>
+            <div className="hidden items-center gap-4 sm:flex">
+              <ul className="items-center gap-4 text-sm font-medium sm:flex">
+                {navItems.map((item) => (
+                  <li
+                    key={item.href}
+                    className="text-muted-foreground duration-200 hover:text-foreground"
+                  >
+                    <Link href={item.href}>{item.label}</Link>
+                  </li>
+                ))}
+              </ul>
+              <CustomNavigationMenu
+                title={t('Global.categories')}
+                items={categories.map(({ name }) => ({
+                  title: name,
+                  href: `/products?category_name=${name}`,
+                }))}
+              />
+            </div>
           </nav>
 
           <div className="flex w-fit items-center gap-4">
@@ -174,10 +193,15 @@ const Header = () => {
   );
 };
 
-const MobileMenu = () => {
+type MobileMenuProps = {
+  categories?: string[];
+};
+const MobileMenu = ({ categories = [] }: MobileMenuProps) => {
   const navItems = useNavItems();
+  const [open, setOpen] = useState(false);
+  const t = useTranslations();
   return (
-    <Sheet>
+    <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger asChild>
         <Button
           variant="ghost"
@@ -193,6 +217,9 @@ const MobileMenu = () => {
             href="/"
             className="text-3xl leading-none font-bold text-nowrap"
             lang="en"
+            onClick={() => {
+              setOpen(false);
+            }}
             // eslint-disable-next-line i18next/no-literal-string
           >
             Be One.
@@ -205,12 +232,38 @@ const MobileMenu = () => {
                 <Link
                   className="block rounded-md px-4 py-3 hover:bg-accent/50"
                   href={item.href}
+                  onClick={() => {
+                    setOpen(false);
+                  }}
                 >
                   {item.label}
                 </Link>
               </li>
             ))}
           </ul>
+          <Collapsible className="group/collapsible">
+            <CollapsibleTrigger className="flex w-full items-center rounded-md px-4 py-3 hover:bg-accent/50">
+              <span>{t('Global.categories')}</span>
+              <ChevronRight
+                size={20}
+                className="ms-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90 rtl:rotate-180"
+              />
+            </CollapsibleTrigger>
+            <CollapsibleContent className="px-4">
+              {categories.map((name) => (
+                <Link
+                  key={name}
+                  href={`/products?category_name=${name}`}
+                  className="block rounded-md px-3 py-2 text-sm text-muted-foreground hover:bg-accent/50 hover:text-foreground"
+                  onClick={() => {
+                    setOpen(false);
+                  }}
+                >
+                  {name}
+                </Link>
+              ))}
+            </CollapsibleContent>
+          </Collapsible>
         </nav>
       </SheetContent>
     </Sheet>
@@ -219,11 +272,7 @@ const MobileMenu = () => {
 
 const useNavItems = () => {
   const t = useTranslations();
-  return [
-    { label: t('HomePage.home'), href: '/' },
-    { label: t('Global.summerCollection'), href: '/products?category=summer' },
-    { label: t('Global.winterCollection'), href: '/products?category=winter' },
-  ];
+  return [{ label: t('HomePage.home'), href: '/' }];
 };
 
 export default Header;

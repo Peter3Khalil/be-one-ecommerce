@@ -23,3 +23,10 @@ export function getProductById(productId: string) {
 export function getAvailableFilters() {
   return axiosClient.get<FiltersResponse>('/products/filters');
 }
+
+export function getCategories() {
+  return axiosClient.get<{
+    success: boolean;
+    data: Array<{ id: number; name: string }>;
+  }>('/categories');
+}
