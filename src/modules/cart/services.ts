@@ -8,5 +8,11 @@ export function createOrder(data: {
   }>;
   shippingData: ShippingData;
 }) {
-  return axiosClient.post<CreateOrderResponse>('/orders', data);
+  return axiosClient.post<CreateOrderResponse>('/orders', {
+    ...data,
+    shippingData: {
+      ...data.shippingData,
+      postal_code: data.shippingData.postal_code || '11111',
+    },
+  });
 }

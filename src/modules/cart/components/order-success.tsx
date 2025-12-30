@@ -88,19 +88,19 @@ const OrderSuccess: FC<Props> = ({
             <p className="text-sm text-muted-foreground">
               {t('CartPage.country')}
             </p>
-            <p className="font-medium">{address.country}</p>
+            <p className="font-medium capitalize">{address.country}</p>
           </div>
           <div>
             <p className="text-sm text-muted-foreground">
               {t('CartPage.city')}
             </p>
-            <p className="font-medium">{address.city}</p>
+            <p className="font-medium capitalize">{address.city}</p>
           </div>
           <div>
             <p className="text-sm text-muted-foreground">
               {t('CartPage.region')}
             </p>
-            <p className="font-medium">{address.region}</p>
+            <p className="font-medium capitalize">{address.region}</p>
           </div>
 
           <div>

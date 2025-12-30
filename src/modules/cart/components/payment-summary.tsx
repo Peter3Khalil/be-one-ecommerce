@@ -118,12 +118,14 @@ const PaymentSummary: FC<Props> = ({
               </span>{' '}
               {address.address}
             </p>
-            <p>
-              <span className="text-sm text-muted-foreground">
-                {t('CartPage.postalCode')}:
-              </span>{' '}
-              {address.postal_code}
-            </p>
+            {address.postal_code && (
+              <p>
+                <span className="text-sm text-muted-foreground">
+                  {t('CartPage.postalCode')}:
+                </span>{' '}
+                {address.postal_code}
+              </p>
+            )}
             <AddressDialog
               onAddressAdd={(data) => {
                 setAddress(data);

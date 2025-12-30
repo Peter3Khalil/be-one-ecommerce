@@ -29,7 +29,7 @@ export const addressSchema = z.object({
   address: z.string().min(1, 'Address is required'),
   city: z.string().min(1, 'City is required'),
   region: z.string().min(1, 'Region is required'),
-  postal_code: z.string().optional().or(z.literal('')),
+  postal_code: z.string().optional(),
   country: z.string().optional().default('egypt'),
 });
 export type AddressFormData = z.infer<typeof addressSchema>;
