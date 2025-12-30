@@ -11,9 +11,28 @@ import {
 import { Filter } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { FiltersOptions } from './filters-options';
+import { AvailableFilters } from '../types';
+import { FC } from 'react';
 
-const MobileFilters = () => {
+type Props = {
+  filtersOptions?: AvailableFilters;
+  defaultValues?: Partial<AvailableFilters> & {
+    availability?: { inStock: boolean; outOfStock: boolean };
+  };
+  // eslint-disable-next-line no-unused-vars
+  onOptionsChange?: (options: AvailableFilters) => void;
+  onReset?: () => void;
+};
+const MobileFilters: FC<Props> = ({
+  defaultValues,
+  filtersOptions,
+  onOptionsChange,
+  onReset,
+}) => {
   const t = useTranslations();
+  if (!filtersOptions) {
+    return null;
+  }
   return (
     <Drawer>
       <DrawerTrigger asChild>
@@ -31,21 +50,26 @@ const MobileFilters = () => {
             <h3 className="text-lg font-semibold lg:text-xl">
               {t('ProductsPage.filters')}
             </h3>
-            <Button variant="outline" size="sm" className="rounded-full">
+            <Button
+              variant="outline"
+              size="sm"
+              className="rounded-full"
+              onClick={onReset}
+            >
               {t('ProductsPage.reset')}
             </Button>
           </div>
         </DrawerHeader>
         <FiltersOptions
           onOptionsChange={(options) => {
-            console.log(options);
+            onOptionsChange?.(options);
           }}
           options={{
-            colors: ['Red', 'Blue'],
-            priceRange: [50, 100],
-            sizes: ['S', 'XL'],
+            ...filtersOptions,
+            availability: { inStock: false, outOfStock: false },
           }}
           className="px-4 *:py-4 *:not-last:border-b *:last:pt-4"
+          defaultValues={defaultValues}
         />
         <DrawerFooter>
           <Button>{t('ProductsPage.applyFilters')}</Button>

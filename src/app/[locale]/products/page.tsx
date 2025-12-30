@@ -53,7 +53,24 @@ const Products = () => {
               {t('ProductsPage.products')}
             </p>
           </div>
-          <MobileFilters />
+          <MobileFilters
+            filtersOptions={filtersOptions}
+            onOptionsChange={(options) => {
+              dispatch({ type: 'SET_CATEGORIES', payload: options.categories });
+              dispatch({ type: 'SET_COLORS', payload: options.colors });
+              dispatch({ type: 'SET_SIZES', payload: options.sizes });
+            }}
+            defaultValues={{
+              categories: params.category_name,
+              colors: params.color,
+              sizes: params.size,
+            }}
+            onReset={() => {
+              dispatch({ type: 'RESET_FILTERS' });
+              setIsResetting((prev) => !prev);
+            }}
+            key={String(isResetting)}
+          />
         </div>
 
         {isLoading ? (
