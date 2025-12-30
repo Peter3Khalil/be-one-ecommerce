@@ -8,6 +8,7 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
 } from './navigation-menu';
+import { cn, detectLang } from '@/lib/utils';
 type Props = {
   items?: Array<{ title: string; href: string }>;
   title: string;
@@ -24,7 +25,10 @@ const CustomNavigationMenu: FC<Props> = ({ items = [], title }) => {
             {items.map((item) => (
               <NavigationMenuLink
                 key={item.title}
-                className="w-[150px]"
+                className={cn('w-[150px]', {
+                  arabic: detectLang(item.title) === 'ar',
+                  english: detectLang(item.title) === 'en',
+                })}
                 asChild
               >
                 <Link href={item.href}>{item.title}</Link>

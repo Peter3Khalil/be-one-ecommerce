@@ -1,6 +1,6 @@
 'use client';
 import { Link, usePathname, useRouter } from '@/i18n/navigation';
-import { cn } from '@/lib/utils';
+import { cn, detectLang } from '@/lib/utils';
 import { useCart } from '@/modules/cart/components/cart-provider';
 import { useCategoriesQuery } from '@/modules/products/queries';
 import { Button } from '@ui/button';
@@ -254,7 +254,13 @@ const MobileMenu = ({ categories = [] }: MobileMenuProps) => {
                 <Link
                   key={name}
                   href={`/products?category_name=${name}`}
-                  className="block rounded-md px-3 py-2 text-sm text-muted-foreground hover:bg-accent/50 hover:text-foreground"
+                  className={cn(
+                    'block rounded-md px-3 py-2 text-sm text-muted-foreground hover:bg-accent/50 hover:text-foreground',
+                    {
+                      arabic: detectLang(name) === 'ar',
+                      english: detectLang(name) === 'en',
+                    }
+                  )}
                   onClick={() => {
                     setOpen(false);
                   }}
