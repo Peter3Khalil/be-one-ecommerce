@@ -272,7 +272,13 @@ const MobileMenu = ({ categories = [] }: MobileMenuProps) => {
 
 const useNavItems = () => {
   const t = useTranslations();
-  return [{ label: t('HomePage.home'), href: '/' }];
+  return [
+    { label: t('HomePage.home'), href: '/' },
+    {
+      label: t('ProductsPage.products'),
+      href: '/products',
+    },
+  ];
 };
 
 export default Header;
