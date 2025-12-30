@@ -7,6 +7,7 @@ import { ChevronRight } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import React, { FC, useReducer } from 'react';
 import { AvailableFilters } from '../types';
+import { cn, detectLang } from '@/lib/utils';
 type FilterOptionsProps = {
   title: string;
   children: React.ReactNode;
@@ -152,6 +153,10 @@ export const FiltersOptions: FC<Props> = ({
                     }
                   }}
                   key={size}
+                  className={cn({
+                    arabic: detectLang(size) === 'ar',
+                    english: detectLang(size) === 'en',
+                  })}
                 >
                   {size}
                 </CustomCheckbox>
@@ -184,6 +189,10 @@ export const FiltersOptions: FC<Props> = ({
                     }
                   }}
                   key={color}
+                  className={cn({
+                    arabic: detectLang(color) === 'ar',
+                    english: detectLang(color) === 'en',
+                  })}
                 >
                   {color}
                 </CustomCheckbox>
