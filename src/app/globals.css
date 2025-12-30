@@ -37,6 +37,8 @@
   --color-popover: var(--popover);
   --color-card-foreground: var(--card-foreground);
   --color-card: var(--card);
+  --font-cairo: var(--font-cairo);
+  --font-roboto: var(--font-roboto);
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
@@ -165,10 +167,13 @@
   }
 }
 
-:lang(ar) {
-  direction: rtl;
-}
-
-:lang(en) {
-  direction: ltr;
+@layer utilities {
+  .arabic {
+    font-family: var(--font-cairo);
+    direction: rtl;
+  }
+  .english {
+    font-family: var(--font-roboto);
+    direction: ltr;
+  }
 }

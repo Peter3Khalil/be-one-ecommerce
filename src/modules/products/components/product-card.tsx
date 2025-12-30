@@ -1,6 +1,6 @@
 'use client';
 import { Link } from '@/i18n/navigation';
-import { cn, formatPrice } from '@/lib/utils';
+import { cn, detectLang, formatPrice } from '@/lib/utils';
 import { Product } from '@/modules/products/types';
 import Rating from '@components/rating';
 import { useState } from 'react';
@@ -46,7 +46,13 @@ const ProductCard = ({ id, name, price, images, delay = 0 }: Props) => {
       <div className="mt-4 space-y-2 px-1">
         <Link
           href={`/products/${id}`}
-          className="font-medium text-foreground transition-colors duration-300 group-hover:text-primary"
+          className={cn(
+            'font-medium text-foreground transition-colors duration-300 group-hover:text-primary',
+            {
+              arabic: detectLang(name) === 'ar',
+              english: detectLang(name) === 'en',
+            }
+          )}
         >
           {name}
         </Link>

@@ -17,6 +17,7 @@ const roboto = Roboto({
   fallback: ['sans-serif', 'arial'],
   style: ['normal', 'italic'],
   subsets: ['latin'],
+  variable: '--font-roboto',
 });
 
 const cairo = Cairo({
@@ -24,6 +25,7 @@ const cairo = Cairo({
   fallback: ['sans-serif', 'arial'],
   style: ['normal'],
   subsets: ['latin'],
+  variable: '--font-cairo',
 });
 
 export const metadata: Metadata = {
@@ -48,6 +50,7 @@ export default async function RootLayout({
       lang={locale}
       dir={locale === 'ar' ? 'rtl' : 'ltr'}
       suppressHydrationWarning
+      className={cn(roboto.variable, cairo.variable)}
     >
       <body
         className={cn(`bg-background text-foreground antialiased`, {

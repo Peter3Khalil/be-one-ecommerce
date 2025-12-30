@@ -5,7 +5,7 @@ import { Trash2 } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { FC } from 'react';
 import { CartProduct } from '../types';
-import { cn, formatPrice } from '@/lib/utils';
+import { cn, detectLang, formatPrice } from '@/lib/utils';
 type Props = {
   products: Array<CartProduct>;
   // eslint-disable-next-line no-unused-vars
@@ -60,15 +60,39 @@ const CartList: FC<Props> = ({
                 href={`/products/${productId}?color=${color}&size=${size}`}
                 className="underline-offset-2 hover:underline"
               >
-                <h2 className="max-w-[154px] text-base font-semibold md:max-w-md md:text-lg md:text-xl">
+                <h2
+                  className={cn(
+                    'mb-1 w-fit max-w-[154px] text-base font-semibold md:max-w-md md:text-lg md:text-xl',
+                    {
+                      arabic: detectLang(title) === 'ar',
+                      english: detectLang(title) === 'en',
+                    }
+                  )}
+                >
                   {title}
                 </h2>
               </Link>
               <p className="text-sm text-muted-foreground">
-                <b>{t('Global.size')}:</b> {size}
+                <b>{t('Global.size')}:</b>{' '}
+                <span
+                  className={cn({
+                    arabic: detectLang(size) === 'ar',
+                    english: detectLang(size) === 'en',
+                  })}
+                >
+                  {size}
+                </span>
               </p>
               <p className="text-sm text-muted-foreground">
-                <b>{t('Global.color')}:</b> {color}
+                <b>{t('Global.color')}:</b>{' '}
+                <span
+                  className={cn({
+                    arabic: detectLang(color) === 'ar',
+                    english: detectLang(color) === 'en',
+                  })}
+                >
+                  {color}
+                </span>
               </p>
               <div className="mt-auto flex w-full items-center">
                 <p className="text-xl font-medium md:text-3xl">

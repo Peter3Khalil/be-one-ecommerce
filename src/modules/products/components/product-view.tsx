@@ -9,7 +9,7 @@ import { useTranslations } from 'next-intl';
 import { FC, useState } from 'react';
 import { Product } from '../types';
 import { useCart } from '@/modules/cart/components/cart-provider';
-import { formatPrice } from '@/lib/utils';
+import { cn, detectLang, formatPrice } from '@/lib/utils';
 import { Link } from '@/i18n/navigation';
 import { ShoppingCart, Share2 } from 'lucide-react';
 import { Popover, PopoverContent, PopoverTrigger } from '@ui/popover';
@@ -43,7 +43,6 @@ const ProductView: FC<Props> = ({
   const currentVariantId =
     variants.find((v) => v.color === currentColor && v.size === currentSize)
       ?.id || '';
-
   return (
     <article className="container flex flex-col gap-8 py-10 *:flex-1 md:flex-row md:py-16">
       <ImageGallery
@@ -56,14 +55,28 @@ const ProductView: FC<Props> = ({
       <div className="flex flex-1 flex-col divide-y-2 divide-accent *:py-4 *:last:pb-0 dark:divide-y dark:divide-accent/50">
         <div className="space-y-2">
           <div className="flex items-start justify-between gap-2">
-            <h1 className="text-3xl font-bold">{name}</h1>
+            <h1
+              className={cn('text-3xl font-bold', {
+                arabic: detectLang(name) === 'ar',
+                english: detectLang(name) === 'en',
+              })}
+            >
+              {name}
+            </h1>
             <ShareProduct name={name} color={currentColor} size={currentSize} />
           </div>
           <Rating rating={4.5} size={24} />
           <p className="text-xl font-semibold text-primary">
             {formatPrice(+price)}
           </p>
-          <p className="text-muted-foreground">{description}</p>
+          <p
+            className={cn('text-muted-foreground', {
+              arabic: detectLang(description) === 'ar',
+              english: detectLang(description) === 'en',
+            })}
+          >
+            {description}
+          </p>
         </div>
         <div>
           <span className="text-muted-foreground">
@@ -88,7 +101,10 @@ const ProductView: FC<Props> = ({
                         variant:
                           currentColor === color ? 'default' : 'secondary',
                         size: 'sm',
-                        className: 'capitalize',
+                        className: cn('capitalize', {
+                          arabic: detectLang(color) === 'ar',
+                          english: detectLang(color) === 'en',
+                        }),
                       })}
                       htmlFor={color}
                     >
@@ -120,6 +136,10 @@ const ProductView: FC<Props> = ({
                       className={buttonVariants({
                         variant: size == currentSize ? 'default' : 'secondary',
                         size: 'sm',
+                        className: cn({
+                          arabic: detectLang(size) === 'ar',
+                          english: detectLang(size) === 'en',
+                        }),
                       })}
                       htmlFor={size}
                     >
