@@ -12,7 +12,6 @@ import AddressDialog, {
   addressSchema,
 } from './address-dialog';
 import { useCart } from './cart-provider';
-import OrderSuccess from './order-success';
 
 const STORAGE_KEY = 'address';
 
@@ -41,29 +40,25 @@ type Props = {
   discount?: number;
   deliveryFee?: number;
   disabled?: boolean;
+  // eslint-disable-next-line no-unused-vars
+  onSuccess?: (data: { orderId: number; address: AddressFormData }) => void;
 };
 const PaymentSummary: FC<Props> = ({
   subtotal,
   discount = 0,
   deliveryFee = 0,
   disabled,
+  onSuccess,
 }) => {
   const locale = useLocale();
   const total = subtotal - subtotal * discount + deliveryFee;
-  const { mutate, isPending, data, isSuccess } = useCreateOrder();
+  const { mutate, isPending } = useCreateOrder();
   const { products } = useCart();
   const [isClicked, setIsClicked] = useState(false);
   const [address, setAddress] = useState<AddressFormData | undefined>(
     loadAddressFromStorage
   );
   const t = useTranslations();
-
-  if (isSuccess && data && address) {
-    return (
-      <OrderSuccess orderId={data.data.data.id.toString()} address={address} />
-    );
-  }
-
   return (
     <div className="h-fit space-y-4 bg-card p-4 md:col-span-2">
       <h3 className="border-b pb-4 text-2xl font-semibold">
@@ -194,13 +189,23 @@ const PaymentSummary: FC<Props> = ({
         onClick={() => {
           setIsClicked(true);
           if (address)
-            mutate({
-              cartItems: products.map(({ variantId, quantity }) => ({
-                product_variant_id: +variantId,
-                quantity,
-              })),
-              shippingData: address,
-            });
+            mutate(
+              {
+                cartItems: products.map(({ variantId, quantity }) => ({
+                  product_variant_id: +variantId,
+                  quantity,
+                })),
+                shippingData: address,
+              },
+              {
+                onSuccess(data) {
+                  onSuccess?.({
+                    orderId: data.data.data.order_id,
+                    address,
+                  });
+                },
+              }
+            );
         }}
         disabled={(!address && isClicked) || disabled || isPending}
         className="w-full rounded-full"

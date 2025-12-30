@@ -6,14 +6,21 @@ import { Button } from '@ui/button';
 import { useTranslations } from 'next-intl';
 import { useRouter } from '@/i18n/navigation';
 import { AddressFormData } from './address-dialog';
+import { cn } from '@/lib/utils';
 
 type Props = {
   orderId?: string;
   address: AddressFormData;
   onContinueShopping?: () => void;
+  className?: string;
 };
 
-const OrderSuccess: FC<Props> = ({ orderId, address, onContinueShopping }) => {
+const OrderSuccess: FC<Props> = ({
+  orderId,
+  address,
+  onContinueShopping,
+  className,
+}) => {
   const t = useTranslations();
   const router = useRouter();
 
@@ -26,7 +33,7 @@ const OrderSuccess: FC<Props> = ({ orderId, address, onContinueShopping }) => {
   };
 
   return (
-    <div className="space-y-6 p-4 md:col-span-2 md:p-6">
+    <div className={cn('space-y-6 p-4 md:p-6', className)}>
       {/* Success Icon and Message */}
       <div className="flex flex-col items-center space-y-4 text-center">
         <div className="rounded-full bg-green-50 p-6 dark:bg-green-950">
@@ -54,52 +61,46 @@ const OrderSuccess: FC<Props> = ({ orderId, address, onContinueShopping }) => {
           <FileText className="h-5 w-5" />
           {t('OrderSuccess.deliveryDetails')}
         </h2>
-        <div className="space-y-3">
-          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-            <div>
-              <p className="text-sm text-muted-foreground">
-                {t('CartPage.name')}
-              </p>
-              <p className="font-medium">{address.customer_name}</p>
-            </div>
-            <div>
-              <p className="text-sm text-muted-foreground">
-                {t('CartPage.phone')}
-              </p>
-              <p className="font-medium" dir="ltr">
-                {address.phone}
-              </p>
-            </div>
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+          <div>
+            <p className="text-sm text-muted-foreground">
+              {t('CartPage.name')}
+            </p>
+            <p className="font-medium">{address.customer_name}</p>
+          </div>
+          <div>
+            <p className="text-sm text-muted-foreground">
+              {t('CartPage.phone')}
+            </p>
+            <p className="font-medium" dir="ltr">
+              {address.phone}
+            </p>
           </div>
 
-          {address.email && (
-            <div>
-              <p className="text-sm text-muted-foreground">
-                {t('CartPage.email')}
-              </p>
-              <p className="font-medium">{address.email}</p>
-            </div>
-          )}
+          <div>
+            <p className="text-sm text-muted-foreground">
+              {t('CartPage.email')}
+            </p>
+            <p className="font-medium">{address.email}</p>
+          </div>
 
-          <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
-            <div>
-              <p className="text-sm text-muted-foreground">
-                {t('CartPage.country')}
-              </p>
-              <p className="font-medium">{address.country}</p>
-            </div>
-            <div>
-              <p className="text-sm text-muted-foreground">
-                {t('CartPage.city')}
-              </p>
-              <p className="font-medium">{address.city}</p>
-            </div>
-            <div>
-              <p className="text-sm text-muted-foreground">
-                {t('CartPage.region')}
-              </p>
-              <p className="font-medium">{address.region}</p>
-            </div>
+          <div>
+            <p className="text-sm text-muted-foreground">
+              {t('CartPage.country')}
+            </p>
+            <p className="font-medium">{address.country}</p>
+          </div>
+          <div>
+            <p className="text-sm text-muted-foreground">
+              {t('CartPage.city')}
+            </p>
+            <p className="font-medium">{address.city}</p>
+          </div>
+          <div>
+            <p className="text-sm text-muted-foreground">
+              {t('CartPage.region')}
+            </p>
+            <p className="font-medium">{address.region}</p>
           </div>
 
           <div>

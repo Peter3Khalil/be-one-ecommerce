@@ -5,22 +5,30 @@ import { Trash2 } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { FC } from 'react';
 import { CartProduct } from '../types';
+import { cn } from '@/lib/utils';
 type Props = {
   products: Array<CartProduct>;
   // eslint-disable-next-line no-unused-vars
   onQuantityChange?: (index: number, quantity: number) => void;
   // eslint-disable-next-line no-unused-vars
   onRemoveProduct?: (index: number) => void;
+  className?: string;
 };
 const CartList: FC<Props> = ({
   products,
   onQuantityChange,
   onRemoveProduct,
+  className,
 }) => {
   const t = useTranslations();
   if (products.length === 0) {
     return (
-      <div className="flex h-fit flex-col items-center justify-center gap-4 bg-card px-4 py-10 md:col-span-3">
+      <div
+        className={cn(
+          'flex h-fit flex-col items-center justify-center gap-4 bg-card px-4 py-10',
+          className
+        )}
+      >
         <p className="text-center text-2xl font-medium">
           {t('CartPage.cartEmpty')}
         </p>
@@ -31,7 +39,12 @@ const CartList: FC<Props> = ({
     );
   }
   return (
-    <ul className="h-fit space-y-4 bg-card p-4 *:not-last:border-b *:not-last:pb-4 md:col-span-3">
+    <ul
+      className={cn(
+        'h-fit space-y-4 bg-card p-4 *:not-last:border-b *:not-last:pb-4',
+        className
+      )}
+    >
       {products.map(
         ({ productId, image, title, size, color, price, quantity }, index) => (
           <li key={index} className="relative flex gap-4">
