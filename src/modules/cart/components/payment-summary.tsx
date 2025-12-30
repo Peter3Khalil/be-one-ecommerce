@@ -1,5 +1,5 @@
 'use client';
-import { cn } from '@/lib/utils';
+import { cn, formatPrice } from '@/lib/utils';
 import { Button } from '@ui/button';
 import { Label } from '@ui/label';
 import { RadioGroup, RadioGroupItem } from '@ui/radio-group';
@@ -159,7 +159,7 @@ const PaymentSummary: FC<Props> = ({
         <div className="flex items-center justify-between text-muted-foreground">
           <span>{t('CartPage.subtotal')}</span>
           <span className="font-medium text-foreground">
-            ${subtotal.toFixed(2)}
+            {formatPrice(subtotal)}
           </span>
         </div>
         {discount > 0 && (
@@ -168,7 +168,7 @@ const PaymentSummary: FC<Props> = ({
               {t('CartPage.discount')} (-{(discount * 100).toFixed(0)}%)
             </span>
             <span className="font-medium text-destructive">
-              -${(subtotal * discount).toFixed(2)}
+              -{formatPrice(subtotal * discount)}
             </span>
           </div>
         )}
@@ -176,14 +176,14 @@ const PaymentSummary: FC<Props> = ({
           <div className="flex items-center justify-between text-muted-foreground">
             <span>{t('CartPage.deliveryFee')}</span>
             <span className="font-medium text-foreground">
-              ${deliveryFee.toFixed(2)}
+              {formatPrice(deliveryFee)}
             </span>
           </div>
         )}
       </div>
       <div className="flex items-center justify-between text-lg font-semibold">
         <span className="font-semibold">{t('CartPage.total')}</span>
-        <span>${total.toFixed(2)}</span>
+        <span>{formatPrice(total)}</span>
       </div>
       <Button
         onClick={() => {

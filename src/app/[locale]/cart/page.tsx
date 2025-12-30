@@ -46,7 +46,7 @@ const CartPage = () => {
               <PaymentSummary
                 disabled={isEmpty}
                 subtotal={subtotal}
-                deliveryFee={isEmpty ? 0 : 5}
+                deliveryFee={isEmpty ? 0 : 50}
                 onSuccess={(data) => {
                   setOrderData(data);
                 }}

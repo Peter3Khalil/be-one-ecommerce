@@ -1,6 +1,6 @@
 'use client';
 import { Link } from '@/i18n/navigation';
-import { cn } from '@/lib/utils';
+import { cn, formatPrice } from '@/lib/utils';
 import { Product } from '@/modules/products/types';
 import Rating from '@components/rating';
 import { useState } from 'react';
@@ -54,7 +54,7 @@ const ProductCard = ({ id, name, price, images, delay = 0 }: Props) => {
         <Rating rating={4.5} />
         <div className="flex items-center gap-2">
           <span className="text-lg font-semibold text-foreground">
-            ${price}
+            {formatPrice(+price)}
           </span>
         </div>
       </div>

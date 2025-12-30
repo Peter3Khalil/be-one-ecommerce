@@ -5,7 +5,7 @@ import { Trash2 } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { FC } from 'react';
 import { CartProduct } from '../types';
-import { cn } from '@/lib/utils';
+import { cn, formatPrice } from '@/lib/utils';
 type Props = {
   products: Array<CartProduct>;
   // eslint-disable-next-line no-unused-vars
@@ -71,7 +71,9 @@ const CartList: FC<Props> = ({
                 <b>{t('Global.color')}:</b> {color}
               </p>
               <div className="mt-auto flex w-full items-center">
-                <p className="text-xl font-medium md:text-3xl">${price}</p>
+                <p className="text-xl font-medium md:text-3xl">
+                  {formatPrice(price)}
+                </p>
                 <Counter
                   className="ms-auto"
                   initialValue={quantity}

@@ -9,6 +9,7 @@ import { useTranslations } from 'next-intl';
 import { FC, useState } from 'react';
 import { Product } from '../types';
 import { useCart } from '@/modules/cart/components/cart-provider';
+import { formatPrice } from '@/lib/utils';
 type Props = {
   product: Product;
 };
@@ -39,7 +40,9 @@ const ProductView: FC<Props> = ({
         <div className="space-y-2">
           <h1 className="text-3xl font-bold">{name}</h1>
           <Rating rating={4.5} size={24} />
-          <p className="text-xl font-semibold text-primary">{price}</p>
+          <p className="text-xl font-semibold text-primary">
+            {formatPrice(+price)}
+          </p>
           <p className="text-muted-foreground">{description}</p>
         </div>
         <div>

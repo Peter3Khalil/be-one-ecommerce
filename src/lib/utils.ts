@@ -1,3 +1,4 @@
+import { CURRENCY } from '@/constants';
 import { clsx, type ClassValue } from 'clsx';
 import { getGovernorates } from 'subdivisions-of-egypt';
 import { twMerge } from 'tailwind-merge';
@@ -41,4 +42,12 @@ export function createQueryString(
     }
   });
   return s.endsWith('&') ? s.slice(0, -1) : s;
+}
+
+export function formatPrice(price: number) {
+  return new Intl.NumberFormat('en-EG', {
+    style: 'currency',
+    currency: CURRENCY,
+    maximumFractionDigits: 0,
+  }).format(price);
 }
