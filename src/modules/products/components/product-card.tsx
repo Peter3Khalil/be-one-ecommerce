@@ -15,7 +15,11 @@ type Props = {
 const ProductCard = ({ id, name, price, images, delay = 0 }: Props) => {
   const [isHovered, setIsHovered] = useState(false);
   const t = useTranslations();
-  const image = images?.thumbnail?.[0]?.urls?.medium;
+  const colors = Object.keys(images || {});
+  const image =
+    colors.length > 0
+      ? images?.[colors[0]]?.[0]?.urls?.medium
+      : images?.thumbnail?.[0]?.urls?.medium;
   return (
     <article
       className="group relative"
