@@ -19,13 +19,22 @@ import { Label } from '@ui/label';
 import { useTranslations } from 'next-intl';
 import { FC, useId } from 'react';
 import { useForm } from 'react-hook-form';
+import { isValidPhoneNumber } from 'react-phone-number-input';
 import { getGovernorates, getSubregions } from 'subdivisions-of-egypt';
 import z from 'zod';
 
 export const addressSchema = z.object({
   customer_name: z.string().min(1, 'Full Name is required'),
   email: z.email('Invalid email address'),
-  phone: z.string().min(1, 'Phone is required'),
+  phone: z.string().refine(
+    (phone) => {
+      if (phone.startsWith('+20')) {
+        return isValidPhoneNumber(phone) && phone.length === 13;
+      }
+      return isValidPhoneNumber(phone);
+    },
+    { message: 'Invalid phone number' }
+  ),
   address: z.string().min(1, 'Address is required'),
   city: z.string().min(1, 'City is required'),
   region: z.string().min(1, 'Region is required'),
@@ -95,9 +104,11 @@ const AddressDialog: FC<Props> = ({ onAddressAdd, defaultValues, trigger }) => {
             <InputFormField
               control={form.control}
               name="phone"
+              type="tel"
               label={t('CartPage.phone')}
+              defaultCountry="EG"
               // eslint-disable-next-line i18next/no-literal-string
-              placeholder="+1 234 567 890"
+              placeholder="+20 123 456 7890"
               required
             />
             <InputFormField

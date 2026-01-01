@@ -7,12 +7,36 @@ import {
 } from '@ui/form';
 import { Input } from '@ui/input';
 import { PasswordInput } from '@ui/password-input';
+import { PhoneInput } from '@ui/phone-input';
 import { type Control, type FieldValues, type Path } from 'react-hook-form';
-type Props<T extends FieldValues> = {
+type BaseProps<T extends FieldValues> = {
   control: Control<T>;
   name: Path<T>;
   label?: string;
-} & React.ComponentProps<typeof Input>;
+};
+
+type TextInputProps<T extends FieldValues> = BaseProps<T> &
+  React.ComponentProps<typeof Input> & {
+    type?: Exclude<
+      React.ComponentProps<typeof Input>['type'],
+      'password' | 'tel'
+    >;
+  };
+
+type PasswordInputProps<T extends FieldValues> = BaseProps<T> &
+  React.ComponentProps<typeof PasswordInput> & {
+    type: 'password';
+  };
+
+type PhoneInputProps<T extends FieldValues> = BaseProps<T> &
+  React.ComponentProps<typeof PhoneInput> & {
+    type: 'tel';
+  };
+
+type Props<T extends FieldValues> =
+  | TextInputProps<T>
+  | PasswordInputProps<T>
+  | PhoneInputProps<T>;
 
 const InputFormField = <T extends FieldValues>({
   control,
@@ -21,7 +45,12 @@ const InputFormField = <T extends FieldValues>({
   required,
   ...props
 }: Props<T>) => {
-  const Comp = props.type === 'password' ? PasswordInput : Input;
+  const Comp =
+    props.type === 'password'
+      ? PasswordInput
+      : props.type === 'tel'
+        ? PhoneInput
+        : Input;
   return (
     <FormField
       control={control}
