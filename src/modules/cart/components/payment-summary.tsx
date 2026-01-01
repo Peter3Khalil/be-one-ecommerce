@@ -68,7 +68,10 @@ const PaymentSummary: FC<Props> = ({
         <p className="text-sm font-medium text-muted-foreground">
           {t('CartPage.paymentMethod')}
         </p>
-        <RadioGroup lang={locale} defaultValue="cash_on_delivery">
+        <RadioGroup
+          dir={locale === 'ar' ? 'rtl' : 'ltr'}
+          defaultValue="cash_on_delivery"
+        >
           <div className="flex items-center gap-3">
             <RadioGroupItem value="cash_on_delivery" id="r1" />
             <Label htmlFor="r1">{t('CartPage.cashOnDelivery')}</Label>
@@ -98,13 +101,15 @@ const PaymentSummary: FC<Props> = ({
               <span className="text-sm text-muted-foreground">
                 {t('CartPage.phone')}:
               </span>{' '}
-              {address.phone}
+              <span dir="ltr">{address.phone}</span>
             </p>
             <p>
               <span className="text-sm text-muted-foreground">
                 {t('CartPage.email')}:
               </span>{' '}
-              {address.email}
+              <span dir="ltr" className="english">
+                {address.email}
+              </span>
             </p>
             <p>
               <span className="text-sm text-muted-foreground">

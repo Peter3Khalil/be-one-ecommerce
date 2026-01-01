@@ -91,6 +91,8 @@
   --code-number: oklch(0.72 0 0);
   --code-selection: oklch(0.922 0 0);
   --code-border: oklch(0.922 0 0);
+  --font-cairo: 'Cairo', sans-serif;
+  --font-roboto: 'Roboto', sans-serif;
   --radius: 0.5rem;
 }
 
@@ -167,13 +169,12 @@
   }
 }
 
-@layer utilities {
-  .arabic {
-    font-family: var(--font-cairo);
-    direction: rtl;
-  }
-  .english {
-    font-family: var(--font-roboto);
-    direction: ltr;
-  }
+@utility arabic {
+  font-family: var(--font-cairo), sans-serif !important;
+  direction: rtl !important;
+}
+
+@utility english {
+  font-family: var(--font-roboto), sans-serif !important;
+  direction: ltr !important;
 }
