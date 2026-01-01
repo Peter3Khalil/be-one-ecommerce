@@ -42,7 +42,7 @@
         "name": "Fatima H.",
         "rating": 4.5,
         "review": "\"Wallah this t-shirt is fire! The design is so cool and the fabric is super comfy. I'm a designer myself and I gotta say, the details are on point. It's literally my favorite shirt now!\"",
-        "date": "August 14, 2023",
+        "date": "January 12, 2025",
         "verified": true
       },
       {
@@ -50,7 +50,7 @@
         "name": "Youssef M.",
         "rating": 4,
         "review": "\"Bro this shirt is way better than I expected! Colors are poppin and the print quality is amazing. I work in UI/UX so I'm super picky about how things look, and this one is definitely a winner!\"",
-        "date": "August 15, 2023",
+        "date": "March 5, 2025",
         "verified": true
       },
       {
@@ -58,7 +58,7 @@
         "name": "Khalid R.",
         "rating": 3.5,
         "review": "\"Honestly if you're into good design, you need this shirt habibi. The pattern is simple but stylish, caught my eye right away. Fits perfectly too, you can tell someone who knows what they're doing made this.\"",
-        "date": "August 16, 2023",
+        "date": "May 22, 2025",
         "verified": true
       },
       {
@@ -66,7 +66,7 @@
         "name": "Nour A.",
         "rating": 4,
         "review": "\"I'm big on keeping things simple and functional, and this shirt just gets it! Super comfortable to wear and looks great. You can really see the creativity that went into this one mashallah.\"",
-        "date": "August 17, 2023",
+        "date": "July 8, 2025",
         "verified": true
       },
       {
@@ -74,7 +74,7 @@
         "name": "Omar K.",
         "rating": 4,
         "review": "\"This shirt is everything - comfy and creative at the same time! The fabric is so soft and the design is like wearing art honestly. Perfect for someone who loves fashion and good design like me!\"",
-        "date": "August 18, 2023",
+        "date": "September 15, 2025",
         "verified": true
       },
       {
@@ -82,7 +82,7 @@
         "name": "Layla S.",
         "rating": 5,
         "review": "\"Ya'll this isn't just a t-shirt, it's a whole vibe! The details are crazy good and everyone keeps asking me about it. Definitely a conversation starter wherever I go!\"",
-        "date": "August 19, 2023",
+        "date": "November 28, 2025",
         "verified": true
       }
     ],
@@ -92,7 +92,7 @@
         "name": "فاطمة ح.",
         "rating": 4.5,
         "review": "\"والله القميص ده تحفة! التصميم روعة والقماش مريح جداً. أنا مصممة وبقولك الاهتمام بالتفاصيل واضح أوي. بقى قميصي المفضل بجد!\"",
-        "date": "14 أغسطس 2023",
+        "date": "12 يناير 2025",
         "verified": true
       },
       {
@@ -100,7 +100,7 @@
         "name": "يوسف م.",
         "rating": 4,
         "review": "\"يا جماعة القميص ده فاق توقعاتي بمراحل! الألوان حلوة والطباعة ممتازة. أنا شغال UI/UX ودقيق جداً في الحاجات دي، وده يستاهل كل ريال!\"",
-        "date": "15 أغسطس 2023",
+        "date": "5 مارس 2025",
         "verified": true
       },
       {
@@ -108,7 +108,7 @@
         "name": "خالد ر.",
         "rating": 3.5,
         "review": "\"بصراحة لو بتحب التصميم الحلو لازم تجيب القميص ده يا حبيبي. الشكل بسيط بس أنيق جداً، والمقاس مظبوط. واضح إن اللي عمله فاهم شغله!\"",
-        "date": "16 أغسطس 2023",
+        "date": "22 مايو 2025",
         "verified": true
       },
       {
@@ -116,7 +116,7 @@
         "name": "نور أ.",
         "rating": 4,
         "review": "\"أنا بحب الحاجات البسيطة والعملية، والقميص ده كده بالظبط! مريح جداً في اللبس وشكله جميل. ماشاء الله الإبداع باين فيه!\"",
-        "date": "17 أغسطس 2023",
+        "date": "8 يوليو 2025",
         "verified": true
       },
       {
@@ -124,7 +124,7 @@
         "name": "عمر ك.",
         "rating": 4,
         "review": "\"القميص ده كل حاجة في حاجة - مريح وإبداعي! القماش ناعم والتصميم زي ما تكون لابس لوحة فنية والله. مثالي لحد زيي بيحب الموضة والتصميم!\"",
-        "date": "18 أغسطس 2023",
+        "date": "15 سبتمبر 2025",
         "verified": true
       },
       {
@@ -132,7 +132,7 @@
         "name": "ليلى س.",
         "rating": 5,
         "review": "\"يا ناس ده مش مجرد قميص، ده ستايل كامل! التفاصيل مجنونة وكل الناس بتسألني عنه. بيفتح كلام في أي مكان بروح فيه!\"",
-        "date": "19 أغسطس 2023",
+        "date": "28 نوفمبر 2025",
         "verified": true
       }
     ]
