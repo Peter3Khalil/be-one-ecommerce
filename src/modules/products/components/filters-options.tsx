@@ -10,11 +10,15 @@ import { AvailableFilters } from '../types';
 import { cn, detectLang } from '@/lib/utils';
 type FilterOptionsProps = {
   title: string;
-  children: React.ReactNode;
-};
-export const FilterOption = ({ title, children }: FilterOptionsProps) => {
+} & React.ComponentProps<typeof Collapsible>;
+export const FilterOption = ({
+  title,
+  children,
+  className,
+  ...props
+}: FilterOptionsProps) => {
   return (
-    <Collapsible className="group/collapsible">
+    <Collapsible className={cn('group/collapsible', className)} {...props}>
       <CollapsibleTrigger className="flex w-full cursor-pointer items-center justify-between text-base leading-0 text-muted-foreground hover:text-foreground">
         <span>{title}</span>
         <ChevronRight
@@ -59,7 +63,7 @@ export const FiltersOptions: FC<Props> = ({
   });
   return (
     <div className={className}>
-      <FilterOption title={t('Global.price')}>
+      <FilterOption defaultOpen={true} title={t('Global.price')}>
         <Slider
           value={parsePriceRange(values.price_range)}
           defaultValue={parsePriceRange(values.price_range)}
@@ -131,7 +135,10 @@ export const FiltersOptions: FC<Props> = ({
         </div>
       </FilterOption>
       {sizes.length > 0 && (
-        <FilterOption title={t('Global.size')}>
+        <FilterOption
+          defaultOpen={values.sizes.length > 0}
+          title={t('Global.size')}
+        >
           <ul className="flex flex-wrap gap-2">
             {sizes.map((size) => (
               <li key={size}>
@@ -167,7 +174,10 @@ export const FiltersOptions: FC<Props> = ({
       )}
 
       {colors.length > 0 && (
-        <FilterOption title={t('Global.color')}>
+        <FilterOption
+          defaultOpen={values.colors.length > 0}
+          title={t('Global.color')}
+        >
           <ul className="flex flex-wrap gap-2">
             {colors.map((color) => (
               <li key={color}>
@@ -203,7 +213,10 @@ export const FiltersOptions: FC<Props> = ({
       )}
 
       {categories.length > 0 && (
-        <FilterOption title={t('Global.category')}>
+        <FilterOption
+          defaultOpen={values.categories.length > 0}
+          title={t('Global.category')}
+        >
           <ul className="flex flex-wrap gap-2">
             {categories.map((category) => (
               <li key={category}>

@@ -46,7 +46,7 @@ const MobileFilters: FC<Props> = ({
           <Filter />
         </Button>
       </DrawerTrigger>
-      <DrawerContent>
+      <DrawerContent className="overflow-y-auto">
         <DrawerHeader className="pb-0">
           <div className="flex items-center justify-between border-b pb-4">
             <h3 className="text-lg font-semibold lg:text-xl">
@@ -62,16 +62,19 @@ const MobileFilters: FC<Props> = ({
             </Button>
           </div>
         </DrawerHeader>
+
         <FiltersOptions
           onOptionsChange={(options) => {
             onOptionsChange?.(options);
           }}
           options={filtersOptions}
-          className="px-4 *:py-4 *:not-last:border-b *:last:pt-4"
+          className="overflow-y-auto px-4 *:py-4 *:not-last:border-b *:last:pt-4"
           defaultValues={defaultValues}
         />
         <DrawerFooter>
-          <Button>{t('ProductsPage.applyFilters')}</Button>
+          <DrawerClose asChild>
+            <Button>{t('ProductsPage.applyFilters')}</Button>
+          </DrawerClose>
           <DrawerClose asChild>
             <Button variant="outline">{t('Global.cancel')}</Button>
           </DrawerClose>
