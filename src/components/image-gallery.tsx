@@ -32,6 +32,11 @@ const ImageGallery = ({ images }: { images: Array<string> }) => {
   // Double tap ref
   const lastTapRef = useRef<number>(0);
 
+  // Swipe state for carousel
+  const [swipeStart, setSwipeStart] = useState<number | null>(null);
+  const [swipeOffset, setSwipeOffset] = useState(0);
+  const SWIPE_THRESHOLD = 40; // Minimum swipe distance in pixels
+
   // Detect if device supports touch
   const isTouchDevice =
     typeof window !== 'undefined' && 'ontouchstart' in window;
@@ -109,13 +114,16 @@ const ImageGallery = ({ images }: { images: Array<string> }) => {
       // Pinch zoom start
       e.preventDefault();
       setLastTouchDistance(getTouchDistance(e.touches));
-    } else if (e.touches.length === 1 && zoomLevel > 1) {
-      // Pan start
-      setIsDragging(true);
-      setDragStart({
-        x: e.touches[0].clientX - position.x,
-        y: e.touches[0].clientY - position.y,
-      });
+    } else if (e.touches.length === 1) {
+      // Start swipe or pan
+      setSwipeStart(e.touches[0].clientX);
+      if (zoomLevel > 1) {
+        setIsDragging(true);
+        setDragStart({
+          x: e.touches[0].clientX - position.x,
+          y: e.touches[0].clientY - position.y,
+        });
+      }
     }
   };
 
@@ -133,16 +141,39 @@ const ImageGallery = ({ images }: { images: Array<string> }) => {
         });
         setLastTouchDistance(newDistance);
       }
-    } else if (e.touches.length === 1 && isDragging && zoomLevel > 1) {
-      // Pan
-      setPosition({
-        x: e.touches[0].clientX - dragStart.x,
-        y: e.touches[0].clientY - dragStart.y,
-      });
+    } else if (e.touches.length === 1) {
+      if (isDragging && zoomLevel > 1) {
+        // Pan when zoomed
+        setPosition({
+          x: e.touches[0].clientX - dragStart.x,
+          y: e.touches[0].clientY - dragStart.y,
+        });
+      } else if (swipeStart !== null && zoomLevel === 1 && images.length > 1) {
+        // Swipe for carousel
+        const currentX = e.touches[0].clientX;
+        const diff = currentX - swipeStart;
+        setSwipeOffset(diff);
+      }
     }
   };
 
   const handleTouchEnd = () => {
+    // Handle swipe end for carousel
+    if (swipeStart !== null && zoomLevel === 1 && images.length > 1) {
+      if (swipeOffset > SWIPE_THRESHOLD) {
+        // Swiped right - go to previous
+        handleImageChange(
+          currentIndex === 0 ? images.length - 1 : currentIndex - 1
+        );
+      } else if (swipeOffset < -SWIPE_THRESHOLD) {
+        // Swiped left - go to next
+        handleImageChange(
+          currentIndex === images.length - 1 ? 0 : currentIndex + 1
+        );
+      }
+    }
+    setSwipeStart(null);
+    setSwipeOffset(0);
     setLastTouchDistance(null);
     setIsDragging(false);
   };
@@ -169,6 +200,9 @@ const ImageGallery = ({ images }: { images: Array<string> }) => {
         onMouseEnter={() => !isTouchDevice && setIsHovering(true)}
         onMouseLeave={() => !isTouchDevice && setIsHovering(false)}
         onMouseMove={!isTouchDevice ? handleMouseMove : undefined}
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
       >
         <img
           src={currentImage}
@@ -176,9 +210,13 @@ const ImageGallery = ({ images }: { images: Array<string> }) => {
           className="h-full w-full cursor-zoom-in object-cover transition-transform duration-300"
           style={{
             transformOrigin: `${hoverPosition.x}% ${hoverPosition.y}%`,
-            transform: isHovering && !isTouchDevice ? 'scale(1.8)' : 'scale(1)',
+            transform:
+              isHovering && !isTouchDevice
+                ? 'scale(1.8)'
+                : `scale(1) translateX(${swipeOffset}px)`,
           }}
           onClick={() => setIsFullscreen(true)}
+          draggable={false}
         />
         <Button
           variant="ghost"
