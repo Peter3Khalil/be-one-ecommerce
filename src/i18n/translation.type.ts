@@ -88,6 +88,9 @@ export type TranslationType = {
   };
   Global: {
     searchProductsPlaceholder: string;
+    search: string;
+    cart: string;
+    menu: string;
     size: string;
     color: string;
     quantity: string;

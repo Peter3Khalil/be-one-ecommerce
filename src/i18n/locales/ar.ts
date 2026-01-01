@@ -91,6 +91,9 @@ export default {
     shareVia: 'مشاركة عبر',
   },
   Global: {
+    cart: 'السلة',
+    menu: 'القائمة',
+    search: 'بحث',
     searchProductsPlaceholder: 'ابحث عن المنتجات...',
     next: 'التالي',
     previous: 'السابق',

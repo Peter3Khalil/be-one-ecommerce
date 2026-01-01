@@ -7,7 +7,7 @@ const Footer = () => {
   const currentYear = new Date().getFullYear();
   const t = useTranslations();
   return (
-    <footer className="bg-accent/40">
+    <footer className="bg-accent/40 pb-14 sm:pb-0">
       <div className="container py-12">
         <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3 lg:justify-items-center-safe">
           <div className="space-y-4">

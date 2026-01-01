@@ -92,6 +92,9 @@ export default {
     confirmationNote: 'You will receive order updates via email and phone.',
   },
   Global: {
+    cart: 'Cart',
+    menu: 'Menu',
+    search: 'Search',
     searchProductsPlaceholder: 'Search products...',
     next: 'Next',
     previous: 'Previous',

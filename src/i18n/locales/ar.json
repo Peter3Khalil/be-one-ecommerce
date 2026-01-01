@@ -82,11 +82,14 @@
     "chooseSize": "اختر المقاس",
     "selectColor": "اختر اللون",
     "viewCart": "عرض العربة",
+    "copyLink": "نسخ الرابط",
     "share": "مشاركة",
-    "shareVia": "مشاركة عبر",
-    "copyLink": "نسخ الرابط"
+    "shareVia": "مشاركة عبر"
   },
   "Global": {
+    "cart": "السلة",
+    "menu": "القائمة",
+    "search": "بحث",
     "searchProductsPlaceholder": "ابحث عن المنتجات...",
     "next": "التالي",
     "previous": "السابق",
